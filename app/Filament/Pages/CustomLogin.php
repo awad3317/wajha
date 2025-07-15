@@ -2,9 +2,13 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
+// use Filament\Pages\Page;
+use Filament\Pages\Auth\Login as BaseLogin;
+use Illuminate\Validation\ValidationException;
+use Filament\Notifications\Notification;
+use Filament\Forms\Form;
 
-class CustomLogin extends Page
+class CustomLogin extends BaseLogin
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
