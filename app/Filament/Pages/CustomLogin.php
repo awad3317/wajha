@@ -12,7 +12,7 @@ class CustomLogin extends BaseLogin
 {
     // protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.custom-login';
+    // protected static string $view = 'filament.pages.custom-login';
 
     public function form(Form $form): Form
     {
