@@ -2,14 +2,15 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Form;
-use Filament\Pages\Auth\Login as BaseLogin;
-use Illuminate\Validation\ValidationException;
-use Filament\Notifications\Notification;
-class CustomLogin extends BaseLogin
+use Filament\Pages\Page;
+
+class CustomLogin extends Page
 {
-    
-     public function form(Form $form): Form
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static string $view = 'filament.pages.custom-login';
+
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -17,6 +18,7 @@ class CustomLogin extends BaseLogin
                 $this->getPasswordFormComponent(),
             ]);
     }
+
     protected function getLoginFormComponent(): \Filament\Forms\Components\Component
     {
         return \Filament\Forms\Components\TextInput::make('phone')
@@ -27,6 +29,7 @@ class CustomLogin extends BaseLogin
             ->maxLength(15)
             ->autofocus();
     }
+
     protected function getCredentialsFromFormData(array $data): array
     { 
         return [
@@ -34,6 +37,7 @@ class CustomLogin extends BaseLogin
             'password' => $data['password'],
         ];
     }
+
     public function getHeading(): string
     {
         return "الدخول إلى وجهة"; 

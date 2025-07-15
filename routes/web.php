@@ -9,6 +9,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/admin/login', App\Filament\Pages\CustomLogin::class);
+
 Route::post('/github/deploy', function (Request $request){
     $secret = '14171417Nn'; 
 
