@@ -6,6 +6,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Auth\Login as BaseLogin;
 
+
 class CustomLogin extends BaseLogin
 {
     public function form(Form $form): Form
@@ -36,4 +37,6 @@ class CustomLogin extends BaseLogin
     {
         return "الدخول إلى وجهة"; 
     }
+
+  
 }
