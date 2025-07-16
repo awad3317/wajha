@@ -8,19 +8,30 @@ use Filament\Pages\Auth\Login as BaseLogin;
 
 class CustomLogin extends BaseLogin
 {
-    public function form(Form $form): Form
+    // public function form(Form $form): Form
+    // {
+    //     return $form
+    //         ->schema([
+    //             TextInput::make('phone')
+    //                 ->label('رقم الهاتف')
+    //                 ->required()
+    //                 ->numeric(),
+    //             TextInput::make('password')
+    //                 ->label('كلمة المرور')
+    //                 ->password()
+    //                 ->required(),
+    //         ]);
+    // }
+
+    protected function getLoginFormComponent(): \Filament\Forms\Components\Component
     {
-        return $form
-            ->schema([
-                TextInput::make('phone')
-                    ->label('رقم الهاتف')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('password')
-                    ->label('كلمة المرور')
-                    ->password()
-                    ->required(),
-            ]);
+        return \Filament\Forms\Components\TextInput::make('phone')
+            ->label(' رقم الجوال')
+            ->required()
+            ->autocomplete()
+            ->placeholder('مثال: 9665XXXXXXXX')
+            ->maxLength(15)
+            ->autofocus();
     }
 
     protected function getCredentialsFromFormData(array $data): array
