@@ -22,4 +22,17 @@ class CustomLogin extends BaseLogin
                     ->required(),
             ]);
     }
+
+    protected function getCredentialsFromFormData(array $data): array
+    { 
+        return [
+            'phone' => $data['phone'],
+            'password' => $data['password'],
+        ];
+    }
+
+    public function getHeading(): string
+    {
+        return "الدخول إلى وجهة"; 
+    }
 }
