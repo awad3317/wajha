@@ -23,3 +23,7 @@ Route::post('/github/deploy', function (Request $request){
         exec('cd /home/wajhah/htdocs/Wajhah-Project && git pull origin main');
         return response()->json(['status' => 'Deployed']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
