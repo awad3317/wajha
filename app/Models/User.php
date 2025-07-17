@@ -14,14 +14,6 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-       if ($this->user_type !== 'admin') {
-            abort(403, 'غير مصرح لك بالدخول إلى لوحة التحكم');
-        }
-        return true;
-    }
-
     /**
      * The attributes that are mass assignable.
      *
