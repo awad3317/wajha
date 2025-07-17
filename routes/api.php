@@ -20,6 +20,7 @@ use App\Http\Controllers\API\EstablishmentRuleController;
 use App\Http\Controllers\API\EstablishmentTypeController;
 use App\Http\Controllers\API\Auth\ForgetPasswordController;
 use App\Http\Controllers\API\EstablishmentFeatureController;
+use App\Http\Controllers\API\Dashboard\Owner\Dashboardcontroller;
 use App\Http\Controllers\API\EstablishmentSpecificationController;
 use App\Http\Controllers\API\EstablishmentUnavailabilityController;
 
@@ -41,7 +42,7 @@ Route::middleware(['auth:sanctum','check.banned'])->group(function () {
     Route::apiResource('/unavailabilityDays', EstablishmentUnavailabilityController::class)->except(['index','show','update']);
     Route::apiResource('/booking', BookingController::class)->except([]);
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
-    
+    Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/notifications',[NotificationController::class,'index']);
     
     
