@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b></b>',
+    'logo' => '<b>لوحة تحكم وجهة</b>',
     'logo_img' => 'img/wjahh.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -157,7 +157,7 @@ return [
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => true,
+    'layout_dark_mode' => null,
 
     /*
     |--------------------------------------------------------------------------
