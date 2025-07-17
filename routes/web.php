@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Route::get('/admin/login', App\Filament\Pages\CustomLogin::class);
