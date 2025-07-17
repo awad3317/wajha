@@ -18,8 +18,8 @@
 <body class="login-page" >
     <div class="login-box">
         <div class="login-logo">
-            <a href="http://127.0.0.1:8000/home">
-                <img src="http://127.0.0.1:8000/img/wjahh.jpg"alt="Auth Logo"width="50"height="50">
+            <a href="{{route('home')}}">
+                <img src="{{asset('img/wjahh.jpg')}}"alt="Auth Logo"width="50"height="50">
                 <b></b>
             </a>
         </div>
