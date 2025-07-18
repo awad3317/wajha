@@ -88,7 +88,7 @@ class LoginController extends Controller
     }
 
     if ($this->attemptLogin($request)) {
-        if ($request->user()->user_type == 'admin') {
+        if ($request->user()->user_type !== 'admin') {
             auth()->logout();
             return redirect('/login')->withErrors([
                 'email' => 'ليس لديك صلاحية الدخول إلى لوحة التحكم'
