@@ -6,6 +6,10 @@
     <h1>المستخدمين</h1>
 @stop
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/badge.css') }}">
+@stop
+
 @section('content')
    <div class="col-md-12">
     <div class="card">
@@ -31,20 +35,20 @@
                         <td>
                             @switch($user->user_type)
                                 @case('admin')
-                                    <span class="badge bg-danger">مدير</span>
+                                    <span class="badge-red">مدير</span>
                                     @break
                                 @case('owner')
-                                    <span class="badge bg-warning">صاحب منشأة</span>
+                                    <span class="badge-yellow">صاحب منشأة</span>
                                     @break
                                 @default
-                                    <span class="badge bg-success">مستخدم عادي</span>
+                                    <span class="badge-green">مستخدم عادي</span>
                             @endswitch
                         </td>
                         <td>
                             @if($user->is_banned)
-                                <span class="badge bg-gradient-warning">محظور</span>
+                                <span class="badge-yellow">محظور</span>
                             @else
-                                <span class="badge bg-gradient-success">نشط</span>
+                                <span class="badge-green">نشط</span>
                             @endif
                         </td>
                         <td>
