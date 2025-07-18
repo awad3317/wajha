@@ -42,9 +42,9 @@
                         </td>
                         <td>
                             @if($user->is_banned)
-                                <span class="badge bg-danger">محظور</span>
+                                <span class="badge bg-gradient-warning">محظور</span>
                             @else
-                                <span class="badge bg-success">نشط</span>
+                                <span class="badge bg-gradient-success">نشط</span>
                             @endif
                         </td>
                         <td>
