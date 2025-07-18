@@ -30,7 +30,7 @@
             <div class="card-body login-card-body ">
                 <form action="{{route('login')}}" method="post">
                     @csrf
-                    <input type="hidden" name="_token" value="hWJsNKgs7yi0H97SmNj9XpKjooBJ2wsJaCNVKtRd" autocomplete="off">
+                    {{-- <input type="hidden" name="_token" value="hWJsNKgs7yi0H97SmNj9XpKjooBJ2wsJaCNVKtRd" autocomplete="off"> --}}
                     <div class="input-group mb-3">
                         <input type="text" name="phone" class="form-control "value="" placeholder="مثال: 9665XXXXXXXX" autofocus>
                     </div>
