@@ -66,9 +66,9 @@ class OwnerAccountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if($id != auth('sanctum')->id()){
-            return ApiResponseClass::sendError('You are not authorized to update this acount.', [], 403);
-        }
+        // if($id != auth('sanctum')->id()){
+        //     return ApiResponseClass::sendError('You are not authorized to update this acount.', [], 403);
+        // }
         $fields=$request->validate([
             'bank_id'=>['sometimes',Rule::exists('banks','id')],
             'account_number'=>['sometimes','string','min:7','max:15'],
@@ -86,9 +86,9 @@ class OwnerAccountController extends Controller
      */
     public function destroy(string $id)
     {
-        if($id != auth('sanctum')->id()){
-            return ApiResponseClass::sendError('You are not authorized to deleting this acount.', [], 403);
-        }
+        // if($id != auth('sanctum')->id()){
+        //     return ApiResponseClass::sendError('You are not authorized to deleting this acount.', [], 403);
+        // }
         try {
             $account=$this->OwnerAccountRepository->getById($id);
             if($this->OwnerAccountRepository->delete($id)){
