@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'phone' => '967783326477',
             'password' => '12345678',
             'phone_verified_at'=>now(),
-            'user_type' => 'user',
+            'user_type' => 'owner',
         ]);
 
         User::create( [
