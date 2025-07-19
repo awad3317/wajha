@@ -31,7 +31,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum','check.banned'])->group(function () {
+Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::get('/bank', [BankController::class, 'index']);
     Route::apiResource('/acount', OwnerAccountController::class)->except(['show']);
