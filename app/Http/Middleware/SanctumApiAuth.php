@@ -15,7 +15,7 @@ class SanctumApiAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-          if (auth('sanctum')->check()) {
+          if (!auth('sanctum')->check()) {
             return response()->json([
                 'message' => 'Unauthorized - API token required'
             ], 401);
