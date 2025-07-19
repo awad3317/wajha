@@ -26,6 +26,7 @@ class User extends Authenticatable
         'is_banned',
         'password',
         'user_type',  
+        'device_token'
     ];
 
     /**

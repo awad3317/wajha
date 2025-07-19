@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('phone', 20)->unique();
             $table->timestamp('phone_verified_at')->nullable();
+            $table->string('device_token')->nullable();
             $table->boolean('is_banned')->default(false);
             $table->string('password');
             $table->enum('user_type', ['admin', 'user', 'owner']);

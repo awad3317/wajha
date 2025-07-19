@@ -81,4 +81,18 @@ class UserController extends Controller
     {
         //
     }
+
+    public function updateDeviceToken(Request $request)
+    {
+        try {
+            $request->validate([
+            'device_token' => 'required',
+            ]);
+            auth('sanctum')->user()->update(['device_token' => $request->device_token]);
+            return ApiResponseClass::sendResponse(null,'Device token updated successfully.');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('Error updated token.');
+        }
+        
+    }
 }
