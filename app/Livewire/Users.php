@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\User;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+
+class Users extends Component
+{
+    use WithPagination;
+
+    public $search = '';
+    public $userType = '';
+    public $bannedStatus = '';
+    protected $queryString = ['search', 'userType', 'bannedStatus'];
+    public function toggleBan($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $user->is_banned = !$user->is_banned;
+            $user->save();
+        }
+    }
+
+    public function updating($field)
+    {
+        $this->resetPage();
+    }
+    public $editingUserId = null;
+    public $editName, $editPhone, $editType;
+
+    public function editUser($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $this->editingUserId = $user->id;
+            $this->editName = $user->name;
+            $this->editPhone = $user->phone;
+            $this->editType = $user->user_type;
+        }
+    }
+
+    public function updateUser()
+    {
+        $user = User::find($this->editingUserId);
+        if ($user) {
+            $user->name = $this->editName;
+            $user->phone = $this->editPhone;
+            $user->user_type = $this->editType;
+            $user->save();
+
+            $this->editingUserId = null;
+        }
+    }
+
+    public function cancelEdit()
+    {
+        $this->editingUserId = null;
+    }
+
+    public function render()
+    {
+        $query = User::query();
+
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('phone', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        if ($this->userType !== '') {
+            $query->where('user_type', $this->userType);
+        }
+
+        if ($this->bannedStatus !== '') {
+            $query->where('is_banned', $this->bannedStatus);
+        }
+
+        $users = $query->orderBy('id', 'desc')->paginate(10);
+        return view('livewire.users', compact('users'));
+    }
+}
