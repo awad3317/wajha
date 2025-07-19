@@ -1,4 +1,4 @@
-<div>
+<div dir="rtl">
 
     <style>
         .form-switch {
@@ -6,7 +6,7 @@
             display: inline-block;
             width: 2.5rem;
             height: 1.4rem;
-            margin-left: 0.5rem;
+            margin-right: 0.5rem; 
         }
 
         .form-switch input {
@@ -19,7 +19,7 @@
             content: "";
             position: absolute;
             top: 0;
-            left: 0;
+            right: 0; 
             width: 2.5rem;
             height: 1.4rem;
             background-color: #adb5bd;
@@ -31,7 +31,7 @@
             content: "";
             position: absolute;
             top: 0.1rem;
-            left: 0.1rem;
+            right: 0.1rem; 
             width: 1.2rem;
             height: 1.2rem;
             background-color: white;
@@ -40,25 +40,58 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
-        .form-switch input:checked+label::before {
-            background-color: #0d6efd;
-        }
-
         .form-switch input:checked+label::after {
-            transform: translateX(1.1rem);
+            transform: translateX(-1.1rem); 
         }
 
         .form-switch label {
             position: absolute;
             top: 0;
-            left: 0;
+            right: 0; 
             width: 2.5rem;
             height: 1.4rem;
             cursor: pointer;
         }
 
         .form-check-label-text {
-            margin-right: 0.5rem;
+            margin-left: 0.5rem; 
+        }
+
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .table {
+            direction: rtl;
+        }
+        
+        .table th, .table td {
+            text-align: right;
+        }
+        
+        .input-group-append {
+            margin-right: -1px;
+            margin-left: 0;
+        }
+        
+        .input-group-text {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+        
+        .form-control {
+            text-align: right;
+        }
+        
+        .card-footer .pagination {
+            justify-content: flex-start;
+        }
+        
+        .d-flex {
+            flex-direction: row-reverse;
         }
     </style>
 
@@ -149,20 +182,20 @@
                                             <select class="form-control" wire:model.defer="editType">
                                                 <option value="admin">مدير</option>
                                                 <option value="owner">صاحب منشأة</option>
-                                                <option value="user">مستخدم عادي</option>
+                                                <option value="user">مستخدم</option>
                                             </select>
                                         @else
                                             @switch($user->user_type)
                                                 @case('admin')
-                                                    <span class="badge bg-danger">مدير</span>
+                                                    <span class="badge-red">مدير</span>
                                                 @break
 
                                                 @case('owner')
-                                                    <span class="badge bg-warning text-dark">صاحب منشأة</span>
+                                                    <span class="badge-yellow">صاحب منشأة</span>
                                                 @break
 
                                                 @default
-                                                    <span class="badge bg-success">مستخدم عادي</span>
+                                                    <span class="badge-green">مستخدم</span>
                                             @endswitch
                                         @endif
                                     </td>
