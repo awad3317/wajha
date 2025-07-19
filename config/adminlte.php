@@ -313,9 +313,10 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'المنشئات',
+            'url' => '/establishments',
+            'icon' => 'fas fa-building',
+
         ],
         [
             'text' => 'multilevel',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EstablishmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,5 @@ Route::post('/github/deploy', function (Request $request){
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('establishments', [EstablishmentController::class, 'index']);

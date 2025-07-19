@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Establishment;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Establishment;
 
-class UserController extends Controller
+class EstablishmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
-        return view('users.index', compact('users'));
+         $establishments = Establishment::latest()->paginate(10);
+        return view('establishments.index',compact('establishments'));
     }
 
     /**
@@ -46,8 +45,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        //
     }
 
     /**
@@ -65,5 +63,4 @@ class UserController extends Controller
     {
         //
     }
-  
 }

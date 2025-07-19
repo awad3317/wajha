@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Establishment;
+use App\Models\EstablishmentType;
+use Livewire\Component;
+
+class Establishments extends Component
+{
+    public $search = '';
+    public $selectedType = '';
+    public $selectedStatus = '';
+
+    public function getEstablishmentsProperty()
+    {
+        return Establishment::query()
+            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->when($this->selectedType, fn($q) => $q->where('type_id', $this->selectedType))
+            ->when($this->selectedStatus !== '', fn($q) => $q->where('is_verified', $this->selectedStatus))
+            ->with(['type', 'region'])
+            ->get();
+    }
+
+    public function render()
+    {
+        $establishments = $this->getEstablishmentsProperty();
+        $types = EstablishmentType::all();
+        $statuses = [
+            1 => 'موثقة',
+            0 => 'غير موثقة',
+        ];
+
+        return view('livewire.establishments', compact('establishments', 'types', 'statuses'));
+    }
+}
