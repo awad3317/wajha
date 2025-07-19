@@ -200,9 +200,9 @@
                                         @endif
                                     </td>
 
-                                    <td>
-                                        <div class="form-check d-flex align-items-center">
-                                            <span class="form-check-label-text">
+                                    <td style="vertical-align: middle; text-align: end;">
+                                        <div class="form-check d-flex align-items-center justify-content-end">
+                                            <span class="form-check-label-text me-2">
                                                 {{ $user->is_banned ? 'محظور' : 'نشط' }}
                                             </span>
                                             <div class="form-switch">
