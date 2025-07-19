@@ -1,5 +1,7 @@
 <?php
 
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Messaging\CloudMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BankController;
@@ -29,7 +31,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum','check.banned'])->group(function () {
+Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::get('/bank', [BankController::class, 'index']);
     Route::apiResource('/acount', OwnerAccountController::class)->except(['show']);
@@ -44,6 +46,7 @@ Route::middleware(['auth:sanctum','check.banned'])->group(function () {
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/notifications',[NotificationController::class,'index']);
+    Route::post('/DeviceToken',[UserController::class,'updateDeviceToken']);
     
     
 
@@ -81,4 +84,14 @@ Route::get('/region',[RegionController::class,'index']);
 
 Route::get('/advertisement', [AdvertisementController::class,'index']);
 
-
+Route::get('/test',function(){
+    $credentialsPath = config('firebase.projects.app.credentials') ?? env('FIREBASE_CREDENTIALS');
+            
+            if (empty($credentialsPath) || !file_exists($credentialsPath)) {
+                return 'no file';
+                // throw new \RuntimeException('Firebase credentials file not found at: ' . $credentialsPath);
+            }
+            return 'yes file';
+            // $factory = (new Factory)->withServiceAccount($credentialsPath);
+            // $this->messaging = $factory->createMessaging();
+});
