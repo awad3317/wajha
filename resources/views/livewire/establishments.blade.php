@@ -51,7 +51,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
                 <div class="card shadow-sm rounded-lg w-100 text-right">
                     <div class="position-relative" style="height: 180px; overflow: hidden;">
-                        <img src=' url/{{$establishment->primary_image}}' class="w-100 h-100"
+                        <img src="{{ url($establishment->primary_image) }}" class="w-100 h-100"
                             style="object-fit: cover;" alt="{{ $establishment->name }}">
 
                         <span
