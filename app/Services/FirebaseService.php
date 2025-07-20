@@ -30,8 +30,8 @@ class FirebaseService
             }
 
             $factory = (new Factory)
-                ->withServiceAccount($credentialsPath)
-                ->withDatabaseUri(config('firebase.projects.app.database_url'));
+                ->withServiceAccount($credentialsPath);
+                // ->withDatabaseUri(config('firebase.projects.app.database_url'));
 
             $this->messaging = $factory->createMessaging();
         }
