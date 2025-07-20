@@ -28,10 +28,10 @@ class Establishment extends Model
 
     public function getPrimaryImageAttribute($value)
     {
-        if (request()->is('api/*')) {
+        // if (request()->is('api/*')) {
             return 'storage/'.$value;
-        }
-        return $value;
+        // }
+        // return $value;
     }
 
     // Relationship with owner (User)
