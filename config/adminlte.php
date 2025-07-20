@@ -158,7 +158,7 @@ return [
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
-    
+
 
     /*
     |--------------------------------------------------------------------------
@@ -300,7 +300,7 @@ return [
     */
 
     'menu' => [
-       
+
         // Sidebar items:
 
         [
@@ -318,6 +318,17 @@ return [
             'url' => '/establishments',
             'icon' => 'fas fa-building',
 
+        ],
+        [
+            'text' => 'المناطق',
+            'url' => '/region',
+            'icon' => 'fas fa-map-marker-alt',
+
+        ],
+        [
+            'text' => 'البنوك',
+            'url' => '/bank',
+            'icon' => 'fas fa-university',
         ],
         [
             'text' => 'multilevel',

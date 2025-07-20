@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\BankController;
+use App\Http\Controllers\BanksController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\RegionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -32,3 +35,6 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('establishments', [EstablishmentController::class, 'index']);
+
+Route::get('region', [RegionController::class, 'index']);
+Route::get('bank', [BanksController::class, 'index']);
