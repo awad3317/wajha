@@ -21,10 +21,7 @@ class bank extends Model
 
     public function getIconAttribute($value)
     {
-        if (request()->is('api/*')) {
-            return 'storage/'.$value;
-        }
-        return $value;
+        return 'storage/'.$value;
     }
 
     /**
