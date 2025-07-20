@@ -3,9 +3,9 @@
 @section('title', 'وجهة | المناطق')
 
 @section('content_header')
-    {{-- <div dir="rtl" style="text-align: right; margin-right: 40px;">
-        <h1>المناطق</h1>
-    </div> --}}
+    <div dir="rtl" style="text-align: right; margin-right: 40px;">
+        <h1>إدارة المناطق</h1>
+    </div>
 @stop
 
 @section('css')

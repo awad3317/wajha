@@ -1,6 +1,4 @@
 <div class="container py-4">
-    <h3 class="mb-4 text-right">إدارة البنوك</h3>
-
     @if (session()->has('success'))
         <div class="alert alert-success text-right">{{ session('success') }}</div>
     @endif
