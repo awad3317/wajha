@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdvertisementsController;
+use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\BanksController;
 use App\Http\Controllers\EstablishmentController;
@@ -38,3 +40,4 @@ Route::get('establishments', [EstablishmentController::class, 'index']);
 
 Route::get('region', [RegionController::class, 'index']);
 Route::get('bank', [BanksController::class, 'index']);
+Route::get('advertisement', [AdvertisementsController::class, 'index']);

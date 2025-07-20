@@ -330,6 +330,11 @@ return [
             'url' => '/bank',
             'icon' => 'fas fa-university',
         ],
+           [
+            'text' => 'الاشعارات',
+            'url' => '/advertisement',
+            'icon' => 'fas fa-bell',
+        ],
         [
             'text' => 'multilevel',
             'icon' => 'fas fa-fw fa-share',
