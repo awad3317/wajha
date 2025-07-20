@@ -21,27 +21,44 @@ class FirebaseService
         if (!$this->messaging) {
             $credentialsPath = config('firebase.projects.app.credentials') ?? env('FIREBASE_CREDENTIALS');
             
-            if (empty($credentialsPath) || !file_exists($credentialsPath)) {
-                throw new \RuntimeException('Firebase credentials file not found at: ' . $credentialsPath);
+            if (empty($credentialsPath)) {
+                throw new \RuntimeException('مسار ملف اعتماد Firebase غير محدد');
             }
 
-            $factory = (new Factory)->withServiceAccount($credentialsPath);
+            if (!file_exists($credentialsPath)) {
+                throw new \RuntimeException('ملف اعتماد Firebase غير موجود في: ' . $credentialsPath);
+            }
+
+            $factory = (new Factory)
+                ->withServiceAccount($credentialsPath)
+                ->withDatabaseUri(config('firebase.projects.app.database_url'));
+
             $this->messaging = $factory->createMessaging();
+        }
+
+        // التحقق من صحة device token
+        if (empty($deviceToken) || !is_string($deviceToken)) {
+            throw new \InvalidArgumentException('Device token غير صالح');
         }
 
         $message = CloudMessage::withTarget('token', $deviceToken)
             ->withNotification(Notification::create($title, $body))
             ->withData($data);
 
-        $this->messaging->send($message);
-        return true;
+        return $this->messaging->send($message);
         
-    } catch (\Exception $e) {
-        \Log::error('FCM Error: ' . $e->getMessage(), [
+    } catch (\Kreait\Firebase\Exception\MessagingException $e) {
+        \Log::error('FCM Messaging Error: ' . $e->getMessage(), [
             'device_token' => $deviceToken,
-            'error_details' => $e->getTraceAsString()
+            'error' => $e->errors()
         ]);
-        return false;
+        throw $e;
+    } catch (\Exception $e) {
+        \Log::error('General FCM Error: ' . $e->getMessage(), [
+            'device_token' => $deviceToken,
+            'trace' => $e->getTraceAsString()
+        ]);
+        throw $e;
     }
 }
 }
