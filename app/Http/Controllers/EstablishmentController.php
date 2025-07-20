@@ -8,11 +8,20 @@ use App\Models\Establishment;
 class EstablishmentController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         $establishments = Establishment::latest()->paginate(10);
+        $establishments = Establishment::latest()->paginate(10);
         return view('establishments.index',compact('establishments'));
     }
 
