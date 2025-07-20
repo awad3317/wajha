@@ -3,7 +3,9 @@
 @section('title', 'وجهة | المنشئات')
 
 @section('content_header')
-    <h1>المنشئات</h1>
+    <div dir="rtl" style="text-align: right; margin-right: 40px;">
+        <h1>إدارة المنشئات</h1>
+    </div>
 @stop
 
 @section('css')
