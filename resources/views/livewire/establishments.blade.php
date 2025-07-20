@@ -55,7 +55,7 @@
                             style="object-fit: cover;" alt="{{ $establishment->name }}">
 
                         <span
-                            class="badge {{ $establishment->is_verified ? 'bg-success' : 'bg-secondary' }} position-absolute"
+                            class="{{ $establishment->is_verified ? 'badge-green' : 'badge-red' }} position-absolute"
                             style="top: 10px; left: 10px; font-size: 0.9rem;">
                             {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
                         </span>
