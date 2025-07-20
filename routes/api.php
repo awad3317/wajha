@@ -1,7 +1,6 @@
 <?php
 
-use Kreait\Firebase\Factory;
-use Kreait\Firebase\Messaging\CloudMessage;
+use App\Services\FirebaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BankController;
@@ -84,14 +83,27 @@ Route::get('/region',[RegionController::class,'index']);
 
 Route::get('/advertisement', [AdvertisementController::class,'index']);
 
-Route::get('/test',function(){
-    $credentialsPath = config('firebase.projects.app.credentials') ?? env('FIREBASE_CREDENTIALS');
-            
-            if (empty($credentialsPath) || !file_exists($credentialsPath)) {
-                return 'no file';
-                // throw new \RuntimeException('Firebase credentials file not found at: ' . $credentialsPath);
-            }
-            return 'yes file';
-            // $factory = (new Factory)->withServiceAccount($credentialsPath);
-            // $this->messaging = $factory->createMessaging();
+Route::get('/test',function(Request $request){
+   $firebaseService = new FirebaseService();
+        
+        // بيانات الاختبار
+        $deviceToken = $request->input('device_token', 'YOUR_TEST_DEVICE_TOKEN');
+        $title = "اختبار إشعار";
+        $body = "هذا إشعار تجريبي من Laravel !";
+        // $imageUrl = "https://example.com/logo.png"; // رابط الشعار الذي تريد إرساله
+        
+        $data = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
+        if(!$deviceToken){
+            return response()->json('يجب ارسال deviceToken');
+        }
+
+        $result = $firebaseService->sendNotification($deviceToken, $title, $body, $data);
+
+        return response()->json([
+            'success' => $result,
+            'message' => $result ? 'تم إرسال الإشعار بنجاح!' : 'فشل إرسال الإشعار.',
+        ]);
 });
