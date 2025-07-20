@@ -100,10 +100,19 @@ Route::get('/test',function(Request $request){
             return response()->json('يجب ارسال deviceToken');
         }
 
+        try {
         $result = $firebaseService->sendNotification($deviceToken, $title, $body, $data);
-
+        
         return response()->json([
             'success' => $result,
-            'message' => $result ? 'تم إرسال الإشعار بنجاح!' : 'فشل إرسال الإشعار.',
+            'message' => $result ? 'تم إرسال الإشعار بنجاح!' : 'فشل إرسال الإشعار (بدون تفاصيل خطأ).',
         ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'فشل إرسال الإشعار.',
+            'error' => $e->getMessage(), // رسالة الخطأ التفصيلية
+            'details' => $e->getTraceAsString(), // تفاصيل إضافية (اختياري)
+        ], 500); // 500 Internal Server Error
+    }
 });
