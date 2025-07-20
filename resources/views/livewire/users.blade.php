@@ -1,12 +1,44 @@
 <div dir="rtl">
 
+    {{-- @if ($message)
+        <div class="message-center"
+            style="position: fixed;left: 50%;transform: translate(-50%, -50%);
+        z-index: 9999;padding: 20px;border-radius: 8px;text-align: center;
+        animation: fadeInOut 12s forwards;
+        background: {{ $messageType == 'success' ? '#4CAF50' : '#F44336' }};
+        color: white;">
+            {{ $message }}
+        </div>
+    @endif
+
+    <style>
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style> --}}
+
     <style>
         .form-switch {
             position: relative;
             display: inline-block;
             width: 2.5rem;
             height: 1.4rem;
-            margin-right: 0.5rem; 
+            margin-right: 0.5rem;
         }
 
         .form-switch input {
@@ -19,7 +51,7 @@
             content: "";
             position: absolute;
             top: 0;
-            right: 0; 
+            right: 0;
             width: 2.5rem;
             height: 1.4rem;
             background-color: #adb5bd;
@@ -31,65 +63,66 @@
             content: "";
             position: absolute;
             top: 0.1rem;
-            right: 0.1rem; 
+            right: 0.1rem;
             width: 1.2rem;
             height: 1.2rem;
             background-color: white;
             border-radius: 50%;
-            transition: transform 0.3s;
+            transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
         .form-switch input:checked+label::after {
-            transform: translateX(-1.1rem); 
+            transform: translateX(-1.1rem);
         }
 
-        .form-switch label {
-            position: absolute;
-            top: 0;
-            right: 0; 
-            width: 2.5rem;
-            height: 1.4rem;
-            cursor: pointer;
+        .switch-active label::before {
+            background-color: #007bff;
+        }
+
+        .switch-banned label::before {
+            background-color: #dc3545;
+
         }
 
         .form-check-label-text {
-            margin-left: 0.5rem; 
+            margin-left: 0.5rem;
         }
 
-        
+
         .text-right {
             text-align: right;
         }
-        
+
         .table {
             direction: rtl;
         }
-        
-        .table th, .table td {
+
+        .table th,
+        .table td {
             text-align: right;
         }
-        
+
         .input-group-append {
             margin-right: -1px;
             margin-left: 0;
         }
-        
+
         .input-group-text {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
             border-top-left-radius: 0.25rem;
             border-bottom-left-radius: 0.25rem;
         }
-        
+
         .form-control {
             text-align: right;
         }
-        
+
         .card-footer .pagination {
             justify-content: flex-start;
         }
-        
+
         .d-flex {
             flex-direction: row-reverse;
         }
@@ -102,8 +135,8 @@
                 <div class="m-1 row">
                     <div class="col-md-4 mb-2">
                         <div class="input-group">
-                            <input wire:model.debounce.300ms.live="search" type="text" class="form-control text-right"
-                                placeholder="ابحث بالاسم أو الجوال">
+                            <input wire:model.debounce.300ms.live="search" type="text"
+                                class="form-control text-right" placeholder="ابحث بالاسم أو الجوال">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="fas fa-search"></i>
@@ -162,19 +195,15 @@
                                     <td>{{ $loop->iteration }}</td>
 
                                     <td>
-                                        @if ($editingUserId === $user->id)
-                                            <input type="text" class="form-control" wire:model.defer="editName">
-                                        @else
-                                            {{ $user->name }}
-                                        @endif
+
+                                        {{ $user->name }}
+
                                     </td>
 
                                     <td>
-                                        @if ($editingUserId === $user->id)
-                                            <input type="text" class="form-control" wire:model.defer="editPhone">
-                                        @else
-                                            {{ $user->phone ?? 'غير محدد' }}
-                                        @endif
+
+                                        {{ $user->phone ?? 'غير محدد' }}
+
                                     </td>
 
                                     <td>
@@ -205,7 +234,8 @@
                                             <span class="form-check-label-text me-2">
                                                 {{ $user->is_banned ? 'محظور' : 'نشط' }}
                                             </span>
-                                            <div class="form-switch">
+                                            <div
+                                                class="form-switch {{ $user->is_banned ? 'switch-banned' : 'switch-active' }}">
                                                 <input type="checkbox" id="banSwitch{{ $user->id }}"
                                                     wire:click="toggleBan({{ $user->id }})"
                                                     @if (!$user->is_banned) checked @endif>
@@ -213,6 +243,7 @@
                                             </div>
                                         </div>
                                     </td>
+
 
 
                                     <td>
@@ -248,4 +279,7 @@
             </div>
         </div>
     </div>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
 </div>

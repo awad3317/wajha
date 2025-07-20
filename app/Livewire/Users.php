@@ -16,14 +16,19 @@ class Users extends Component
     public $bannedStatus = '';
     protected $queryString = ['search', 'userType', 'bannedStatus'];
     public function toggleBan($userId)
+
     {
         $user = User::find($userId);
         if ($user) {
             $user->is_banned = !$user->is_banned;
             $user->save();
+
+            $this->dispatch('show-toast', [
+                'type' => 'success',
+                'message' => $user->is_banned ? 'تم حظر المستخدم بنجاح' : 'تم فك حظر المستخدم بنجاح'
+            ]);
         }
     }
-
     public function updating($field)
     {
         $this->resetPage();
@@ -36,22 +41,25 @@ class Users extends Component
         $user = User::find($userId);
         if ($user) {
             $this->editingUserId = $user->id;
-            $this->editName = $user->name;
-            $this->editPhone = $user->phone;
             $this->editType = $user->user_type;
         }
+         
+        
     }
 
     public function updateUser()
     {
         $user = User::find($this->editingUserId);
         if ($user) {
-            $user->name = $this->editName;
-            $user->phone = $this->editPhone;
+    
             $user->user_type = $this->editType;
             $user->save();
 
             $this->editingUserId = null;
+                $this->dispatch('show-toast', [
+                'type' => 'success',
+                'message' => 'تم تعديل المستخدم بنجاح'
+            ]);
         }
     }
 
@@ -62,6 +70,7 @@ class Users extends Component
 
     public function render()
     {
+
         $query = User::query();
 
         if ($this->search) {

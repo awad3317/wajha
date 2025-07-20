@@ -56,7 +56,11 @@ class Banks extends Component
 
         $this->resetForm();
         $this->loadBanks();
-        session()->flash('success', 'تمت إضافة البنك بنجاح');
+         $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'تمت إضافة البنك بنجاح'
+        ]);
+        
     }
 
     public function edit($id)
@@ -87,14 +91,19 @@ class Banks extends Component
 
         $this->resetForm();
         $this->loadBanks();
-        session()->flash('success', 'تم التعديل بنجاح');
-    }
+   $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'تمت تعديل البنك بنجاح'
+        ]);    }
 
     public function deleteBank()
     {
         Bank::findOrFail($this->deleteId)->delete();
         $this->loadBanks();
-        session()->flash('success', 'تم حذف البنك بنجاح');
+           $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'تمت حذف البنك بنجاح'
+        ]);
         $this->resetDelete();
     }
     public function confirmDelete($id)
