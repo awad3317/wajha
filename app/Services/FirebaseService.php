@@ -31,12 +31,10 @@ class FirebaseService
 
             $factory = (new Factory)
                 ->withServiceAccount($credentialsPath);
-                // ->withDatabaseUri(config('firebase.projects.app.database_url'));
 
             $this->messaging = $factory->createMessaging();
         }
 
-        // التحقق من صحة device token
         if (empty($deviceToken) || !is_string($deviceToken)) {
             throw new \InvalidArgumentException('Device token غير صالح');
         }

@@ -111,8 +111,7 @@ Route::get('/test',function(Request $request){
         return response()->json([
             'success' => false,
             'message' => 'فشل إرسال الإشعار.',
-            'error' => $e->getMessage(), // رسالة الخطأ التفصيلية
-            'details' => $e->getTraceAsString(), // تفاصيل إضافية (اختياري)
-        ], 500); // 500 Internal Server Error
+            'error' => $e->getMessage(), 
+        ], 500); 
     }
 });

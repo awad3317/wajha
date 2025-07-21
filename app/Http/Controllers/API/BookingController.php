@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
+use App\Services\FirebaseService;
 use App\Http\Controllers\Controller;
 use App\Repositories\bookingRepository;
 use App\Notifications\NewBookingNotification;
@@ -16,7 +17,7 @@ class BookingController extends Controller
      /**
      * Create a new class instance.
      */
-    public function __construct(private bookingRepository $bookingRepository)
+    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService)
     {
         //
     }
@@ -48,9 +49,19 @@ class BookingController extends Controller
             $establishment = $booking->establishment;
             $owner = $establishment->owner;
 
-            // send notification to the owner
+            // send database notification to the owner
             $owner->notify(new NewBookingNotification($booking));
-            
+
+            // send to FCM notification to the owner
+            $title = "حجز جديد في منشأتك";
+            $body = "تم حجز {$establishment->name} من قبل عميل جديد. تاريخ الحجز: " . $booking->booking_date;
+            $data = [
+                'type' => 'new_booking',
+                'booking_id' => $booking->id,
+                'establishment_id' => $establishment->id,
+                'user_id' => $user_id,
+            ];
+            $this->firebaseService->sendNotification($owner->device_token, $title, $body, $data);
             return ApiResponseClass::sendResponse($booking, 'Booking saving successfully.');
         } catch (Exception $e) {
             return ApiResponseClass::sendError('Error saving booking: ' . $e->getMessage());
