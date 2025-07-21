@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Advertisement;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Services\ImageService;
 
 class Advertisements extends Component
 {
@@ -86,10 +87,10 @@ class Advertisements extends Component
     public function store()
     {
         $this->validate();
-
+        $imageService = new ImageService();
         $imageName = null;
         if ($this->image) {
-            $imageName = $this->image->store('advertisements', 'public');
+            $imageName = $imageService->saveImage($this->image, 'advertisement-images');
         }
 
         Advertisement::create([
@@ -127,14 +128,15 @@ class Advertisements extends Component
         $this->validate();
 
         $advertisement = Advertisement::findOrFail($this->advertisement_id);
+        $imageService = new ImageService();
 
         $imageName = $advertisement->image;
         if ($this->image) {
-            // حذف الصورة القديمة إذا تريد (اختياري)
-            // Storage::disk('public')->delete($advertisement->image);
-
-            $imageName = $this->image->store('advertisements', 'public');
-        }
+            if ($advertisement->image) {
+                $imageService->deleteImage($advertisement->image);
+            }
+        $imageName = $imageService->saveImage($this->image, 'advertisement-images');
+    }
 
         $advertisement->update([
             'title' => $this->title,
@@ -163,8 +165,10 @@ class Advertisements extends Component
     public function deleteAdvertisement()
     {
         $ad = Advertisement::findOrFail($this->deleteId);
-        // حذف الصورة من التخزين إذا تريد
-        // Storage::disk('public')->delete($ad->image);
+        $imageService = new ImageService();
+        if ($ad->image) {
+            $imageService->deleteImage($ad->image);
+        }
         $ad->delete();
 
         $this->loadAdvertisements();
