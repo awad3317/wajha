@@ -275,7 +275,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{ $users->links() }}
+                {{ $users->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>
