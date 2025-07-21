@@ -16,6 +16,11 @@
 </head>
 
 <body class="login-page" >
+    @error('phone')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
     <div class="login-box">
         <div class="login-logo">
             <a href="{{route('home')}}">

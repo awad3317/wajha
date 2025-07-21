@@ -55,6 +55,9 @@ class LoginController extends Controller
         $request->validate([
             'phone' => 'required|string',
             'password' => 'required|string',
+        ],[
+            'phone.required' => 'حقل الهاتف مطلوب',
+            'password.required' => 'حقل كلمة المرور مطلوب',
         ]);
     }
 
@@ -105,4 +108,10 @@ class LoginController extends Controller
     $this->incrementLoginAttempts($request);
     return $this->sendFailedLoginResponse($request);
 }
+protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'phone' => __('بيانات الاعتماد هذه غير متطابقة مع سجلاتنا.'),
+        ]);
+    }
 }
