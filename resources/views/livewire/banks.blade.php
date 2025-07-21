@@ -75,7 +75,7 @@
                             <td>{{ $bank->id }}</td>
                             <td>
                                 @if ($bank->icon)
-                                <img src="{{ url($bank->icon) }}" alt="Bank Icon" width="100" height="100">
+                                <img src="{{ url($bank->icon) }}" alt="Bank Icon" width="60" height="60">
                                 @else
                                     —
                                 @endif
