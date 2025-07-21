@@ -5,9 +5,11 @@ namespace App\Livewire;
 use App\Models\Establishment;
 use App\Models\EstablishmentType;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Establishments extends Component
 {
+    use WithPagination;
     public $search = '';
     public $selectedType = '';
     public $selectedStatus = '';
@@ -19,7 +21,7 @@ class Establishments extends Component
             ->when($this->selectedType, fn($q) => $q->where('type_id', $this->selectedType))
             ->when($this->selectedStatus !== '', fn($q) => $q->where('is_verified', $this->selectedStatus))
             ->with(['type', 'region'])
-            ->get();
+            ->paginate(10);
     }
 
     public function render()

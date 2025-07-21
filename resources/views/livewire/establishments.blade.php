@@ -86,4 +86,9 @@
             </div>
         @endforelse
     </div>
+    <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-center">
+        {{ $establishments->links('vendor.pagination.bootstrap-4') }}
+        </div>
+    </div>
 </div>
