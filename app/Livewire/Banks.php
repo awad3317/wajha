@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Bank;
 use Livewire\WithFileUploads;
+use App\Services\ImageService;
 
 class Banks extends Component
 {
@@ -41,14 +42,13 @@ class Banks extends Component
     {
         $this->validate([
             'name' => 'required|string|max:100|unique:banks,name',
-            'iconFile' => 'nullable|image|mimes:svg,png,jpg,jpeg|max:2048',
+            'iconFile' => 'required|image|max:2048',
         ]);
-
+        $imageService = new ImageService();
         $iconPath = null;
         if ($this->iconFile) {
-            $iconPath = $this->iconFile->store('bank_icons', 'public');
+            $iconPath = $imageService->saveImage($this->iconFile, 'bank_icons');
         }
-
         Bank::create([
             'name' => $this->name,
             'icon' => $iconPath,
@@ -77,12 +77,15 @@ class Banks extends Component
             'name' => 'required|string|max:100|unique:banks,name,' . $this->bank_id,
             'iconFile' => 'nullable|image|mimes:svg,png,jpg,jpeg|max:2048',
         ]);
-
+        $imageService = new ImageService();
         $bank = Bank::findOrFail($this->bank_id);
 
         if ($this->iconFile) {
-            $iconPath = $this->iconFile->store('bank_icons', 'public');
-            $bank->icon = $iconPath;
+            if ($bank->icon) {
+                $imageService->deleteImage($bank->icon);
+            }
+
+            $bank->icon = $imageService->saveImage($this->iconFile, 'bank_icons');
         }
 
         $bank->name = $this->name;
@@ -98,7 +101,13 @@ class Banks extends Component
 
     public function deleteBank()
     {
-        Bank::findOrFail($this->deleteId)->delete();
+        $imageService = new ImageService();
+        
+        $bank = Bank::findOrFail($this->deleteId);
+        if ($bank->icon) {
+            $imageService->deleteImage($bank->icon);
+        }
+        $bank->delete();
         $this->loadBanks();
         $this->dispatch('show-toast', [
             'type' => 'success',
