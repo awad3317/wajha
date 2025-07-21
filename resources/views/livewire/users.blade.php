@@ -260,10 +260,11 @@
 
                                             </div>
                                         @else
-                                            <button class="btn btn-warning btn-sm"
-                                                wire:click="editUser({{ $user->id }})" title="تعديل">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                        <a href="#" class=""
+                                            wire:click.prevent="editUser({{ $user->id }})" 
+                                            title="تغيير نوع المستخدم">
+                                            تغيير نوع المستخدم
+                                        </a>
                                         @endif
                                     </td>
                                 </tr>
