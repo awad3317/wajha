@@ -16,11 +16,7 @@
 </head>
 
 <body class="login-page" >
-    @error('phone')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-    @enderror
+   
     <div class="login-box">
         <div class="login-logo">
             <a href="{{route('home')}}">
@@ -31,6 +27,11 @@
         <div class="card card-outline card-primary">
             <div class="card-header ">
                 <h3 class="card-title float-none text-center">تسجيل الدخول الى وجهة</h3>
+                 @error('phone')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
             </div>
             <div class="card-body login-card-body ">
                 <form action="{{route('login')}}" method="post">
