@@ -331,7 +331,7 @@ return [
             'icon' => 'fas fa-university',
         ],
            [
-            'text' => 'الاشعارات',
+            'text' => 'الأعلانات',
             'url' => '/advertisement',
             'icon' => 'fas fa-bell',
         ],
