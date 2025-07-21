@@ -1,7 +1,7 @@
 <?php
 
-use App\Services\FirebaseService;
 use Illuminate\Http\Request;
+use App\Services\FirebaseService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\API\UserController;
@@ -19,6 +19,7 @@ use App\Http\Controllers\API\EstablishmentController;
 use App\Http\Controllers\API\pricePackageIconController;
 use App\Http\Controllers\API\EstablishmentRuleController;
 use App\Http\Controllers\API\EstablishmentTypeController;
+use App\Http\Controllers\API\EstablishmentImageController;
 use App\Http\Controllers\API\Auth\ForgetPasswordController;
 use App\Http\Controllers\API\EstablishmentFeatureController;
 use App\Http\Controllers\API\Dashboard\Owner\Dashboardcontroller;
@@ -46,9 +47,8 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/notifications',[NotificationController::class,'index']);
     Route::post('/DeviceToken',[UserController::class,'updateDeviceToken']);
+    Route::apiResource('/EstablishmentImage', EstablishmentImageController::class)->except(['index','show']);
     
-    
-
     //           Review Route        //
     Route::post('/review',[ReviewController::class,'upsertReview']);
 
