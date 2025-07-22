@@ -97,7 +97,7 @@ class EstablishmentController extends Controller
                 $establishment->pricePackages()->create([
                     'name' => $package['name'],
                     'description' => $package['description'] ?? null,
-                    'icon' => $package['icon'],
+                    'icon_id' => $package['icon_id'],
                     'price' => $package['price'],
                     'features' => !empty($package['features']) ? json_encode($package['features']) : null,
                 ]);
@@ -229,7 +229,7 @@ class EstablishmentController extends Controller
                     $packageData = [
                         'name' => $package['name'],
                         'description' => $package['description'] ?? null,
-                        'icon' => $package['icon'],
+                        'icon_id' => $package['icon_id'],
                         'price' => $package['price'],
                         'features' => !empty($package['features']) ? json_encode($package['features']) : null,
                     ];
