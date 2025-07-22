@@ -288,7 +288,7 @@ class EstablishmentController extends Controller
     {
         try {
             $user = auth('sanctum')->user();
-            $establishment = $this->EstablishmentRepository->getById($id);
+            $establishment = $this->EstablishmentRepository->find($id);
             if ($establishment->owner_id !== $user->id && $user->user_type !== 'admin') {
                 return ApiResponseClass::sendError('You are not authorized to delete this establishment', null, 403);
             }
