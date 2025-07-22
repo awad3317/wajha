@@ -4,57 +4,62 @@
             <div class="alert alert-success text-right">{{ session('success') }}</div>
         @endif
 
-        <div class="card mb-4">
+        <div class="card  mb-4">
             <div class="card-body">
-
-                <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
-                    <div class="row g-3">
-                        <div class="col-md-4 mb-2">
-                            <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-
-                                <input type="text" wire:model.defer="name" class="form-control text-right border-0"
-                                    placeholder="اسم المنطقة">
-                                <span class="input-group-text bg-white border-0"><i
-                                        class="fas fa-map-marker-alt"></i></span>
-                                @error('name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-2">
-                            <div class="input-group-xl shadow-sm  overflow-hidden">
-                                <select wire:model.defer="parent_id" class="form-control text-right border-0">
-                                    <option value="">بدون منطقة رئيسية</option>
-                                    @foreach ($parents as $parent)
-                                        <option value="{{ $parent->id }}">{{ $parent->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4  mb-2">
-                            <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-                                <input type="text" class="form-control border-0 text-right"
-                                    placeholder="...ابحث باسم المنطقه" wire:model.debounce.300ms.live="search">
-
-                                <div class="input-group-append">
-                                    <span class="input-group-text bg-white border-0">
-                                        <i class="fas fa-search text-secondary"></i>
-                                    </span>
+                @if (!$showForm && !$isEdit)
+                    <button wire:click="create" class="btn btn-primary ">إضافة منطقة</button>
+                @endif
+                @if ($showForm || $isEdit)
+                    <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
+                        <div class="row g-3">
+                            <div class="col-md-6 mb-2">
+                                <div class="input-group-xl shadow-sm  overflow-hidden">
+                                    <select wire:model.defer="parent_id" class="form-control text-right border-0">
+                                        <option value="">بدون منطقة رئيسية</option>
+                                        @foreach ($parents as $parent)
+                                            <option value="{{ $parent->id }}">{{ $parent->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="input-group input-group-xl shadow-sm  overflow-hidden">
+                                    <input type="text" wire:model.defer="name"
+                                        class="form-control text-right border-0" placeholder="اسم المنطقة">
+                                    <span class="input-group-text bg-white border-0"><i
+                                            class="fas fa-map-marker-alt"></i></span>
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-12 mb-2">
+                                <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
+                                    {{ $isEdit ? 'تحديث' : 'إضافة' }}
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-12 mb-2">
-                            <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
-                                {{ $isEdit ? 'تحديث' : 'إضافة' }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                @endif
             </div>
         </div>
 
         <div class="card shadow-sm">
+            <div class="col-md-12  my-2 ">
+                <div class="input-group input-group-xl shadow-sm  overflow-hidden">
+                    <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم المنطقه"
+                        wire:model.debounce.300ms.live="search">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-white border-0">
+                            <i class="fas fa-search text-secondary"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
             <div class="card-body table-responsive" dir="rtl">
                 <table class="table table-bordered table-hover text-center align-middle">
                     <thead class="table-light">

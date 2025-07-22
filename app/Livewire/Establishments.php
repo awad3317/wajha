@@ -23,6 +23,17 @@ class Establishments extends Component
             ->with(['type', 'region'])
             ->paginate(10);
     }
+    public function toggleVerification($id)
+    {
+        $establishment = Establishment::find($id);
+        if ($establishment) {
+            $establishment->is_verified = !$establishment->is_verified;
+            $establishment->save();
+
+            $establishment->refresh();
+        }
+    }
+
 
     public function render()
     {

@@ -14,6 +14,7 @@ class Regions extends Component
     public $deleteId = null;
     public $deleteName = null;
     public $search = '';
+    public $showForm = false;
 
     public function mount()
     {
@@ -60,6 +61,7 @@ class Regions extends Component
         $this->name = $region->name;
         $this->parent_id = $region->parent_id;
         $this->isEdit = true;
+        $this->showForm = true;
     }
 
     public function update()
@@ -100,6 +102,11 @@ class Regions extends Component
 
         $this->dispatch('close-delete-modal');
     }
+    public function create()
+    {
+        $this->resetForm();
+        $this->showForm = true;
+    }
 
 
     public function resetForm()
@@ -108,6 +115,7 @@ class Regions extends Component
         $this->parent_id = null;
         $this->region_id = null;
         $this->isEdit = false;
+        $this->showForm = false;
     }
 
     public function render()

@@ -1,9 +1,10 @@
 <div>
+
     <div class="row mb-4">
         <div class="col-md-12 mb-2">
             <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                <input type="text" class="form-control border-0 text-right"
-                    placeholder="...ابحث باسم المنشأة" wire:model.debounce.300ms.live="search">
+                <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم المنشأة"
+                    wire:model.debounce.300ms.live="search">
 
                 <div class="input-group-append">
                     <span class="input-group-text bg-white border-0">
@@ -17,7 +18,7 @@
             <div class="input-group shadow-sm rounded-pill overflow-hidden">
                 <select wire:model.live="selectedType" class="form-control text-right border-0">
                     <option value="">كل الأنواع</option>
-                    @foreach($types as $type)
+                    @foreach ($types as $type)
                         <option value="{{ $type->id }}">{{ $type->name }}</option>
                     @endforeach
                 </select>
@@ -54,11 +55,13 @@
                         <img src="{{ url($establishment->primary_image) }}" class="w-100 h-100"
                             style="object-fit: cover;" alt="{{ $establishment->name }}">
 
-                        <span
+                        <span wire:click="toggleVerification({{ $establishment->id }})"
                             class="{{ $establishment->is_verified ? 'badge-green' : 'badge-red' }} position-absolute"
-                            style="top: 10px; left: 10px; font-size: 0.9rem;">
+                            style="top: 10px; left: 10px; font-size: 0.9rem; cursor: pointer;">
                             {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
                         </span>
+
+
                     </div>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title mb-2 text-truncate">{{ $establishment->name }}</h5>
@@ -88,7 +91,7 @@
     </div>
     <div class="row mt-4">
         <div class="col-12 d-flex justify-content-center">
-        {{ $establishments->links('vendor.pagination.bootstrap-4') }}
+            {{ $establishments->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 </div>
