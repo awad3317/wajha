@@ -48,7 +48,7 @@ class EstablishmentController extends Controller
      */
     public function show(string $id)
     {
-        $establishment = $establishment=$this->EstablishmentRepository->getById($id);
+        $establishment = $establishment=$this->EstablishmentRepository->find($id);
         return view('establishments.show_info',compact('establishment'));
     }
 
