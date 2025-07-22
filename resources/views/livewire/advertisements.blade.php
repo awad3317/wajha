@@ -196,7 +196,7 @@
                 </div>
             </div>
             @forelse ($advertisements as $ad)
-                <div class="col-md-6 col-lg-4 my-2">
+                <div class="col-md-6 col-lg-4 my-2" wire:key="ad-{{ $ad->id }}">
                     <div class="card border-0 shadow rounded-3 h-100 overflow-hidden position-relative">
 
                         {{-- صورة الإعلان --}}
@@ -210,11 +210,13 @@
                             </div>
                         @endif
 
-                        {{-- الحالة في الزاوية --}}
-                        <span
-                            class="position-absolute top-0 end-0 m-2 badge {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}">
+                    
+                        <span wire:click="toggleVerification({{ $ad->id }})"
+                            class="position-absolute top-0 end-0 m-2 badge rounded-pill {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}"
+                            style="cursor: pointer; font-size: 0.85rem;">
                             {{ $ad->is_active ? 'مفعل' : 'غير مفعل' }}
                         </span>
+
 
                         <div class="card-body text-end d-flex flex-column">
 

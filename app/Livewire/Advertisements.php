@@ -17,7 +17,7 @@ class Advertisements extends Component
     public $deleteId = null;
     public $deleteTitle = null;
     public $search = '';
-  public $showForm =false;
+    public $showForm = false;
     public function mount()
     {
         $this->loadAdvertisements();
@@ -187,6 +187,17 @@ class Advertisements extends Component
         $this->deleteTitle = null;
         $this->dispatch('close-delete-modal');
     }
+    public function toggleVerification($id)
+    {
+        $ad = Advertisement::find($id);
+        if ($ad) {
+            $ad->is_active = !$ad->is_active;
+            $ad->save();
+
+            $this->advertisements = Advertisement::latest()->get();
+        }
+    }
+
 
     public function resetForm()
     {
