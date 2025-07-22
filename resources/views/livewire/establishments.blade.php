@@ -47,10 +47,11 @@
     </div>
 
     <!-- عرض المنشآت -->
-    <div class="row">
+    {{-- <div class="row">
         @forelse ($establishments as $establishment)
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                <div class="card shadow-sm rounded-lg w-100 text-right">
+            <div 
+                class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                <a href="{{ route('establishment.show', $establishment->id) }}" class="card shadow-sm rounded-lg w-100 text-right">
                     <div class="position-relative" style="height: 180px; overflow: hidden;">
                         <img src="{{ url($establishment->primary_image) }}" class="w-100 h-100"
                             style="object-fit: cover;" alt="{{ $establishment->name }}">
@@ -79,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         @empty
             <div class="col-12">
@@ -94,4 +95,58 @@
             {{ $establishments->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
-</div>
+</div> --}}
+    <div class="row">
+        @forelse ($establishments as $establishment)
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                <div class="card shadow-sm rounded-lg w-100 text-right position-relative">
+                    <a href="{{ route('establishment.show', $establishment->id) }}"
+                        class="text-decoration-none text-dark">
+                        <div style="height: 180px; overflow: hidden;">
+                            <img src="{{ url($establishment->primary_image) }}" class="w-100 h-100"
+                                style="object-fit: cover;" alt="{{ $establishment->name }}">
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-2 text-truncate">{{ $establishment->name }}</h5>
+
+                            <div class="row text-right">
+                                <div class="col-7 d-flex justify-content-end align-items-center gap-2">
+                                    <span class="mx-1">{{ $establishment->type->name ?? '-' }}</span>
+                                    <strong>:النوع</strong>
+                                    <i class="fas fa-building text-primary mx-1"></i>
+                                </div>
+                                <div class="col-5 d-flex justify-content-end align-items-center gap-2">
+                                    <span class="mx-1">{{ $establishment->region->name ?? '-' }}</span>
+                                    <strong>:المنطقة</strong>
+                                    <i class="fas fa-map-marker-alt text-danger mx-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    {{-- حالة التوثيق (خارج الرابط) --}}
+                    <span wire:click.prevent="toggleVerification({{ $establishment->id }})"
+                        class="{{ $establishment->is_verified ? 'badge-green' : 'badge-red' }} position-absolute"
+                        style="top: 10px; left: 10px; font-size: 0.9rem; cursor: pointer; z-index: 10;">
+                        {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
+                    </span>
+                </div>
+            </div>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-warning text-center shadow-sm rounded">
+                    لا توجد منشآت مطابقة لبحثك.
+                </div>
+            </div>
+        @endforelse
+    </div>
+
+    {{-- روابط التصفح --}}
+    @if ($establishments->hasPages())
+        <div class="row mt-4">
+            <div class="col-12 d-flex justify-content-center">
+                {{ $establishments->links('vendor.pagination.bootstrap-4') }}
+            </div>
+        </div>
+    @endif

@@ -23,4 +23,5 @@ class AdvertisementsController extends Controller
         return view('Advertisements.index',compact('regions'));
         
     }
+ 
 }

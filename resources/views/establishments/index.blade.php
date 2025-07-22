@@ -6,6 +6,7 @@
     <div dir="rtl" style="text-align: right; margin-right: 40px;">
         <h1>إدارة المنشئات</h1>
     </div>
+    
 @stop
 
 @section('css')
@@ -14,4 +15,5 @@
 
 @section('content')
 @livewire('establishments')
+
 @stop

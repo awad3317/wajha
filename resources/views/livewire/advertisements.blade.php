@@ -64,7 +64,7 @@
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
                 @if (!$showForm && !$isEdit)
-                    <button wire:click="create" class="btn btn-primary ">إضافة منطقة</button>
+                    <button wire:click="create" class="btn btn-primary w-100">إضافة الاعلان</button>
                 @endif
                 @if ($showForm || $isEdit)
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" enctype="multipart/form-data">
@@ -81,12 +81,12 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-12">
-                                <label for="image" class="form-label d-block text-end">
-                                    صورة الإعلان {{ $isEdit ? '(اختياري)' : '*' }}
+                            <div class="col-md-12" dir="rtl" style="text-align: right;">
+                                <label for="image" class="form-label d-block text-right">
+                                    <span class="text-danger">{{ $isEdit ? '(اختياري)' : '*' }}</span> صورة الإعلان
                                 </label>
 
-                                <div class="input-group mb-2">
+                                <div class="input-group mb-2 justify-content-start d-flex">
                                     <label class="input-group-text btn btn-outline-primary" style="cursor: pointer;">
                                         📤 اختر صورة
                                         <input type="file" id="image" wire:model="image" accept="image/*"
@@ -95,29 +95,27 @@
 
                                     {{-- عرض اسم الملف إن وُجد --}}
                                     @if ($image)
-                                        <span
-                                            class="form-control text-truncate">{{ $image->getClientOriginalName() }}</span>
+                                        <span class="form-control text-truncate ml-2" style="max-width: 60%;">
+                                            {{ $image->getClientOriginalName() }}
+                                        </span>
                                     @endif
                                 </div>
 
                                 @error('image')
-                                    <div class="text-danger text-end small">{{ $message }}</div>
+                                    <div class="text-danger small text-right">{{ $message }}</div>
                                 @enderror
 
                                 {{-- المعاينة --}}
                                 <div class="mt-3 d-flex justify-content-end">
                                     @if ($image)
-                                        <div>
-                                            <p class="mb-1 text-muted text-end" style="font-size: 0.9rem;">معاينة مؤقتة:
-                                            </p>
+                                        <div style="text-align: right;">
+                                            <p class="mb-1 text-muted" style="font-size: 0.9rem;">معاينة مؤقتة:</p>
                                             <img src="{{ $image->temporaryUrl() }}" class="rounded shadow-sm border"
                                                 style="max-height: 150px; max-width: 100%;">
                                         </div>
                                     @elseif ($imagePreview)
-                                        <div>
-                                            <p class="mb-1 text-muted text-end" style="font-size: 0.9rem;">الصورة
-                                                الحالية:
-                                            </p>
+                                        <div style="text-align: right;">
+                                            <p class="mb-1 text-muted" style="font-size: 0.9rem;">الصورة الحالية:</p>
                                             <img src="{{ asset('storage/' . $imagePreview) }}"
                                                 class="rounded shadow-sm border"
                                                 style="max-height: 150px; max-width: 100%;">
@@ -140,7 +138,11 @@
                             {{-- تواريخ البدء والانتهاء --}}
 
                             <div class="col-md-6 ">
-                                <label for="end_date" class="form-label text-right d-block">تاريخ الانتهاء</label>
+                                <label for="end_date" class="form-label text-right d-block">تاريخ الانتهاء
+                                    <span class="text-danger">*</span>
+
+                                </label>
+
                                 <input id="end_date" type="datetime-local" wire:model.defer="end_date"
                                     class="form-control @error('end_date') is-invalid @enderror"
                                     placeholder="تاريخ الانتهاء">
@@ -149,8 +151,9 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="start_date" class="form-label text-right d-block">تاريخ البدء <span
-                                        class="text-danger">*</span></label>
+                                <label for="start_date" class="form-label text-right d-block">تاريخ البدء
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input id="start_date" type="datetime-local" wire:model.defer="start_date"
                                     class="form-control @error('start_date') is-invalid @enderror"
                                     placeholder="تاريخ البدء">
@@ -210,7 +213,7 @@
                             </div>
                         @endif
 
-                    
+
                         <span wire:click="toggleVerification({{ $ad->id }})"
                             class="position-absolute top-0 end-0 m-2 badge rounded-pill {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}"
                             style="cursor: pointer; font-size: 0.85rem;">
