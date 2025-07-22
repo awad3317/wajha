@@ -247,9 +247,16 @@ class EstablishmentController extends Controller
             if (isset($fields['specifications'])) {
                 foreach ($fields['specifications'] as $specification) {
                     if (isset($specification['id'])) {
-                        $establishment->specifications()->where('id', $specification['id'])->update($specification);
+                        
+                        $establishment->specifications()->where('id', $specification['id'])->update([
+                            'name' => $specification['name'],
+                            'icon' => $specification['icon'],
+                        ]);
                     } else {
-                        $establishment->specifications()->create($specification);
+                        $establishment->specifications()->create([
+                            'name' => $specification['name'],
+                            'icon' => $specification['icon'],
+                        ]);
                     }
                 }
             }
