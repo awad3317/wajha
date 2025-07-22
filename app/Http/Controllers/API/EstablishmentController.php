@@ -97,7 +97,7 @@ class EstablishmentController extends Controller
                 $establishment->pricePackages()->create([
                     'name' => $package['name'],
                     'description' => $package['description'] ?? null,
-                    'icon' => $package['icon'],
+                    'icon_id' => $package['icon_id'],
                     'price' => $package['price'],
                     'features' => !empty($package['features']) ? json_encode($package['features']) : null,
                 ]);
@@ -229,7 +229,7 @@ class EstablishmentController extends Controller
                     $packageData = [
                         'name' => $package['name'],
                         'description' => $package['description'] ?? null,
-                        'icon' => $package['icon'],
+                        'icon_id' => $package['icon_id'],
                         'price' => $package['price'],
                         'features' => !empty($package['features']) ? json_encode($package['features']) : null,
                     ];
@@ -247,9 +247,16 @@ class EstablishmentController extends Controller
             if (isset($fields['specifications'])) {
                 foreach ($fields['specifications'] as $specification) {
                     if (isset($specification['id'])) {
-                        $establishment->specifications()->where('id', $specification['id'])->update($specification);
+                        
+                        $establishment->specifications()->where('id', $specification['id'])->update([
+                            'name' => $specification['name'],
+                            'icon' => $specification['icon'],
+                        ]);
                     } else {
-                        $establishment->specifications()->create($specification);
+                        $establishment->specifications()->create([
+                            'name' => $specification['name'],
+                            'icon' => $specification['icon'],
+                        ]);
                     }
                 }
             }
@@ -281,7 +288,7 @@ class EstablishmentController extends Controller
     {
         try {
             $user = auth('sanctum')->user();
-            $establishment = $this->EstablishmentRepository->getById($id);
+            $establishment = $this->EstablishmentRepository->find($id);
             if ($establishment->owner_id !== $user->id && $user->user_type !== 'admin') {
                 return ApiResponseClass::sendError('You are not authorized to delete this establishment', null, 403);
             }

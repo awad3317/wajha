@@ -17,7 +17,7 @@ class Advertisements extends Component
     public $deleteId = null;
     public $deleteTitle = null;
     public $search = '';
-
+    public $showForm = false;
     public function mount()
     {
         $this->loadAdvertisements();
@@ -49,6 +49,11 @@ class Advertisements extends Component
                 'message' => $ad->is_active ? 'تم تفعيل الإعلان بنجاح' : 'تم إلغاء تفعيل الإعلان بنجاح'
             ]);
         }
+    }
+    public function create()
+    {
+        $this->resetForm();
+        $this->showForm = true;
     }
 
     protected function rules()
@@ -121,6 +126,7 @@ class Advertisements extends Component
         $this->start_date = $advertisement->start_date->format('Y-m-d\TH:i');
         $this->end_date = $advertisement->end_date ? $advertisement->end_date->format('Y-m-d\TH:i') : null;
         $this->isEdit = true;
+        $this->showForm = true;
     }
 
     public function update()
@@ -135,8 +141,8 @@ class Advertisements extends Component
             if ($advertisement->image) {
                 $imageService->deleteImage($advertisement->image);
             }
-        $imageName = $imageService->saveImage($this->image, 'advertisement-images');
-    }
+            $imageName = $imageService->saveImage($this->image, 'advertisement-images');
+        }
 
         $advertisement->update([
             'title' => $this->title,
@@ -181,6 +187,17 @@ class Advertisements extends Component
         $this->deleteTitle = null;
         $this->dispatch('close-delete-modal');
     }
+    public function toggleVerification($id)
+    {
+        $ad = Advertisement::find($id);
+        if ($ad) {
+            $ad->is_active = !$ad->is_active;
+            $ad->save();
+
+            $this->advertisements = Advertisement::latest()->get();
+        }
+    }
+
 
     public function resetForm()
     {
@@ -193,6 +210,7 @@ class Advertisements extends Component
         $this->end_date = null;
         $this->advertisement_id = null;
         $this->isEdit = false;
+        $this->showForm = true;
     }
     public function render()
     {

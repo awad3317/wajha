@@ -9,24 +9,40 @@ use Livewire\WithPagination;
 
 class Establishments extends Component
 {
-    use WithPagination;
+   use WithPagination;
+
     public $search = '';
     public $selectedType = '';
     public $selectedStatus = '';
 
-    public function getEstablishmentsProperty()
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = ['search', 'selectedType', 'selectedStatus'];
+
+    public function updating($field)
     {
-        return Establishment::query()
-            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
-            ->when($this->selectedType, fn($q) => $q->where('type_id', $this->selectedType))
-            ->when($this->selectedStatus !== '', fn($q) => $q->where('is_verified', $this->selectedStatus))
-            ->with(['type', 'region'])
-            ->paginate(10);
+        $this->resetPage();
+    }
+
+    public function toggleVerification($id)
+    {
+        $establishment = Establishment::find($id);
+        if ($establishment) {
+            $establishment->is_verified = !$establishment->is_verified;
+            $establishment->save();
+        }
     }
 
     public function render()
     {
-        $establishments = $this->getEstablishmentsProperty();
+        $establishments = Establishment::query()
+            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->when($this->selectedType, fn($q) => $q->where('type_id', $this->selectedType))
+            ->when($this->selectedStatus !== '', fn($q) => $q->where('is_verified', $this->selectedStatus))
+            ->with(['type', 'region'])
+            ->latest()
+            ->paginate(10);
+
         $types = EstablishmentType::all();
         $statuses = [
             1 => 'موثقة',

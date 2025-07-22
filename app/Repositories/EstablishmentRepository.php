@@ -52,6 +52,14 @@ class EstablishmentRepository implements RepositoriesInterface
     }
 
     /**
+     * Retrieve a Establishment by ID.
+     */
+    public function find($id): Establishment
+    {
+        return Establishment::with(['region.parent','images','features','rules','pricePackages','specifications','unavailabilityDays'])->withAvg('reviews', 'rating')->findOrFail($id);
+    }
+
+    /**
      * Store a new Establishment.
      */
     public function store(array $data): Establishment

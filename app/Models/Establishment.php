@@ -10,7 +10,7 @@ class Establishment extends Model
 {
     use HasFactory, FilterQueryString;
 
-    protected $filters = ['type_id','like'];
+    protected $filters = ['type_id', 'like'];
 
     protected $fillable = [
         'owner_id',
@@ -29,7 +29,7 @@ class Establishment extends Model
     public function getPrimaryImageAttribute($value)
     {
         // if (request()->is('api/*')) {
-            return 'storage/'.$value;
+        return 'storage/' . $value;
         // }
         // return $value;
     }
@@ -105,19 +105,24 @@ class Establishment extends Model
     }
 
     /**
-    * Get the bookings for the establishment.
-    */
+     * Get the bookings for the establishment.
+     */
     public function bookings()
     {
         return $this->hasMany(booking::class);
     }
 
     /**
-    * Get the active bookings for the establishment.
-    */
+     * Get the active bookings for the establishment.
+     */
     public function activeBookings()
     {
         return $this->hasMany(booking::class)
-                ->whereNotIn('status', ['cancelled', 'completed']);
+            ->whereNotIn('status', ['cancelled', 'completed']);
+    }
+
+    public function unavailabilities()
+    {
+        return $this->hasMany(EstablishmentUnavailability::class);
     }
 }

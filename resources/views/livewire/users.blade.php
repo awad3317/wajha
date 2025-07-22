@@ -243,6 +243,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    
                                     <td>
                                         @if ($editingUserId === $user->id)
                                             <div class="d-flex my-2 ">

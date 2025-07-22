@@ -63,103 +63,124 @@
         {{-- النموذج --}}
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
-                <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" enctype="multipart/form-data">
-                    <div class="row g-3">
+                @if (!$showForm && !$isEdit)
+                    <button wire:click="create" class="btn btn-primary w-100">إضافة الاعلان</button>
+                @endif
+                @if ($showForm || $isEdit)
+                    <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" enctype="multipart/form-data">
+                        <div class="row g-3">
 
-                        {{-- حالة التفعيل --}}
-                        <div class="col-md-4 d-flex align-items-center mt-4 justify-content-end">
-                            <div class="form-check d-flex align-items-center">
-                                <span
-                                    class="form-check-label-text me-2 {{ $is_active ? 'text-primary' : 'text-danger' }}">
-                                    {{ $is_active ? 'مفعل' : 'غير مفعل' }}
-                                </span>
-                                <div class="form-switch {{ $is_active ? 'switch-active' : 'switch-banned' }}">
-                                    <input type="checkbox" id="isActiveSwitch" wire:model.defer="is_active"
-                                        @if ($is_active) checked @endif>
-                                    <label for="isActiveSwitch"></label>
+                            {{-- العنوان --}}
+                            <div class="col-md-12">
+                                <label for="title" class="form-label text-right d-block">عنوان الإعلان <span
+                                        class="text-danger">*</span></label>
+                                <input id="title" type="text" wire:model.defer="title"
+                                    class="form-control text-right @error('title') is-invalid @enderror"
+                                    placeholder="عنوان الإعلان">
+                                @error('title')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-12" dir="rtl" style="text-align: right;">
+                                <label for="image" class="form-label d-block text-right">
+                                    <span class="text-danger">{{ $isEdit ? '(اختياري)' : '*' }}</span> صورة الإعلان
+                                </label>
+
+                                <div class="input-group mb-2 justify-content-start d-flex">
+                                    <label class="input-group-text btn btn-outline-primary" style="cursor: pointer;">
+                                        📤 اختر صورة
+                                        <input type="file" id="image" wire:model="image" accept="image/*"
+                                            class="d-none @error('image') is-invalid @enderror">
+                                    </label>
+
+                                    {{-- عرض اسم الملف إن وُجد --}}
+                                    @if ($image)
+                                        <span class="form-control text-truncate ml-2" style="max-width: 60%;">
+                                            {{ $image->getClientOriginalName() }}
+                                        </span>
+                                    @endif
+                                </div>
+
+                                @error('image')
+                                    <div class="text-danger small text-right">{{ $message }}</div>
+                                @enderror
+
+                                {{-- المعاينة --}}
+                                <div class="mt-3 d-flex justify-content-end">
+                                    @if ($image)
+                                        <div style="text-align: right;">
+                                            <p class="mb-1 text-muted" style="font-size: 0.9rem;">معاينة مؤقتة:</p>
+                                            <img src="{{ $image->temporaryUrl() }}" class="rounded shadow-sm border"
+                                                style="max-height: 150px; max-width: 100%;">
+                                        </div>
+                                    @elseif ($imagePreview)
+                                        <div style="text-align: right;">
+                                            <p class="mb-1 text-muted" style="font-size: 0.9rem;">الصورة الحالية:</p>
+                                            <img src="{{ asset('storage/' . $imagePreview) }}"
+                                                class="rounded shadow-sm border"
+                                                style="max-height: 150px; max-width: 100%;">
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-4">
-                            <label for="image" class="form-label text-right d-block">صورة الإعلان
-                                {{ $isEdit ? '(اختياري)' : '*' }}</label>
-                            <input id="image" type="file" wire:model="image" accept="image/*"
-                                class="form-control @error('image') is-invalid @enderror">
-                            @error('image')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-
-                            {{-- معاينة الصورة --}}
-                            <div class="mt-3">
-                                @if ($image)
-                                    <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail"
-                                        style="max-height: 150px;">
-                                @elseif ($imagePreview)
-                                    <img src="{{ asset('storage/' . $imagePreview) }}" class="img-thumbnail"
-                                        style="max-height: 150px;">
-                                @endif
+                            {{-- وصف الإعلان --}}
+                            <div class="col-12 mb-2">
+                                <label for="description" class="form-label text-right d-block">وصف الإعلان <span
+                                        class="text-danger">*</span></label>
+                                <textarea id="description" wire:model.defer="description" rows="4"
+                                    class="form-control text-right @error('description') is-invalid @enderror" placeholder="وصف الإعلان"></textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- تواريخ البدء والانتهاء --}}
+
+                            <div class="col-md-6 ">
+                                <label for="end_date" class="form-label text-right d-block">تاريخ الانتهاء
+                                    <span class="text-danger">*</span>
+
+                                </label>
+
+                                <input id="end_date" type="datetime-local" wire:model.defer="end_date"
+                                    class="form-control @error('end_date') is-invalid @enderror"
+                                    placeholder="تاريخ الانتهاء">
+                                @error('end_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="start_date" class="form-label text-right d-block">تاريخ البدء
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input id="start_date" type="datetime-local" wire:model.defer="start_date"
+                                    class="form-control @error('start_date') is-invalid @enderror"
+                                    placeholder="تاريخ البدء">
+                                @error('start_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-switch d-none">
+                                <input type="hidden" id="isActiveSwitch" wire:model.defer="is_active"
+                                    @if ($is_active) checked @endif>
+                                <label for="isActiveSwitch"></label>
+                            </div>
+
+
+                            {{-- زر الإضافة أو التحديث --}}
+                            <div class="col-md-12 d-flex align-items-end mt-2">
+                                <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
+                                    {{ $isEdit ? 'تحديث' : 'إضافة' }}
+                                </button>
+                            </div>
+
+
+
                         </div>
-
-                        {{-- العنوان --}}
-                        <div class="col-md-4">
-                            <label for="title" class="form-label text-right d-block">عنوان الإعلان <span
-                                    class="text-danger">*</span></label>
-                            <input id="title" type="text" wire:model.defer="title"
-                                class="form-control text-right @error('title') is-invalid @enderror"
-                                placeholder="عنوان الإعلان">
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- وصف الإعلان --}}
-                        <div class="col-12 mb-2">
-                            <label for="description" class="form-label text-right d-block">وصف الإعلان <span
-                                    class="text-danger">*</span></label>
-                            <textarea id="description" wire:model.defer="description" rows="4"
-                                class="form-control text-right @error('description') is-invalid @enderror" placeholder="وصف الإعلان"></textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- تواريخ البدء والانتهاء --}}
-
-                        <div class="col-md-6 ">
-                            <label for="end_date" class="form-label text-right d-block">تاريخ الانتهاء</label>
-                            <input id="end_date" type="datetime-local" wire:model.defer="end_date"
-                                class="form-control @error('end_date') is-invalid @enderror"
-                                placeholder="تاريخ الانتهاء">
-                            @error('end_date')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label for="start_date" class="form-label text-right d-block">تاريخ البدء <span
-                                    class="text-danger">*</span></label>
-                            <input id="start_date" type="datetime-local" wire:model.defer="start_date"
-                                class="form-control @error('start_date') is-invalid @enderror"
-                                placeholder="تاريخ البدء">
-                            @error('start_date')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-
-
-                        {{-- زر الإضافة أو التحديث --}}
-                        <div class="col-md-12 d-flex align-items-end mt-2">
-                            <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
-                                {{ $isEdit ? 'تحديث' : 'إضافة' }}
-                            </button>
-                        </div>
-
-
-
-                    </div>
-                </form>
+                    </form>
+                @endif
             </div>
         </div>
 
@@ -178,7 +199,7 @@
                 </div>
             </div>
             @forelse ($advertisements as $ad)
-                <div class="col-md-6 col-lg-4 my-2">
+                <div class="col-md-6 col-lg-4 my-2" wire:key="ad-{{ $ad->id }}">
                     <div class="card border-0 shadow rounded-3 h-100 overflow-hidden position-relative">
 
                         {{-- صورة الإعلان --}}
@@ -192,11 +213,13 @@
                             </div>
                         @endif
 
-                        {{-- الحالة في الزاوية --}}
-                        <span
-                            class="position-absolute top-0 end-0 m-2 badge {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}">
+
+                        <span wire:click="toggleVerification({{ $ad->id }})"
+                            class="position-absolute top-0 end-0 m-2 badge rounded-pill {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}"
+                            style="cursor: pointer; font-size: 0.85rem;">
                             {{ $ad->is_active ? 'مفعل' : 'غير مفعل' }}
                         </span>
+
 
                         <div class="card-body text-end d-flex flex-column">
 

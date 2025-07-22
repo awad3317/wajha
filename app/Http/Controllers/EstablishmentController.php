@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Establishment;
+use App\Repositories\EstablishmentRepository;
 
 class EstablishmentController extends Controller
 {
@@ -12,10 +13,11 @@ class EstablishmentController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private EstablishmentRepository $EstablishmentRepository)
     {
         $this->middleware('auth');
     }
+   
     /**
      * Display a listing of the resource.
      */
@@ -46,7 +48,8 @@ class EstablishmentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $establishment = $establishment=$this->EstablishmentRepository->getById($id);
+        return view('establishments.show_info',compact('establishment'));
     }
 
     /**
