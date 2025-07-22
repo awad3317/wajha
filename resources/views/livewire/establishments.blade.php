@@ -113,12 +113,10 @@
                             <div class="row text-right">
                                 <div class="col-7 d-flex justify-content-end align-items-center gap-2">
                                     <span class="mx-1">{{ $establishment->type->name ?? '-' }}</span>
-                                    <strong>:النوع</strong>
                                     <i class="fas fa-building text-primary mx-1"></i>
                                 </div>
                                 <div class="col-5 d-flex justify-content-end align-items-center gap-2">
                                     <span class="mx-1">{{ $establishment->region->name ?? '-' }}</span>
-                                    <strong>:المنطقة</strong>
                                     <i class="fas fa-map-marker-alt text-danger mx-1"></i>
                                 </div>
                             </div>
