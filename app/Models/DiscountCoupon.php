@@ -9,7 +9,7 @@ class DiscountCoupon extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+     protected $fillable = [
         'code',
         'description',
         'discount_type',
@@ -17,9 +17,10 @@ class DiscountCoupon extends Model
         'start_date',
         'end_date',
         'max_uses',
+        'current_uses',
         'is_active',
         'applies_to',
-        'created_by',
+        'created_by'
     ];
 
     protected $casts = [
@@ -36,6 +37,11 @@ class DiscountCoupon extends Model
         return $this->belongsToMany(Establishment::class, 'coupon_establishments', 'coupon_id', 'establishment_id');
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
      /**
      * Get the establishment types that the coupon applies to.
      */
@@ -50,6 +56,13 @@ class DiscountCoupon extends Model
     public function uses()
     {
         return $this->hasMany(CouponUse::class, 'coupon_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'coupon_uses')
+            ->withPivot('discount_amount', 'used_at', 'booking_id')
+            ->using(CouponUse::class);
     }
 
     public function bookings()

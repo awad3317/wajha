@@ -20,6 +20,11 @@ class EstablishmentType extends Model
         return $this->hasMany(Establishment::class);
     }
 
+     public function coupons()
+    {
+        return $this->belongsToMany(DiscountCoupon::class, 'coupon_establishment_types', 'type_id', 'coupon_id');
+    }
+
     public function getIconAttribute($value)
     {
         if (request()->is('api/*')) {

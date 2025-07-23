@@ -125,4 +125,9 @@ class Establishment extends Model
     {
         return $this->hasMany(EstablishmentUnavailability::class);
     }
+
+    public function coupons()
+    {
+        return $this->belongsToMany(DiscountCoupon::class, 'coupon_establishments');
+    }
 }

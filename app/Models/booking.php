@@ -46,4 +46,9 @@ class booking extends Model
         return $this->belongsTo(DiscountCoupon::class);
     }
 
+    public function couponUse()
+    {
+        return $this->hasOne(CouponUse::class);
+    }
+
 }

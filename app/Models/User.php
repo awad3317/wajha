@@ -77,4 +77,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(booking::class);
     }
+
+    public function createdCoupons()
+    {
+        return $this->hasMany(DiscountCoupon::class, 'created_by');
+    }
+
+    public function couponUses()
+    {
+        return $this->hasMany(CouponUse::class);
+    }
+
+    public function usedCoupons()
+    {
+        return $this->belongsToMany(DiscountCoupon::class, 'coupon_uses')
+                ->withPivot('discount_amount', 'used_at', 'booking_id')
+                ->using(CouponUse::class);
+    }
 }
