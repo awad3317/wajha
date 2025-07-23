@@ -17,8 +17,9 @@ class Banks extends Component
     public $deleteId = null;
     public $deleteName = null;
     public $search = '';
-
     public $iconFile;
+    public $showForm = false;
+
 
 
     public function mount()
@@ -61,6 +62,11 @@ class Banks extends Component
             'message' => 'تمت إضافة البنك بنجاح'
         ]);
     }
+    public function create()
+    {
+        $this->resetForm();
+        $this->showForm = true;
+    }
 
     public function edit($id)
     {
@@ -69,6 +75,7 @@ class Banks extends Component
         $this->name = $bank->name;
         $this->icon = $bank->icon;
         $this->isEdit = true;
+        $this->showForm = true;
     }
 
     public function update()
@@ -102,7 +109,7 @@ class Banks extends Component
     public function deleteBank()
     {
         $imageService = new ImageService();
-        
+
         $bank = Bank::findOrFail($this->deleteId);
         if ($bank->icon) {
             $imageService->deleteImage($bank->icon);
@@ -129,6 +136,7 @@ class Banks extends Component
         $this->iconFile = null;
         $this->bank_id = null;
         $this->isEdit = false;
+        $this->showForm = true;
     }
 
     public function resetDelete()

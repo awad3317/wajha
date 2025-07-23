@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div dir="rtl" class="container py-4">
 
     {{-- @if ($message)
         <div class="message-center"

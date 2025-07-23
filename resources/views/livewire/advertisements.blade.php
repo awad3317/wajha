@@ -1,13 +1,21 @@
 <div>
-    <div class="container py-4">
-        <h3 class="mb-4 text-right">إدارة الإعلانات</h3>
+    {{-- رسالة النجاح --}}
+    @if (session()->has('success'))
+        <div class="alert alert-success text-right">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        {{-- رسالة النجاح --}}
-        @if (session()->has('success'))
-            <div class="alert alert-success text-right">
-                {{ session('success') }}
-            </div>
-        @endif
+
+
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center my-3">
+            @if (!$showForm && !$isEdit)
+                <button wire:click="create" class="btn btn-primary text-left">إضافة الإعلان</button>
+            @endif
+            <h3 class="text-left">إدارة الإعلانات</h3>
+        </div>
+
         <style>
             .form-switch {
                 position: relative;
@@ -61,12 +69,10 @@
             }
         </style>
         {{-- النموذج --}}
-        <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-                @if (!$showForm && !$isEdit)
-                    <button wire:click="create" class="btn btn-primary w-100">إضافة الاعلان</button>
-                @endif
-                @if ($showForm || $isEdit)
+        @if ($showForm || $isEdit)
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" enctype="multipart/form-data">
                         <div class="row g-3">
 
@@ -167,37 +173,52 @@
                                     @if ($is_active) checked @endif>
                                 <label for="isActiveSwitch"></label>
                             </div>
-
-
                             {{-- زر الإضافة أو التحديث --}}
                             <div class="col-md-12 d-flex align-items-end mt-2">
                                 <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
                                     {{ $isEdit ? 'تحديث' : 'إضافة' }}
                                 </button>
                             </div>
-
-
-
                         </div>
                     </form>
-                @endif
+
+                </div>
+            </div>
+        @endif
+        {{-- جدول الإعلانات --}}
+
+        <div class="col-md-12  mb-2">
+            <div class="input-group input-group-xl shadow-sm  overflow-hidden">
+                <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم الاعلان"
+                    wire:model.debounce.300ms.live="search">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-search text-secondary"></i>
+                    </span>
+                </div>
             </div>
         </div>
 
-        {{-- جدول الإعلانات --}}
-        <div class="row g-4 mt-2">
-            <div class="col-md-12  mb-2">
-                <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-                    <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم الاعلان"
-                        wire:model.debounce.300ms.live="search">
 
-                    <div class="input-group-append">
-                        <span class="input-group-text bg-white border-0">
-                            <i class="fas fa-search text-secondary"></i>
-                        </span>
-                    </div>
+        <div class="col-md-12  mb-2">
+            <div class="input-group input-group-xl shadow-sm  overflow-hidden">
+                <select wire:model.live="selectedStatu" class="form-control text-right border-0">
+                    <option value=" ">كل الحالات</option>
+                    <option value="1">مفعل</option>
+                    <option value="0">غير مفعل</option>
+                </select>
+
+                <div class="input-group-append">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-check-circle text-success"></i>
+                    </span>
                 </div>
             </div>
+        </div>
+
+
+        <div class="row  mt-2">
+
             @forelse ($advertisements as $ad)
                 <div class="col-md-6 col-lg-4 my-2" wire:key="ad-{{ $ad->id }}">
                     <div class="card border-0 shadow rounded-3 h-100 overflow-hidden position-relative">

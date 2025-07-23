@@ -17,7 +17,7 @@ class Establishments extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    protected $queryString = ['search', 'selectedType', 'selectedStatus'];
+        protected $queryString = ['search', 'selectedType', 'selectedStatus'];
 
     public function updating($field)
     {
