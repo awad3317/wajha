@@ -72,7 +72,7 @@
                 <tbody>
                     @forelse ($banks as $bank)
                         <tr>
-                            <td>{{ $bank->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>
                                 @if ($bank->icon)
                                 <img src="{{ url($bank->icon) }}" alt="Bank Icon" width="60" height="60">
