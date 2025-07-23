@@ -73,7 +73,7 @@
                     <tbody>
                         @forelse ($regions as $region)
                             <tr>
-                                <td>{{ $region->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $region->name }}</td>
                                 <td>{{ $region->parent->name ?? '—' }}</td>
                                 <td>
