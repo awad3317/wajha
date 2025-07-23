@@ -279,7 +279,7 @@
         </div>
     </div>
 
-    {{-- الأيام غير المتاحة --}}
+    <!-- {{-- الأيام غير المتاحة --}}
     <div class="card card-custom mb-5 text-right">
         <div class="card-header bg-danger text-white section-header">الأيام غير المتاحة</div>
         <div class="card-body p-0">
@@ -302,6 +302,6 @@
                 <div class="p-4 text-center text-muted">لا توجد أيام غير متاحة.</div>
             @endif
         </div>
-    </div>
+    </div> -->
 
 </div>
