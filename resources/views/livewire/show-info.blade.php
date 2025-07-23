@@ -114,6 +114,41 @@
 
 <div class="container py-4">
 
+    {{-- إحصائيات --}}
+    <div class="row text-center mb-5">
+        @php
+            $stats = [
+                ['label' => 'عدد الصور', 'count' => $images->count(), 'icon' => 'fas fa-image', 'bg' => 'bg-info'],
+                [
+                    'label' => 'عدد الميزات',
+                    'count' => $features->count(),
+                    'icon' => 'fas fa-star',
+                    'bg' => 'bg-success',
+                ],
+                [
+                    'label' => 'عدد المواصفات',
+                    'count' => $specifications->count(),
+                    'icon' => 'fas fa-list',
+                    'bg' => 'bg-warning',
+                ],
+                ['label' => 'عدد القواعد', 'count' => $rules->count(), 'icon' => 'fas fa-gavel', 'bg' => 'bg-primary'],
+                
+              
+            ];
+        @endphp
+
+        @foreach ($stats as $stat)
+            <div class="col-md-2 col-6 mb-4">
+                <div class="stats-box text-white {{ $stat['bg'] }} p-3 shadow-sm">
+                    <i class="{{ $stat['icon'] }} stats-icon mb-2"></i>
+                    <h3 class="font-weight-bold mb-0">{{ $stat['count'] }}</h3>
+                    <small>{{ $stat['label'] }}</small>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+
     {{-- البيانات الأساسية --}}
     <div class="card card-custom mb-5 text-right">
         <div class="card-header bg-primary text-white section-header">البيانات الأساسية</div>
@@ -165,46 +200,9 @@
         </div>
     </div>
 
-    {{-- إحصائيات --}}
-    <div class="row text-center mb-5">
-        @php
-            $stats = [
-                ['label' => 'عدد الصور', 'count' => $images->count(), 'icon' => 'fas fa-image', 'bg' => 'bg-info'],
-                [
-                    'label' => 'عدد الميزات',
-                    'count' => $features->count(),
-                    'icon' => 'fas fa-star',
-                    'bg' => 'bg-success',
-                ],
-                [
-                    'label' => 'عدد المواصفات',
-                    'count' => $specifications->count(),
-                    'icon' => 'fas fa-list',
-                    'bg' => 'bg-warning',
-                ],
-                ['label' => 'عدد القواعد', 'count' => $rules->count(), 'icon' => 'fas fa-gavel', 'bg' => 'bg-primary'],
-                [
-                    'label' => 'أيام عدم التوفر',
-                    'count' => $unavailabilities->count(),
-                    'icon' => 'fas fa-calendar-times',
-                    'bg' => 'bg-danger',
-                ],
-            ];
-        @endphp
-
-        @foreach ($stats as $stat)
-            <div class="col-md-2 col-6 mb-4">
-                <div class="stats-box text-white {{ $stat['bg'] }} p-3 shadow-sm">
-                    <i class="{{ $stat['icon'] }} stats-icon mb-2"></i>
-                    <h3 class="font-weight-bold mb-0">{{ $stat['count'] }}</h3>
-                    <small>{{ $stat['label'] }}</small>
-                </div>
-            </div>
-        @endforeach
-    </div>
-
-    {{-- معرض الصور --}}
-    <div class="card card-custom mb-5 text-right">
+    <div class="row">
+  {{-- معرض الصور --}}
+    <div class="card card-custom mb-5 text-right col-md-6">
         <div class="card-header bg-secondary text-white section-header">معرض الصور</div>
         <div class="card-body">
             <div class="row">
@@ -221,7 +219,7 @@
     </div>
 
     {{-- المميزات --}}
-    <div class="card card-custom mb-5 text-right">
+    <div class="card card-custom mb-5 text-right col-md-6">
         <div class="card-header bg-success text-white section-header">المميزات</div>
         <div class="card-body">
             <div class="row">
@@ -244,8 +242,11 @@
         </div>
     </div>
 
-    {{-- المواصفات --}}
-    <div class="card card-custom mb-5 text-right">
+    </div>
+
+     <div class="row">
+   {{-- المواصفات --}}
+    <div class="card card-custom mb-5 text-right col-md-6">
         <div class="card-header bg-warning text-dark section-header">المواصفات</div>
         <div class="card-body">
             <ul class="list-group list-group-flush text-right">
@@ -266,7 +267,7 @@
     </div>
 
     {{-- القواعد --}}
-    <div class="card card-custom mb-5 text-right">
+    <div class="card card-custom mb-5 text-right col-md-6">
         <div class="card-header bg-info text-white section-header">القواعد</div>
         <div class="card-body">
             <ol class="rules-list list-group list-group-numbered text-right mb-0">
@@ -278,6 +279,11 @@
             </ol>
         </div>
     </div>
+     </div>
+      <div class="d-flex "></div>
+  
+
+ 
 
     <!-- {{-- الأيام غير المتاحة --}}
     <div class="card card-custom mb-5 text-right">

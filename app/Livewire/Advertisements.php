@@ -18,15 +18,22 @@ class Advertisements extends Component
     public $deleteTitle = null;
     public $search = '';
     public $showForm = false;
+    public $selectedStatu = null;
+
     public function mount()
     {
         $this->loadAdvertisements();
     }
-
     public function updatedSearch()
     {
         $this->loadAdvertisements();
     }
+    public function updatedSelectedStatu()
+    {
+        $this->loadAdvertisements();
+    }
+
+    protected $queryString = ['search', 'selectedStatu'];
 
     public function loadAdvertisements()
     {
@@ -34,9 +41,14 @@ class Advertisements extends Component
             ->when($this->search, function ($query) {
                 $query->where('title', 'like', '%' . $this->search . '%');
             })
+            ->when(is_numeric($this->selectedStatu), function ($query) {
+                $query->where('is_active', $this->selectedStatu);
+            })
             ->orderBy('id', 'desc')
             ->get();
     }
+
+
     public function toggleActive($adId)
     {
         $ad = Advertisement::find($adId);

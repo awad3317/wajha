@@ -1,15 +1,18 @@
 <div>
-    <div class="container py-4">
         @if (session()->has('success'))
             <div class="alert alert-success text-right">{{ session('success') }}</div>
         @endif
-
-        <div class="card  mb-4">
-            <div class="card-body">
-                @if (!$showForm && !$isEdit)
-                    <button wire:click="create" class="btn btn-primary ">إضافة منطقة</button>
-                @endif
-                @if ($showForm || $isEdit)
+    <div class="container py-4">
+  
+            <div class="d-flex justify-content-between align-items-center my-2">
+            @if (!$showForm && !$isEdit)
+                <button wire:click="create" class="btn btn-primary text-left">إضافة منطقة</button>
+            @endif
+            <h3 class="text-left">إدارة المناطق</h3>
+        </div>
+        @if ($showForm || $isEdit)
+            <div class="card  mb-4">
+                <div class="card-body">
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
                         <div class="row g-3">
                             <div class="col-md-6 mb-2">
@@ -43,10 +46,10 @@
                             </div>
                         </div>
                     </form>
-                @endif
-            </div>
-        </div>
 
+                </div>
+            </div>
+        @endif
         <div class="card shadow-sm">
             <div class="col-md-12  my-2 ">
                 <div class="input-group input-group-xl shadow-sm  overflow-hidden">
