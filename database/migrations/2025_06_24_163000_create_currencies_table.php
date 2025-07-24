@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name'); // مثل "ريال سعودي"
             $table->string('code'); // مثل "SAR"
             $table->string('symbol'); // مثل "ر.س"
+            $table->string('icon'); // اسم ملف الأيقونة (مثل "sar.png")
             $table->timestamps();
         });
     }
