@@ -9,6 +9,7 @@ use App\Http\Controllers\API\RegionController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\BookingController;
 use App\Http\Controllers\API\Auth\OtpController;
+use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\API\FavoriteController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OwnerAccountController;
@@ -49,6 +50,7 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::post('/DeviceToken',[UserController::class,'updateDeviceToken']);
     Route::apiResource('/EstablishmentImage', EstablishmentImageController::class)->except(['index','show']);
     
+    Route::apiResource('/Currency', CurrencyController::class)->only(['index']);
     //           Review Route        //
     Route::post('/review',[ReviewController::class,'upsertReview']);
 

@@ -39,7 +39,7 @@ class BookingController extends Controller
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'price_package_id' =>['required',Rule::exists('price_packages','id')],
             'booking_date' =>['required','date','after_or_equal:now'],
-            'coupon_id' => ['nullable',Rule::exists('discount_coupons','id')],
+            'coupon_code' => ['nullable','string'],
         ]);
 
         try {

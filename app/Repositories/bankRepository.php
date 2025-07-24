@@ -3,7 +3,6 @@
 namespace App\Repositories;
 use App\Interfaces\RepositoriesInterface;
 use App\Models\bank;
-use Illuminate\Support\Facades\DB;
 
 class bankRepository implements RepositoriesInterface
 {

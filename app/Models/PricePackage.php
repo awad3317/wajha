@@ -14,6 +14,7 @@ class PricePackage extends Model
         'name',
         'description',
         'icon_id',
+        'currency_id',
         'price',
         'features',
         'is_active',
@@ -40,5 +41,10 @@ class PricePackage extends Model
     public function bookings()
     {
         return $this->hasMany(booking::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('price_packages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('establishment_id')->constrained('establishments')->onDelete('cascade');
+            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
             $table->foreignId('icon_id')->nullable()->constrained('price_package_icons')->onDelete('set null');
             $table->string('name', 100);
             $table->text('description')->nullable();
