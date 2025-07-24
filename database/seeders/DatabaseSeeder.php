@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             price_package_iconsSeeder::class,
             bankSeeder::class,
             CurrencySeeder::class,
+            establishmentFeaturesIconSeeder::class,
         ]);
     }
 }
