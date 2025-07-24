@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // مثل "ريال سعودي"
-            $table->string('code'); // مثل "SAR"
-            $table->string('symbol'); // مثل "ر.س"
-            $table->string('icon'); // اسم ملف الأيقونة (مثل "sar.png")
+            $table->string('name');
+            $table->string('code'); 
+            $table->string('symbol'); 
+            $table->string('icon'); 
             $table->timestamps();
         });
     }

@@ -59,6 +59,7 @@ class EstablishmentController extends Controller
         'price_packages.*.description' => ['nullable', 'string', 'max:1000'],
         'price_packages.*.icon_id' => ['nullable',Rule::exists('price_package_icons','id')],
         'price_packages.*.price' => ['required', 'numeric', 'min:0'],
+        'price_packages.*.currency_id' => ['required', Rule::exists('currencies', 'id')],
         'price_packages.*.features' => ['nullable', 'array'],
         'price_packages.*.features.*' => ['required', 'string', 'max:100'],
         'specifications' => ['nullable', 'array'],
@@ -99,6 +100,7 @@ class EstablishmentController extends Controller
                     'description' => $package['description'] ?? null,
                     'icon_id' => $package['icon_id'],
                     'price' => $package['price'],
+                    'currency_id' => $package['currency_id'],
                     'features' => !empty($package['features']) ? json_encode($package['features']) : null,
                 ]);
             }
@@ -170,6 +172,7 @@ class EstablishmentController extends Controller
             'price_packages.*.description' => ['nullable', 'string', 'max:1000'],
             'price_packages.*.icon_id' => ['nullable', Rule::exists('price_package_icons', 'id')],
             'price_packages.*.price' => ['required', 'numeric', 'min:0'],
+            'price_packages.*.currency_id' => ['required', Rule::exists('currencies', 'id')],
             'price_packages.*.features' => ['nullable', 'array'],
             'price_packages.*.features.*' => ['required', 'string', 'max:100'],
             'deleted_price_packages' => ['nullable', 'array'],
