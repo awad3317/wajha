@@ -24,6 +24,7 @@ use App\Http\Controllers\API\EstablishmentImageController;
 use App\Http\Controllers\API\Auth\ForgetPasswordController;
 use App\Http\Controllers\API\EstablishmentFeatureController;
 use App\Http\Controllers\API\Dashboard\Owner\Dashboardcontroller;
+use App\Http\Controllers\API\EstablishmentFeaturesIconController;
 use App\Http\Controllers\API\EstablishmentSpecificationController;
 use App\Http\Controllers\API\EstablishmentUnavailabilityController;
 
@@ -50,6 +51,7 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::post('/DeviceToken',[UserController::class,'updateDeviceToken']);
     Route::apiResource('/EstablishmentImage', EstablishmentImageController::class)->except(['index','show']);
     
+    Route::apiResource('/featuresIcon', EstablishmentFeaturesIconController::class)->only(['index']);
     Route::apiResource('/Currency', CurrencyController::class)->only(['index']);
     //           Review Route        //
     Route::post('/review',[ReviewController::class,'upsertReview']);
