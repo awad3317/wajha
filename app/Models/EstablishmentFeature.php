@@ -13,7 +13,7 @@ class EstablishmentFeature extends Model
         'establishment_id',
         'name',
         'description',
-        'icon'
+        'icon_id'
     ];
 
     public function establishment()
