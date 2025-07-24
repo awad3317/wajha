@@ -20,4 +20,9 @@ class EstablishmentFeature extends Model
     {
         return $this->belongsTo(Establishment::class);
     }
+
+    public function icon()
+    {
+        return $this->belongsTo(establishmentFeaturesIcon::class, 'icon_id');
+    }
 }

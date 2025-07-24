@@ -14,4 +14,9 @@ class establishmentFeaturesIcon extends Model
     { 
         return 'storage/'.$value;
     }
+
+    public function features()
+    {
+        return $this->hasMany(EstablishmentFeature::class, 'icon_id');
+    }
 }
