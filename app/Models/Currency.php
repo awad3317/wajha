@@ -10,4 +10,9 @@ class Currency extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'code', 'symbol','icon'];
+
+    public function getIconAttribute($value)
+    {
+        return 'storage/'.$value;
+    }
 }

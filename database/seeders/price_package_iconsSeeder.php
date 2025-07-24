@@ -14,7 +14,7 @@ class price_package_iconsSeeder extends Seeder
      */
     public function run(): void
     {
-         $icons = [
+        $icons = [
             [
                'icon'=>'price_package_icons/icon1.svg'
             ],

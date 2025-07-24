@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class pricePackageIcon extends Model
+class establishmentFeaturesIcon extends Model
 {
     use HasFactory;
     protected $fillable = ['icon'];
@@ -13,13 +13,5 @@ class pricePackageIcon extends Model
     public function getIconAttribute($value)
     { 
         return 'storage/'.$value;
-    }
-
-    /**
-     * Get the price packages for the pricePackageIcon .
-     */
-    public function pricePackages()
-    {
-        return $this->hasMany(PricePackage::class);
     }
 }

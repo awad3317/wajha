@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('establishment_id')->constrained('establishments')->onDelete('cascade');
             $table->string('name', 100);
             $table->text('description')->nullable();
-            $table->string('icon', 255)->nullable();
+            $table->foreignId('icon_id')->constrained('establishment_features_icons')->onDelete('set null');
             $table->timestamps();
         });
     }

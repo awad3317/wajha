@@ -42,7 +42,7 @@ class EstablishmentFeatureController extends Controller
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'name' => ['required','string','max:255'],
             'description'=>['nullable','string','max:1000','min:2'],
-            'icon' => ['required','string','max:255'],
+            'icon_id' => ['required',Rule::exists('establishment_features_icons','id')],
         ]);
         try {
             $user = auth('sanctum')->user();
@@ -53,7 +53,7 @@ class EstablishmentFeatureController extends Controller
             $feature = $establishment->features()->create([
             'name' => $fields['name'],
             'description'=>$fields['description'] ?? null,
-            'icon' => $fields['icon']
+            'icon_id' => $fields['icon_id']
         ]);
             return ApiResponseClass::sendResponse($feature, 'Establishment feature saved successfully.');
         } catch (Exception $e) {
@@ -77,7 +77,7 @@ class EstablishmentFeatureController extends Controller
         $fields = $request->validate([
             'establishment_id' => ['sometimes',Rule::exists('establishments','id')],
             'name' => ['sometimes','string','max:255'],
-            'icon' => ['sometimes','string','max:255'],
+            'icon_id' => ['required',Rule::exists('establishment_features_icons','id')],
         ]);
         try {
             $feature = $this->EstablishmentFeatureRepository->getById($id);

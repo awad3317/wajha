@@ -14,9 +14,9 @@ class CurrencySeeder extends Seeder
     public function run(): void
     {
         DB::table('currencies')->insert([
-            ['name' => 'ريال سعودي', 'code' => 'SAR', 'symbol' => 'ر.س'],
-            ['name' => 'ريال يمني', 'code' => 'YER', 'symbol' => 'ر.ي'],
-            ['name' => 'دولار أمريكي', 'code' => 'USD', 'symbol' => '$'],
+            ['name' => 'ريال سعودي', 'code' => 'SAR', 'symbol' => 'ر.س','icon'=>'Currency-icons/saudi-arabia.png'],
+            ['name' => 'ريال يمني', 'code' => 'YER', 'symbol' => 'ر.ي','icon'=>'Currency-icons/yemen.png'],
+            ['name' => 'دولار أمريكي', 'code' => 'USD', 'symbol' => '$','icon'=>'Currency-icons/united-states.png'],
         ]);
     }
 }
