@@ -84,7 +84,11 @@ class EstablishmentController extends Controller
 
         if (!empty($fields['features'])) {
             foreach ($fields['features'] as $feature) {
-                $establishment->features()->create($feature);
+                $establishment->features()->create([
+                    'name' => $feature['name'],
+                    'description' => $feature['description'] ?? null,
+                    'icon_id' => $feature['icon_id']
+                ]);
             }
         }
         
