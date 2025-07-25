@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             bankSeeder::class,
             CurrencySeeder::class,
             establishmentFeaturesIconSeeder::class,
+            DiscountCouponsSeeder::class,
         ]);
     }
 }
