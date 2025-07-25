@@ -16,7 +16,6 @@ class DiscountCouponsSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        // 1. كوبون صالح للاستخدام (جميع الشروط متاحة)
         DB::table('discount_coupons')->insert([
             'code' => 'VALID2023',
             'description' => 'كوبون صالح للاستخدام مع جميع المنشآت',
@@ -28,12 +27,12 @@ class DiscountCouponsSeeder extends Seeder
             'current_uses' => 25,
             'is_active' => true,
             'applies_to' => 'all_establishments',
-            'created_by' => 1, // افتراضي أن أول مستخدم هو المدير
+            'created_by' => 1, 
             'created_at' => $now,
             'updated_at' => $now,
         ]);
 
-        // 2. كوبون منتهي الصلاحية
+
         DB::table('discount_coupons')->insert([
             'code' => 'EXPIRED2023',
             'description' => 'كوبون انتهت صلاحيته',
@@ -50,7 +49,6 @@ class DiscountCouponsSeeder extends Seeder
             'updated_at' => $now,
         ]);
 
-        // 3. كوبون تم استنفاذ عدد استخداماته
         DB::table('discount_coupons')->insert([
             'code' => 'MAXEDOUT2023',
             'description' => 'كوبون تم الوصول للحد الأقصى لاستخداماته',
@@ -59,7 +57,7 @@ class DiscountCouponsSeeder extends Seeder
             'start_date' => $now->copy()->subDays(10),
             'end_date' => $now->copy()->addMonth(),
             'max_uses' => 30,
-            'current_uses' => 30, // مساوي للحد الأقصى
+            'current_uses' => 30, 
             'is_active' => true,
             'applies_to' => 'specific_types',
             'created_by' => 1,
@@ -76,7 +74,7 @@ class DiscountCouponsSeeder extends Seeder
             'end_date' => $now->copy()->addMonth(),
             'max_uses' => 200,
             'current_uses' => 45,
-            'is_active' => false, // غير مفعل
+            'is_active' => false, 
             'applies_to' => 'all_establishments',
             'created_by' => 1,
             'created_at' => $now,
