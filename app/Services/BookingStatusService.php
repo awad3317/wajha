@@ -10,7 +10,9 @@ class BookingStatusService
     public function markAsWaitingPayment(Booking $booking)
     {
         return DB::transaction(function () use ($booking) {
-
+            if ($booking->status === 'cancelled') {
+            throw new \Exception('لا يمكن تعديل الحجز الملغي');
+        }
             $booking->update([
                 'status' => 'waiting_payment',
             ]);
@@ -23,6 +25,10 @@ class BookingStatusService
     public function markAsPaid(Booking $booking,$receiptImage)
     {
         return DB::transaction(function () use ($booking,$receiptImage) {
+
+            if ($booking->status === 'cancelled') {
+                throw new \Exception('لا يمكن تعديل الحجز الملغي');
+            }
 
             $booking->update([
                 'status' => 'paid',
@@ -37,6 +43,9 @@ class BookingStatusService
     public function confirmBooking(Booking $booking)
     {
         return DB::transaction(function () use ($booking) {
+            if ($booking->status === 'cancelled') {
+                throw new \Exception('لا يمكن تعديل الحجز الملغي');
+            }
             if ($booking->status !== 'paid') {
                 throw new \Exception('يمكن تأكيد الحجز فقط من الحالة المدفوعة');
             }
@@ -51,6 +60,9 @@ class BookingStatusService
     public function cancelledBooking(Booking $booking)
     {
         return DB::transaction(function () use ($booking) {
+            if ($booking->status === 'cancelled') {
+                return $booking; 
+            }
             $booking->update(['status' => 'cancelled']);
             
             // إرسال إشعار للعميل
