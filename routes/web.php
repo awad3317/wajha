@@ -44,3 +44,7 @@ Route::get('advertisement', [AdvertisementsController::class, 'index']);
 
 Route::get('establishments', [EstablishmentController::class, 'index']);
 Route::get('establishment/{id}', [EstablishmentController::class, 'show'])->name('establishment.show');
+
+
+Route::get('packages', [BanksController::class, 'show_package']);
+Route::get('price_packages', [BanksController::class, 'show_packages']);

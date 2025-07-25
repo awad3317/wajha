@@ -330,11 +330,25 @@ return [
             'url' => '/bank',
             'icon' => 'fas fa-university',
         ],
-           [
+        [
             'text' => 'الأعلانات',
             'url' => '/advertisement',
             'icon' => 'fas fa-bell',
         ],
+
+        [
+            'text' => 'الايقونات',
+            'url' => '/packages',
+            'icon' => 'fas fa-icons',
+        ],
+
+        [
+            'text' => 'اسعار الباقات',
+            'url' => '/price_packages',
+            'icon' => 'fas fa-icons',
+        ],
+
+
         [
             'text' => 'multilevel',
             'icon' => 'fas fa-fw fa-share',
