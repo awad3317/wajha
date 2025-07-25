@@ -16,13 +16,16 @@ class price_package_iconsSeeder extends Seeder
     {
         $icons = [
             [
-               'icon'=>'price_package_icons/icon1.svg'
+               'icon'=>'price-package-icons/Group.svg'
             ],
             [
-                'icon'=>'price_package_icons/icon2.svg'
+                'icon'=>'price-package-icons/Group2.svg'
             ],
             [
-                'icon'=>'price_package_icons/icon3.svg'
+                'icon'=>'price-package-icons/Vector.svg'
+            ],
+            [
+                'icon'=>'price-package-icons/Vector1.svg'
             ],
         ];
          foreach ($icons as $icon) {
