@@ -89,7 +89,7 @@ class BookingController extends Controller
             $owner = $establishment->owner;
 
             // send database notification to the owner
-            $owner->notify(new NewBookingNotification($booking,'حجز جديد','حجز جديد في منشأتك: ' . $this->booking->establishment->name,'owner'));
+            $owner->notify(new NewBookingNotification($booking,'حجز جديد','حجز جديد في منشأتك: ' . $booking->establishment->name,'owner'));
 
             // send to FCM notification to the owner
             $title = "حجز جديد في منشأتك";
