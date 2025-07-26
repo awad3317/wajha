@@ -306,7 +306,7 @@ return [
         [
             'text' => 'لوحة التحكم',
             'url' => '/',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-home',
         ],
         [
             'text' => 'المستخدمين',
