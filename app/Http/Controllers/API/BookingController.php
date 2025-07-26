@@ -40,7 +40,11 @@ class BookingController extends Controller
     {
        $fields = $request->validate([
             'establishment_id' => ['required',Rule::exists('establishments','id')],
-            'price_package_id' =>['required',Rule::exists('price_packages','id')],
+            'price_package_id' => ['required',
+                    Rule::exists('price_packages', 'id')->where(function ($query) use ($request) {
+                    $query->where('establishment_id', $request->establishment_id);
+                })
+            ],
             'booking_date' =>['required','date','after_or_equal:now'],
             'coupon_code' => ['nullable','string'],
         ]);
