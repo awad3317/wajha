@@ -19,23 +19,6 @@ class PricePackageIcons extends Component
     public $iconFile;
     public $showForm = false;
 
-    public function mount()
-    {
-        $this->loadPackages();
-    }
-
-    public function updatedSearch()
-    {
-        $this->loadPackages();
-    }
-
-    public function loadPackages()
-    {
-        $this->packages = pricePackageIcon::query()
-            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
-            ->orderBy('id')->get();
-    }
-
     public function create()
     {
         $this->resetForm();
