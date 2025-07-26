@@ -337,12 +337,6 @@ return [
         ],
 
         [
-            'text' => 'الايقونات',
-            'url' => '/packages',
-            'icon' => 'fas fa-icons',
-        ],
-
-        [
             'text' => 'اسعار الباقات',
             'url' => '/price_packages',
             'icon' => 'fas fa-shopping-bag',
