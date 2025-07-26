@@ -19,6 +19,16 @@ class PricePackageIcons extends Component
     public $iconFile;
     public $showForm = false;
 
+    public function mount()
+    {
+        $this->loadPackages();
+    }
+
+    public function loadPackages()
+    {
+        $this->packages = pricePackageIcon::query()->get();
+    }
+
     public function create()
     {
         $this->resetForm();
