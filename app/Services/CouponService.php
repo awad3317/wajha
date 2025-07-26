@@ -34,7 +34,7 @@ class CouponService
         return match ($coupon->applies_to) {
             'specific_establishments' => $coupon->establishments()->where('establishment_id', $establishment->id)->exists(),
             'specific_types' => $coupon->establishmentTypes()->where('type_id', $establishment->type_id)->exists(),
-            'all' => true,
+            'all_establishments' => true,
             default => false,
     };
     }

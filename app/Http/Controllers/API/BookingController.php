@@ -121,7 +121,7 @@ class BookingController extends Controller
             $user = $booking->user;
             $establishment = $booking->establishment;
 
-            $user->notify(new NewBookingNotification($booking,'بانتظار الدفع',"حجزك في {$this->booking->establishment->name} بانتظار الدفع",'customer'));
+            $user->notify(new NewBookingNotification($booking,'بانتظار الدفع',"حجزك في {$booking->establishment->name} بانتظار الدفع",'customer'));
 
             $title = "بانتظار الدفع";
             $body = "حجزك في {$establishment->name} بانتظار الدفع. الرجاء إتمام الدفع قبل تاريخ الحجز: " . $booking->booking_date;
