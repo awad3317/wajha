@@ -67,6 +67,10 @@ class PricePackageIcons extends Component
             'message' => 'تمت إضافة الأيقونة بنجاح'
         ]);
     }
+public function cancel()
+{
+    $this->resetForm();
+}
 
     public function edit($id)
     {

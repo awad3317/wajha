@@ -1,124 +1,7 @@
 <div>
 
 
-    <style>
-        body {
-            background: #f6f8fb;
-        }
-
-        .main-title {
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #1565c0;
-            margin-bottom: 2rem;
-        }
-
-        .add-btn {
-            border-radius: 2rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            padding: 0.7rem 2.2rem;
-            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.07);
-        }
-
-        .card {
-            border-radius: 1.5rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-            border: none;
-        }
-
-        .card-header {
-            border-radius: 1.5rem 1.5rem 0 0;
-            background: linear-gradient(90deg, #4f8cff 0%, #6dd5ed 100%);
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.25rem;
-            letter-spacing: 0.5px;
-            border-bottom: none;
-            padding: 1.2rem 1.5rem;
-        }
-
-        .input-group-xl .form-control {
-            font-size: 1.15rem;
-            padding: 1rem 1.2rem;
-            border-radius: 2rem;
-        }
-
-        .package-card {
-            border-radius: 1.5rem;
-            overflow: hidden;
-            background: #fff;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            transition: box-shadow 0.2s, transform 0.2s;
-            position: relative;
-        }
-
-        .package-card:hover {
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-            transform: translateY(-6px) scale(1.02);
-        }
-
-        .package-header {
-            background: linear-gradient(90deg, #4f8cff 0%, #6dd5ed 100%);
-            color: #fff;
-            padding: 1.5rem 1rem 1rem;
-            position: relative;
-            text-align: right;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .package-icon {
-            position: absolute;
-            left: 1.25rem;
-            top: 1.25rem;
-            font-size: 2.8rem;
-            color: rgba(255, 255, 255, 0.18);
-            pointer-events: none;
-        }
-
-        .price-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #fff;
-            color: #4f8cff;
-            font-weight: bold;
-            border-radius: 2rem;
-            padding: 0.45em 1.2em;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            z-index: 5;
-        }
-
-        .package-body {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .feature-badge {
-            font-size: 0.85rem;
-            background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
-            color: #0d47a1;
-            margin: 0.2rem 0.25rem 0.25rem 0;
-            display: inline-block;
-            border-radius: 0.6rem;
-            padding: 0.3em 0.8em;
-            box-shadow: 0 1px 3px rgba(33, 150, 243, 0.1);
-        }
-
-        .btn-pill {
-            border-radius: 50rem;
-            padding: 0.35rem 1.1rem;
-            font-weight: 500;
-        }
-
-        .pagination .page-link {
-            border-radius: 1rem !important;
-            margin: 0 0.15rem;
-        }
-    </style>
+   
 
     <div class="container mt-4">
         <h3 class="main-title text-right"> إدارة الباقات </h3>
@@ -130,7 +13,7 @@
         @endif
 
         @if (!$showForm)
-            <button wire:click="create" class="btn btn-primary add-btn mb-4 " ">
+            <button wire:click="create" class="btn btn-primary add-btn mb-4 " >
                     إضافة باقة جديدة
                     <i class="fas fa-plus-circle me-2"></i>
             </button>
@@ -290,7 +173,7 @@
                                 </p>
 
                                 <p class="mb-3">
-                                    <span class="badge bg-{{ $package->is_active ? 'success' : 'danger' }}">
+                                    <span class="badge bg-{{ $package->is_active ? 'success' : 'danger' }} ">
                                         <i
                                             class="fas fa-{{ $package->is_active ? 'check-circle' : 'times-circle' }}"></i>
                                         {{ $package->is_active ? 'نشطة' : 'غير نشطة' }}

@@ -47,6 +47,10 @@ class Advertisements extends Component
             ->orderBy('id', 'desc')
             ->get();
     }
+    public function cancel()
+    {
+        $this->resetForm();
+    }
 
 
     public function toggleActive($adId)
@@ -222,7 +226,7 @@ class Advertisements extends Component
         $this->end_date = null;
         $this->advertisement_id = null;
         $this->isEdit = false;
-        $this->showForm = true;
+        $this->showForm = false;
     }
     public function render()
     {

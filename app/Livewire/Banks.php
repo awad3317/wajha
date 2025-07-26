@@ -77,6 +77,10 @@ class Banks extends Component
         $this->isEdit = true;
         $this->showForm = true;
     }
+    public function cancel()
+    {
+        $this->resetForm();
+    }
 
     public function update()
     {
@@ -136,7 +140,7 @@ class Banks extends Component
         $this->iconFile = null;
         $this->bank_id = null;
         $this->isEdit = false;
-        $this->showForm = true;
+        $this->showForm = false;
     }
 
     public function resetDelete()

@@ -108,6 +108,10 @@ class Regions extends Component
         $this->showForm = true;
     }
 
+public function cancel()
+{
+    $this->resetForm();
+}
 
     public function resetForm()
     {

@@ -1,108 +1,192 @@
 <div>
-        @if (session()->has('success'))
-            <div class="alert alert-success text-right">{{ session('success') }}</div>
-        @endif
+    @if (session()->has('success'))
+        <div class="alert alert-success text-right">{{ session('success') }}</div>
+    @endif
     <div class="container py-4">
-  
-            <div class="d-flex justify-content-between align-items-center my-2">
+
+        <div class="d-flex justify-content-between align-items-center my-2">
             @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary text-left">إضافة منطقة</button>
+                <button wire:click="create" class="btn btn-primary add-btn text-left">إضافة منطقة</button>
             @endif
             <h3 class="text-left">إدارة المناطق</h3>
         </div>
         @if ($showForm || $isEdit)
-            <div class="card  mb-4">
-                <div class="card-body">
+            <div class="card mb-4 border-0 shadow-sm rounded-3">
+                <div class="card-header bg-gradient-primary text-white py-3 rounded-top-3">
+                    <h5 class="mb-0 text-center">
+                        <i class="fas fa-map-marked-alt me-2"></i>
+                        {{ $isEdit ? 'تعديل المنطقة' : 'إضافة منطقة جديدة' }}
+                    </h5>
+                </div>
+
+                <div class="card-body py-4">
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
-                        <div class="row g-3">
-                            <div class="col-md-6 mb-2">
-                                <div class="input-group-xl shadow-sm  overflow-hidden">
-                                    <select wire:model.defer="parent_id" class="form-control text-right border-0">
-                                        <option value="">بدون منطقة رئيسية</option>
-                                        @foreach ($parents as $parent)
-                                            <option value="{{ $parent->id }}">{{ $parent->name }}</option>
-                                        @endforeach
-                                    </select>
+                        <div class="row g-4">
+                            {{-- حقل المنطقة الرئيسية --}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                        المنطقة الرئيسية
+                                    </label>
+
+                                    <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
+                                        <span class="input-group-text bg-white border-0">
+                                            <i class="fas fa-layer-group text-primary"></i>
+                                        </span>
+                                        <select wire:model.defer="parent_id"
+                                            class="form-control text-right border-0 py-3">
+                                            <option value="">بدون منطقة رئيسية</option>
+                                            @foreach ($parents as $parent)
+                                                <option value="{{ $parent->id }}">{{ $parent->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-                                    <input type="text" wire:model.defer="name"
-                                        class="form-control text-right border-0" placeholder="اسم المنطقة">
-                                    <span class="input-group-text bg-white border-0"><i
-                                            class="fas fa-map-marker-alt"></i></span>
+
+                            {{-- حقل اسم المنطقة --}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                        اسم المنطقة <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
+                                        <input type="text" wire:model.defer="name"
+                                            class="form-control border-0 text-right py-3 @error('name') is-invalid @enderror"
+                                            placeholder="أدخل اسم المنطقة">
+                                        <span class="input-group-text bg-white border-0">
+                                            <i class="fas fa-map-marker-alt text-primary"></i>
+                                        </span>
+                                    </div>
+
                                     @error('name')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <div class="invalid-feedback text-right d-block mt-2">
+                                            <i class="fas fa-exclamation-circle me-2"></i>{{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                             </div>
 
+                            {{-- زر الإرسال والإلغاء --}}
+                            <div class="col-12 mt-4">
+                                <div class="d-flex gap-3">
+                                    {{-- زر الإلغاء --}}
+                                    <div class="flex-grow-1">
+                                        <button type="button" wire:click="cancel"
+                                            class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
+                                            <i class="fas fa-times me-2"></i> إلغاء
+                                        </button>
+                                    </div>
 
+                                    {{-- زر الحفظ/الإضافة --}}
+                                    <div class="flex-grow-1">
+                                        <button type="submit"
+                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                            {{ $isEdit ? 'حفظ التغييرات' : 'إضافة منطقة' }}
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} me-2"></i>
 
-                            <div class="col-md-12 mb-2">
-                                <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
-                                    {{ $isEdit ? 'تحديث' : 'إضافة' }}
-                                </button>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         @endif
-        <div class="card shadow-sm">
-            <div class="col-md-12  my-2 ">
-                <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-                    <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم المنطقه"
-                        wire:model.debounce.300ms.live="search">
-
-                    <div class="input-group-append">
-                        <span class="input-group-text bg-white border-0">
-                            <i class="fas fa-search text-secondary"></i>
-                        </span>
-                    </div>
+       <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+    <!-- رأس البطاقة مع شريط البحث -->
+    <div class="card-header bg-light py-3">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h5 class="mb-0 text-white">
+                    <i class="fas fa-map-marked-alt me-2"></i>
+                    إدارة المناطق
+                </h5>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
+                    <input type="text" 
+                           class="form-control border-0 text-right py-2"
+                           placeholder="ابحث باسم المنطقة..."
+                           wire:model.debounce.300ms.live="search">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-search text-primary"></i>
+                    </span>
                 </div>
             </div>
-            <div class="card-body table-responsive" dir="rtl">
-                <table class="table table-bordered table-hover text-center align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>#</th>
-                            <th>المديرية</th>
-                            <th>المحافظة</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($regions as $region)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $region->name }}</td>
-                                <td>{{ $region->parent->name ?? '—' }}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-info mb-1" wire:click="edit({{ $region->id }})">
+        </div>
+    </div>
+
+    <!-- جدول البيانات -->
+    <div class="card-body p-0" dir="rtl">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light-primary">
+                    <tr>
+                        <th class="text-center py-3 fw-bold">#</th>
+                        <th class="text-start py-3 fw-bold">المديرية</th>
+                        <th class="text-start py-3 fw-bold">المحافظة</th>
+                        <th class="text-center py-3 fw-bold" >الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($regions as $region)
+                        <tr class="border-bottom">
+                            <td class="text-center text-muted">{{ $loop->iteration }}</td>
+                            
+                            <td class="text-start">
+                                <span class="fw-bold">{{ $region->name }}</span>
+                            </td>
+                            
+                            <td class="text-start">
+                                @if($region->parent)
+                                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-1">
+                                        <i class="fas fa-map-marker-alt me-1"></i>
+                                        {{ $region->parent->name }}
+                                    </span>
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
+                            </td>
+                            
+                            <td class="text-center">
+                                <div class="d-flex  gap-2"  style="margin: 0px 29%">
+                                    <button class="btn btn-icon btn-sm btn-info mr-5 mx-3 rounded-circle shadow-sm"
+                                  
+                                            wire:click="edit({{ $region->id }})"
+                                            data-bs-toggle="tooltip"
+                                            title="تعديل">
                                         <i class="fas fa-edit"></i>
                                     </button>
-
-                                    <button class="btn btn-sm btn-danger mb-1"
-                                        wire:click="confirmDelete({{ $region->id }})" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal">
+                                    <button class="btn btn-icon btn-sm btn-danger rounded-circle shadow-sm"
+                                            wire:click="confirmDelete({{ $region->id }})"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-bs-toggle="tooltip"
+                                            title="حذف">
                                         <i class="fas fa-trash"></i>
                                     </button>
-
-                                    </button>
-
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4">لا توجد مناطق بعد.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <i class="fas fa-map-marker-alt fa-2x mb-3"></i>
+                                <p class="mb-0 fs-5">لا توجد مناطق مسجلة</p>
+                                @if($search)
+                                    <p class="text-muted small mt-2">لا توجد نتائج مطابقة لبحثك</p>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
+    </div>
+</div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

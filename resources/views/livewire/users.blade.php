@@ -1,38 +1,6 @@
 <div dir="rtl" class="container py-4">
-
-    {{-- @if ($message)
-        <div class="message-center"
-            style="position: fixed;left: 50%;transform: translate(-50%, -50%);
-        z-index: 9999;padding: 20px;border-radius: 8px;text-align: center;
-        animation: fadeInOut 12s forwards;
-        background: {{ $messageType == 'success' ? '#4CAF50' : '#F44336' }};
-        color: white;">
-            {{ $message }}
-        </div>
-    @endif
-
     <style>
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-            }
-
-            5% {
-                opacity: 1;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-    </style> --}}
-
-    <style>
+        /* Switch Toggle Styles */
         .form-switch {
             position: relative;
             display: inline-block;
@@ -40,13 +8,7 @@
             height: 1.4rem;
             margin-right: 0.5rem;
         }
-
-        .form-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
+        .form-switch input { opacity: 0; width: 0; height: 0; }
         .form-switch label::before {
             content: "";
             position: absolute;
@@ -58,7 +20,6 @@
             border-radius: 1.5rem;
             transition: background-color 0.3s;
         }
-
         .form-switch label::after {
             content: "";
             position: absolute;
@@ -68,217 +29,188 @@
             height: 1.2rem;
             background-color: white;
             border-radius: 50%;
-            transition: transform 0.3s, background-color 0.3s;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        .form-switch input:checked+label::after { transform: translateX(-1.1rem); }
+        .switch-active label::before { background-color: #28a745; }
+        .switch-banned label::before { background-color: #dc3545; }
+
+        /* Badge Styles */
+        .badge-red { background-color: #dc3545; color: white; }
+        .badge-yellow { background-color: #ffc107; color: #212529; }
+        .badge-green { background-color: #28a745; color: white; }
+        .badge-red, .badge-yellow, .badge-green {
+            padding: 0.35em 0.65em;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
         }
 
-        .form-switch input:checked+label::after {
-            transform: translateX(-1.1rem);
+        /* Table Styles */
+        .table th { background-color: #f8f9fa; font-weight: 600; }
+        .table-hover tbody tr:hover { background-color: rgba(0,0,0,0.03); }
+        
+        /* Pagination */
+        .pagination { justify-content: flex-start; }
+        
+        /* Action Links */
+        .action-link {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.2s;
         }
-
-        .switch-active label::before {
-            background-color: #007bff;
+        .action-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
         }
-
-        .switch-banned label::before {
-            background-color: #dc3545;
-
+        
+        /* Custom Card Styles */
+        .card-header-custom {
+            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
         }
-
-        .form-check-label-text {
-            margin-left: 0.5rem;
-        }
-
-
-        .text-right {
-            text-align: right;
-        }
-
-        .table {
-            direction: rtl;
-        }
-
-        .table th,
-        .table td {
-            text-align: right;
-        }
-
-        .input-group-append {
-            margin-right: -1px;
-            margin-left: 0;
-        }
-
-        .input-group-text {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-        }
-
-        .form-control {
-            text-align: right;
-        }
-
-        .card-footer .pagination {
-            justify-content: flex-start;
-        }
-
-        .d-flex {
-            flex-direction: row-reverse;
+        .filter-section {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
     </style>
 
     <div class="col-12">
-        <div class="card">
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-                <div class="m-1 row">
-                    <div class="col-md-4 mb-2">
-                        <div class="input-group">
-                            <input wire:model.debounce.300ms.live="search" type="text"
-                                class="form-control text-right" placeholder="ابحث بالاسم أو الجوال">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+        <div class="card border-0 shadow-sm">
+            <!-- Card Header -->
+            <div class="card-header card-header-custom text-white">
+                <h5 class="mb-0 text-right">
+                    <i class="fas fa-users-cog me-2"></i>
+                    إدارة المستخدمين
+                </h5>
+            </div>
 
-                    <div class="col-md-4 mb-2">
-                        <div class="input-group">
-                            <select wire:model.live="userType" class="form-control text-right">
-                                <option value="">كل الأنواع</option>
-                                <option value="admin">مدير</option>
-                                <option value="owner">صاحب منشأة</option>
-                                <option value="user">مستخدم عادي</option>
-                            </select>
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fas fa-user-tag"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-2">
-                        <div class="input-group">
-                            <select wire:model.live="bannedStatus" class="form-control text-right">
-                                <option value="">كل الحالات</option>
-                                <option value="1">محظور</option>
-                                <option value="0">نشط</option>
-                            </select>
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fas fa-ban"></i>
-                                </span>
-                            </div>
-                        </div>
+            <!-- Filter Section -->
+            <div class="filter-section row g-3 p-4">
+                <div class="col-md-4">
+                    <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                        <input wire:model.debounce.300ms.live="search" 
+                               type="text"
+                               class="form-control border-0 py-2"
+                               placeholder="البحث بالاسم أو الجوال...">
+                        <span class="input-group-text bg-white border-0">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">#</th>
-                                <th>الاسم</th>
-                                <th>رقم الجوال</th>
-                                <th>نوع المستخدم</th>
-                                <th>حالة الحظر</th>
-                                <th style="width: 150px">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
-                                <tr wire:key="{{ $user->id }}">
-                                    <td>{{ $loop->iteration }}</td>
+                <div class="col-md-4">
+                    <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                        <select wire:model.live="userType" 
+                                class="form-control border-0 py-2">
+                            <option value="">جميع أنواع المستخدمين</option>
+                            <option value="admin">مدير النظام</option>
+                            <option value="owner">أصحاب المنشآت</option>
+                            <option value="user">المستخدمون العاديون</option>
+                        </select>
+                        <span class="input-group-text bg-white border-0">
+                            <i class="fas fa-user-tag text-muted"></i>
+                        </span>
+                    </div>
+                </div>
 
-                                    <td>
-
-                                        {{ $user->name }}
-
-                                    </td>
-
-                                    <td>
-
-                                        {{ $user->phone ?? 'غير محدد' }}
-
-                                    </td>
-
-                                    <td>
-                                        @if ($editingUserId === $user->id)
-                                            <select class="form-control" wire:model.defer="editType">
-                                                <option value="admin">مدير</option>
-                                                <option value="owner">صاحب منشأة</option>
-                                                <option value="user">مستخدم</option>
-                                            </select>
-                                        @else
-                                            @switch($user->user_type)
-                                                @case('admin')
-                                                    <span class="badge-red">مدير</span>
-                                                @break
-
-                                                @case('owner')
-                                                    <span class="badge-yellow">صاحب منشأة</span>
-                                                @break
-
-                                                @default
-                                                    <span class="badge-green">مستخدم</span>
-                                            @endswitch
-                                        @endif
-                                    </td>
-
-                                    <td style="vertical-align: middle; text-align: end;">
-                                        <div class="form-check d-flex align-items-center justify-content-end">
-                                            <span class="form-check-label-text me-2">
-                                                {{ $user->is_banned ? 'محظور' : 'نشط' }}
-                                            </span>
-                                            <div
-                                                class="form-switch {{ $user->is_banned ? 'switch-banned' : 'switch-active' }}">
-                                                <input type="checkbox" id="banSwitch{{ $user->id }}"
-                                                    wire:click="toggleBan({{ $user->id }})"
-                                                    @if (!$user->is_banned) checked @endif>
-                                                <label for="banSwitch{{ $user->id }}"></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    
-                                    <td>
-                                        @if ($editingUserId === $user->id)
-                                            <div class="d-flex my-2 ">
-                                                <button class="btn btn-success btn-xs mx-1" wire:click="updateUser"
-                                                    title="حفظ">
-                                                    <i class="fas fa-check"></i>
-                                                    حفظ
-                                                </button>
-                                                <button class="btn btn-secondary btn-xs" wire:click="cancelEdit">
-                                                    ✖ إلغاء
-                                                </button>
-
-                                            </div>
-                                        @else
-                                        <a href="#" class=""
-                                            wire:click.prevent="editUser({{ $user->id }})" 
-                                            title="تغيير نوع المستخدم">
-                                            تغيير نوع المستخدم
-                                        </a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
+                <div class="col-md-4">
+                    <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                        <select wire:model.live="bannedStatus" 
+                                class="form-control border-0 py-2">
+                            <option value="">جميع حالات المستخدمين</option>
+                            <option value="1">الحسابات المحظورة</option>
+                            <option value="0">الحسابات النشطة</option>
+                        </select>
+                        <span class="input-group-text bg-white border-0">
+                            <i class="fas fa-user-lock text-muted"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer clearfix">
+
+            <!-- Table Section -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="text-center py-3 fw-bold" width="60">#</th>
+                            <th class="text-start py-3 fw-bold">الاسم</th>
+                            <th class="text-start py-3 fw-bold">رقم الجوال</th>
+                            <th class="text-center py-3 fw-bold">نوع المستخدم</th>
+                            <th class="text-center py-3 fw-bold">الحالة</th>
+                            <th class="text-center py-3 fw-bold" width="180">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr wire:key="{{ $user->id }}" class="{{ $user->is_banned ? 'table-danger' : '' }}">
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-start fw-semibold">{{ $user->name }}</td>
+                                <td class="text-start">{{ $user->phone ?? 'غير محدد' }}</td>
+                                
+                                <td class="text-center">
+                                    @if ($editingUserId === $user->id)
+                                        <select class="form-control form-control-sm shadow-sm" 
+                                                wire:model.defer="editType">
+                                            <option value="admin">مدير</option>
+                                            <option value="owner">صاحب منشأة</option>
+                                            <option value="user">مستخدم</option>
+                                        </select>
+                                    @else
+                                        @switch($user->user_type)
+                                            @case('admin')
+                                                <span class="badge badge-red">مدير</span>
+                                            @break
+                                            @case('owner')
+                                                <span class="badge badge-yellow">صاحب منشأة</span>
+                                            @break
+                                            @default
+                                                <span class="badge badge-green">مستخدم</span>
+                                        @endswitch
+                                    @endif
+                                </td>
+                                
+                                <td class="text-center">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <span class="me-2 small">{{ $user->is_banned ? 'محظور' : 'نشط' }}</span>
+                                        <div class="form-switch {{ $user->is_banned ? 'switch-banned' : 'switch-active' }}">
+                                            <input type="checkbox" id="banSwitch{{ $user->id }}"
+                                                wire:click="toggleBan({{ $user->id }})"
+                                                @if (!$user->is_banned) checked @endif>
+                                            <label for="banSwitch{{ $user->id }}"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                <td class="text-center">
+                                    @if ($editingUserId === $user->id)
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <button class="btn btn-sm btn-success shadow-sm rounded-pill px-3"
+                                                    wire:click="updateUser">
+                                                <i class="fas fa-check me-1"></i> حفظ
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary shadow-sm rounded-pill px-3"
+                                                    wire:click="cancelEdit">
+                                                <i class="fas fa-times me-1"></i> إلغاء
+                                            </button>
+                                        </div>
+                                    @else
+                                        <button class="btn btn-sm btn-outline-primary shadow-sm rounded-pill px-3"
+                                                wire:click="editUser({{ $user->id }})">
+                                            <i class="fas fa-edit me-1"></i> تعديل
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Card Footer with Pagination -->
+            <div class="card-footer">
                 {{ $users->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- 
 </div>

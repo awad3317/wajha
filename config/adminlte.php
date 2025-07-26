@@ -345,7 +345,7 @@ return [
         [
             'text' => 'اسعار الباقات',
             'url' => '/price_packages',
-            'icon' => 'fas fa-icons',
+            'icon' => 'fas fa-shopping-bag',
         ],
 
 

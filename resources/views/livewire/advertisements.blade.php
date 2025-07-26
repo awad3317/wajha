@@ -1,316 +1,312 @@
 <div>
-    {{-- رسالة النجاح --}}
+    {{-- Success Message --}}
     @if (session()->has('success'))
-        <div class="alert alert-success text-right">
+        <div class="alert alert-success alert-dismissible fade show text-right" role="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-
-
     <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center my-3">
+        {{-- Header Section --}}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-primary">
+                 إدارة الإعلانات
+            </h3>
             @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary text-left">إضافة الإعلان</button>
+                <button wire:click="create" class="btn btn-primary add-btn">
+                    <i class="fas fa-plus-circle ml-2"></i> إضافة إعلان جديد
+                </button>
             @endif
-            <h3 class="text-left">إدارة الإعلانات</h3>
         </div>
 
-        <style>
-            .form-switch {
-                position: relative;
-                display: inline-block;
-                width: 2.5rem;
-                height: 1.4rem;
-                margin-right: 0.5rem;
-            }
-
-            .form-switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-            .form-switch label::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 2.5rem;
-                height: 1.4rem;
-                background-color: #adb5bd;
-                border-radius: 1.5rem;
-                transition: background-color 0.3s;
-            }
-
-            .form-switch label::after {
-                content: "";
-                position: absolute;
-                top: 0.1rem;
-                right: 0.1rem;
-                width: 1.2rem;
-                height: 1.2rem;
-                background-color: white;
-                border-radius: 50%;
-                transition: transform 0.3s, background-color 0.3s;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-            }
-
-            .form-switch input:checked+label::after {
-                transform: translateX(-1.1rem);
-            }
-
-            .switch-active label::before {
-                background-color: #007bff;
-            }
-
-            .switch-banned label::before {
-                background-color: #dc3545;
-            }
-        </style>
-        {{-- النموذج --}}
+        {{-- Form Section --}}
         @if ($showForm || $isEdit)
-            <div class="card mb-4 shadow-sm">
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0 text-right">
+                        <i class="fas fa-edit ml-2"></i>
+                        {{ $isEdit ? 'تعديل الإعلان' : 'إضافة إعلان جديد' }}
+                    </h5>
+                </div>
+                
                 <div class="card-body">
-
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" enctype="multipart/form-data">
-                        <div class="row g-3">
-
-                            {{-- العنوان --}}
-                            <div class="col-md-12">
-                                <label for="title" class="form-label text-right d-block">عنوان الإعلان <span
-                                        class="text-danger">*</span></label>
-                                <input id="title" type="text" wire:model.defer="title"
-                                    class="form-control text-right @error('title') is-invalid @enderror"
-                                    placeholder="عنوان الإعلان">
+                        <div class="row g-4">
+                            {{-- Title Field --}}
+                            <div class="col-12">
+                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                     عنوان الإعلان <i class="fas fa-heading ml-2"></i><span class="text-danger">*</span>
+                                </label>
+                                <input type="text" wire:model.defer="title"
+                                    class="form-control form-control-lg text-right py-3 rounded-3 @error('title') is-invalid @enderror"
+                                    placeholder="أدخل عنوان الإعلان هنا...">
                                 @error('title')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback text-right d-block mt-2">
+                                        {{ $message }}<i class="fas fa-exclamation-circle me-1"></i>
+                                    </div>
                                 @enderror
                             </div>
-                            <div class="col-md-12" dir="rtl" style="text-align: right;">
-                                <label for="image" class="form-label d-block text-right">
-                                    <span class="text-danger">{{ $isEdit ? '(اختياري)' : '*' }}</span> صورة الإعلان
+
+                            {{-- Image Field --}}
+                            <div class="col-12">
+                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                     صورة الإعلان <i class="fas fa-image ml-2"></i>
+                                    <span class="text-danger">{{ $isEdit ? '(اختياري)' : '*' }}</span>
                                 </label>
-
-                                <div class="input-group mb-2 justify-content-start d-flex">
-                                    <label class="input-group-text btn btn-outline-primary" style="cursor: pointer;">
-                                        📤 اختر صورة
-                                        <input type="file" id="image" wire:model="image" accept="image/*"
-                                            class="d-none @error('image') is-invalid @enderror">
+                                
+                                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                                    <label class="input-group-text btn btn-primary text-white border-0" style="cursor: pointer;">
+                                        <i class="fas fa-cloud-upload-alt ml-2"></i> اختر صورة
+                                        <input type="file" wire:model="image" accept="image/*" class="d-none">
                                     </label>
-
-                                    {{-- عرض اسم الملف إن وُجد --}}
-                                    @if ($image)
-                                        <span class="form-control text-truncate ml-2" style="max-width: 60%;">
-                                            {{ $image->getClientOriginalName() }}
-                                        </span>
-                                    @endif
+                                    <span class="form-control text-right bg-light text-truncate">
+                                        @if ($image) {{ $image->getClientOriginalName() }}
+                                        @elseif($imagePreview) تم اختيار صورة مسبقاً
+                                        @else لم يتم اختيار صورة
+                                        @endif
+                                    </span>
                                 </div>
-
+                                
                                 @error('image')
-                                    <div class="text-danger small text-right">{{ $message }}</div>
+                                    <div class="text-danger small text-right mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
-
-                                {{-- المعاينة --}}
-                                <div class="mt-3 d-flex justify-content-end">
+                                
+                                {{-- Image Preview --}}
+                                <div class="mt-3 text-center">
                                     @if ($image)
-                                        <div style="text-align: right;">
-                                            <p class="mb-1 text-muted" style="font-size: 0.9rem;">معاينة مؤقتة:</p>
-                                            <img src="{{ $image->temporaryUrl() }}" class="rounded shadow-sm border"
-                                                style="max-height: 150px; max-width: 100%;">
+                                        <div class="position-relative d-inline-block">
+                                            <img src="{{ $image->temporaryUrl() }}" 
+                                                 class="rounded-3 shadow border border-3 border-primary"
+                                                 style="max-height: 200px; max-width: 100%; object-fit: contain;">
+                                            <span class="badge bg-primary position-absolute top-0 start-0 m-2">معاينة</span>
                                         </div>
                                     @elseif ($imagePreview)
-                                        <div style="text-align: right;">
-                                            <p class="mb-1 text-muted" style="font-size: 0.9rem;">الصورة الحالية:</p>
-                                            <img src="{{ asset('storage/' . $imagePreview) }}"
-                                                class="rounded shadow-sm border"
-                                                style="max-height: 150px; max-width: 100%;">
+                                        <div class="position-relative d-inline-block">
+                                            <img src="{{ asset('storage/' . $imagePreview) }}" 
+                                                 class="rounded-3 shadow border border-3 border-secondary"
+                                                 style="max-height: 200px; max-width: 100%; object-fit: contain;">
+                                            <span class="badge bg-secondary position-absolute top-0 start-0 m-2">الصورة الحالية</span>
                                         </div>
                                     @endif
                                 </div>
                             </div>
 
-                            {{-- وصف الإعلان --}}
-                            <div class="col-12 mb-2">
-                                <label for="description" class="form-label text-right d-block">وصف الإعلان <span
-                                        class="text-danger">*</span></label>
-                                <textarea id="description" wire:model.defer="description" rows="4"
-                                    class="form-control text-right @error('description') is-invalid @enderror" placeholder="وصف الإعلان"></textarea>
+                            {{-- Description Field --}}
+                            <div class="col-12">
+                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                    وصف الإعلان <i class="fas fa-align-left ml-2"></i> <span class="text-danger">*</span>
+                                </label>
+                                <textarea wire:model.defer="description" rows="5"
+                                    class="form-control form-control-lg text-right py-3 rounded-3 @error('description') is-invalid @enderror"
+                                    placeholder="أدخل وصف الإعلان هنا..."></textarea>
                                 @error('description')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback text-right d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            {{-- تواريخ البدء والانتهاء --}}
-
-                            <div class="col-md-6 ">
-                                <label for="end_date" class="form-label text-right d-block">تاريخ الانتهاء
-                                    <span class="text-danger">*</span>
-
-                                </label>
-
-                                <input id="end_date" type="datetime-local" wire:model.defer="end_date"
-                                    class="form-control @error('end_date') is-invalid @enderror"
-                                    placeholder="تاريخ الانتهاء">
-                                @error('end_date')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Dates Section --}}
                             <div class="col-md-6">
-                                <label for="start_date" class="form-label text-right d-block">تاريخ البدء
-                                    <span class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                     تاريخ البدء <i class="fas fa-calendar-plus ml-2"></i><span class="text-danger">*</span>
                                 </label>
-                                <input id="start_date" type="datetime-local" wire:model.defer="start_date"
-                                    class="form-control @error('start_date') is-invalid @enderror"
-                                    placeholder="تاريخ البدء">
+                                <div class="input-group input-group-lg shadow-sm rounded-3">
+                                    <span class="input-group-text bg-white border-0">
+                                        <i class="fas fa-calendar-alt text-primary"></i>
+                                    </span>
+                                    <input type="datetime-local" wire:model.defer="start_date"
+                                        class="form-control border-0 text-right py-3 @error('start_date') is-invalid @enderror">
+                                </div>
                                 @error('start_date')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback text-right d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <div class="form-switch d-none">
-                                <input type="hidden" id="isActiveSwitch" wire:model.defer="is_active"
-                                    @if ($is_active) checked @endif>
-                                <label for="isActiveSwitch"></label>
+                            <div class="col-md-6">
+                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                     تاريخ الانتهاء <i class="fas fa-calendar-times ml-2"></i><span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group input-group-lg shadow-sm rounded-3">
+                                    <span class="input-group-text bg-white border-0">
+                                        <i class="fas fa-calendar-alt text-primary"></i>
+                                    </span>
+                                    <input type="datetime-local" wire:model.defer="end_date"
+                                        class="form-control border-0 text-right py-3 @error('end_date') is-invalid @enderror">
+                                </div>
+                                @error('end_date')
+                                    <div class="invalid-feedback text-right d-block mt-2">
+                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            {{-- زر الإضافة أو التحديث --}}
-                            <div class="col-md-12 d-flex align-items-end mt-2">
-                                <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} w-100">
-                                    {{ $isEdit ? 'تحديث' : 'إضافة' }}
+
+                            {{-- Action Buttons --}}
+                            <div class="col-md-6 mt-4">
+                                <button type="button" wire:click="cancel"
+                                    class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
+                                    <i class="fas fa-times ml-2"></i> إلغاء
+                                </button>
+                            </div>
+
+                            <div class="col-md-6 mt-4">
+                                <button type="submit"
+                                    class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
+                                    {{ $isEdit ? 'حفظ التعديلات' : 'إضافة الإعلان' }}
                                 </button>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         @endif
-        {{-- جدول الإعلانات --}}
 
-        <div class="col-md-12  mb-2">
-            <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-                <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم الاعلان"
-                    wire:model.debounce.300ms.live="search">
-                <div class="input-group-append">
+        {{-- Search and Filter Section --}}
+        <div class="row g-3 mb-4">
+            <div class="col-md-8">
+                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                    <input type="text" wire:model.debounce.300ms.live="search"
+                        class="form-control border-0 text-right py-2"
+                        placeholder="ابحث باسم الإعلان...">
                     <span class="input-group-text bg-white border-0">
-                        <i class="fas fa-search text-secondary"></i>
+                        <i class="fas fa-search text-primary"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                    <select wire:model.live="selectedStatu" class="form-control border-0 text-right py-2">
+                        <option value="">كل الحالات</option>
+                        <option value="1">المفعلة</option>
+                        <option value="0">غير المفعلة</option>
+                    </select>
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-filter text-primary"></i>
                     </span>
                 </div>
             </div>
         </div>
 
-
-        <div class="col-md-12  mb-2">
-            <div class="input-group input-group-xl shadow-sm  overflow-hidden">
-                <select wire:model.live="selectedStatu" class="form-control text-right border-0">
-                    <option value=" ">كل الحالات</option>
-                    <option value="1">مفعل</option>
-                    <option value="0">غير مفعل</option>
-                </select>
-
-                <div class="input-group-append">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fas fa-check-circle text-success"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row  mt-2">
-
+        {{-- Advertisements Grid --}}
+        <div class="row g-4">
             @forelse ($advertisements as $ad)
-                <div class="col-md-6 col-lg-4 my-2" wire:key="ad-{{ $ad->id }}">
-                    <div class="card border-0 shadow rounded-3 h-100 overflow-hidden position-relative">
-
-                        {{-- صورة الإعلان --}}
-                        @if ($ad->image)
-                            <img src="{{ asset('storage/' . $ad->image) }}" alt="صورة الإعلان" class="w-100"
-                                style="height: 180px; object-fit: cover;">
-                        @else
-                            <div class="bg-light d-flex align-items-center justify-content-center"
-                                style="height: 180px;">
-                                <span class="text-muted">لا توجد صورة</span>
-                            </div>
-                        @endif
-
-
-                        <span wire:click="toggleVerification({{ $ad->id }})"
-                            class="position-absolute top-0 end-0 m-2 badge rounded-pill {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}"
-                            style="cursor: pointer; font-size: 0.85rem;">
-                            {{ $ad->is_active ? 'مفعل' : 'غير مفعل' }}
-                        </span>
-
-
-                        <div class="card-body text-end d-flex flex-column">
-
-                            {{-- عنوان الإعلان --}}
-                            <h5 class="fw-bold text-truncate mb-2 text-right" title="{{ $ad->title }}">
+                <div class="col-md-6 col-lg-4" wire:key="ad-{{ $ad->id }}">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                        {{-- Advertisement Image --}}
+                        <div class="position-relative">
+                            @if ($ad->image)
+                                <img src="{{ asset('storage/' . $ad->image) }}" 
+                                     class="card-img-top" 
+                                     alt="صورة الإعلان"
+                                     style="height: 200px; object-fit: cover;">
+                            @else
+                                <div class="bg-light d-flex align-items-center justify-content-center" 
+                                     style="height: 200px;">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                </div>
+                            @endif
+                            
+                            {{-- Active Status Badge --}}
+                            <span wire:click="toggleVerification({{ $ad->id }})"
+                                class="position-absolute top-0 end-0 m-2 badge rounded-pill {{ $ad->is_active ? 'bg-success' : 'bg-danger' }}"
+                                style="cursor: pointer; font-size: 0.85rem;">
+                                {{ $ad->is_active ? 'مفعل' : 'غير مفعل' }}
+                            </span>
+                        </div>
+                        
+                        <div class="card-body d-flex flex-column">
+                            {{-- Title --}}
+                            <h5 class="card-title fw-bold text-right mb-3 text-truncate" title="{{ $ad->title }}">
                                 {{ $ad->title }}
                             </h5>
-
-                            {{-- وصف الإعلان --}}
-                            <p class="text-muted small text-right" style="max-height: 4.5em; overflow: hidden;"
-                                title="{{ $ad->description }}">
+                            
+                            {{-- Description --}}
+                            <p class="card-text text-muted text-right mb-4" 
+                               style="max-height: 4.5em; overflow: hidden; line-height: 1.6;"
+                               title="{{ $ad->description }}">
                                 {{ $ad->description }}
                             </p>
-
-                            {{-- التواريخ --}}
-                            <div class="d-flex justify-content-end small mt-2 mb-3 text-right">
-
-                                <div>النهاية:
-                                    {{ $ad->end_date ? \Carbon\Carbon::parse($ad->end_date)->format('Y-m-d') : '—' }}
-                                    <i class="far fa-calendar-check ms-1"></i>
+                            
+                            {{-- Dates --}}
+                            <div class="d-flex justify-content-between small text-muted mt-auto mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-primary mr-2"></i>
+                                    <div>
+                                        <div class="fw-bold">{{ \Carbon\Carbon::parse($ad->start_date)->format('Y-m-d') }}</div>
+                                        <div class="extra-small">تاريخ البدء</div>
+                                    </div>
                                 </div>
-                                <div class="mx-4">البداية:
-                                    {{ \Carbon\Carbon::parse($ad->start_date)->format('Y-m-d') }}
-                                    <i class="far fa-calendar-alt ms-1"></i>
+                                
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-check text-primary mr-2"></i>
+                                    <div>
+                                        <div class="fw-bold">
+                                            {{ $ad->end_date ? \Carbon\Carbon::parse($ad->end_date)->format('Y-m-d') : '—' }}
+                                        </div>
+                                        <div class="extra-small">تاريخ النهاية</div>
+                                    </div>
                                 </div>
                             </div>
-
-                            {{-- الأزرار --}}
-                            <div class="d-flex gap-2 mt-auto ">
-                                <button class="btn btn-info btn-sm w-50" wire:click="edit({{ $ad->id }})">
-                                    <i class="fas fa-edit ms-1"></i> تعديل
+                            
+                            {{-- Action Buttons --}}
+                            <div class="d-flex justify-content-between mt-auto">
+                                <button class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                                        wire:click="edit({{ $ad->id }})">
+                                    <i class="fas fa-edit me-1"></i> تعديل
                                 </button>
-                                <button class="btn btn-danger btn-sm w-50 ml-2"
-                                    wire:click="confirmDelete({{ $ad->id }})">
-                                    <i class="fas fa-trash ms-1"></i> حذف
+                                <button class="btn btn-outline-danger btn-sm rounded-pill px-3"
+                                        wire:click="confirmDelete({{ $ad->id }})">
+                                    <i class="fas fa-trash me-1"></i> حذف
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             @empty
-                <div class="col-12 text-center text-muted fs-5">
-                    لا توجد إعلانات بعد.
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center py-5">
+                            <i class="fas fa-ad fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">لا توجد إعلانات لعرضها</h4>
+                            <p class="text-muted mt-2">يمكنك إضافة إعلان جديد باستخدام زر "إضافة إعلان"</p>
+                        </div>
+                    </div>
                 </div>
             @endforelse
         </div>
 
-
-
-
-        {{-- مودال الحذف Livewire فقط --}}
+        {{-- Delete Confirmation Modal --}}
         @if ($deleteId)
-            <div class="modal fade show d-block text-right" tabindex="-1"
-                style="background-color: rgba(0,0,0,0.5);">
+            <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                    <div class="modal-content border-0 shadow-lg">
                         <div class="modal-header bg-danger text-white">
-                            <h5 class="modal-title">تأكيد الحذف</h5>
-                            <button type="button" class="btn-close" wire:click="$set('deleteId', null)"
-                                aria-label="Close"></button>
+                            <h5 class="modal-title">
+                                <i class="fas fa-exclamation-triangle ml-2"></i> تأكيد الحذف
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" wire:click="$set('deleteId', null)"></button>
                         </div>
-                        <div class="modal-body">
-                            هل أنت متأكد أنك تريد حذف الإعلان:
-                            <strong class="text-danger">"{{ $deleteTitle }}"</strong>؟ لا يمكن التراجع بعد الحذف.
+                        <div class="modal-body text-right">
+                            <p>هل أنت متأكد أنك تريد حذف الإعلان التالي؟</p>
+                            <p class="fw-bold text-danger">"{{ $deleteTitle }}"</p>
+                            <p class="small text-muted">ملاحظة: لا يمكن استعادة الإعلان بعد الحذف</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                wire:click="$set('deleteId', null)">إلغاء</button>
-                            <button type="button" class="btn btn-danger" wire:click="deleteAdvertisement">نعم،
-                                حذف</button>
+                            <button type="button" class="btn btn-secondary rounded-pill px-4"
+                                wire:click="$set('deleteId', null)">
+                                <i class="fas fa-times me-1"></i> إلغاء
+                            </button>
+                            <button type="button" class="btn btn-danger rounded-pill px-4"
+                                wire:click="deleteAdvertisement">
+                                <i class="fas fa-trash me-1"></i> نعم، احذف
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -318,7 +314,7 @@
         @endif
     </div>
 
-    {{-- سكريبتات SweetAlert2 --}}
+    {{-- SweetAlert2 Script --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         window.addEventListener('show-toast', event => {
@@ -332,18 +328,21 @@
                 timerProgressBar: true,
                 background: '#f8f9fa',
                 color: '#212529',
+                iconColor: event.detail.type === 'success' ? '#28a745' : '#dc3545'
             });
         });
-
-        window.addEventListener('close-delete-modal', () => {
-            const modal = document.querySelector('.modal.show');
-            if (modal) {
-                modal.classList.remove('show');
-                modal.style.display = 'none';
-                document.body.classList.remove('modal-open');
-                const backdrop = document.querySelector('.modal-backdrop');
-                if (backdrop) backdrop.remove();
-            }
-        });
     </script>
+    <style>
+    .hover-shadow {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+</style>
 </div>
+
