@@ -78,10 +78,12 @@ class BookingController extends Controller
                      $coupon, 
                      $establishment->pricePackages()->findOrFail($fields['price_package_id'])->price
                 );
+                $fields['coupon_id']=$coupon->id;
                 } else {
                    return ApiResponseClass::sendError('كود الكوبون الذي أدخلته غير صحيح. يرجى التحقق والمحاولة مرة أخرى.', 400);
                 }
             }
+            
             $booking = $this->bookingRepository->store($fields);
              if (!empty($fields['coupon_code'])) {
             $this->couponService->recordCouponUse([
