@@ -53,6 +53,12 @@ class BookingController extends Controller
             $user_id = auth('sanctum')->id();
             $fields['user_id'] = $user_id;
 
+            $existingBooking = $this->bookingRepository->findExistingBooking($user_id,$fields['establishment_id']);
+
+            if ($existingBooking) {
+                return ApiResponseClass::sendError('لديك بالفعل حجز نشط في هذه المنشأة ولا يمكنك حجز مرة أخرى.', 400);
+            }
+
             $establishment = $this->EstablishmentRepository->getById($fields['establishment_id']);
             if (!empty($fields['coupon_code'])) {
                 $coupon = $this->couponService->getCouponByCode($fields['coupon_code']);

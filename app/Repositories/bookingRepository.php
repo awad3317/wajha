@@ -52,5 +52,12 @@ class bookingRepository implements RepositoriesInterface
     {
         return booking::where('id', $id)->delete() > 0;
     }
+
+    public function findExistingBooking($user_id,$establishment_id){
+        return Booking::where('user_id', $user_id)
+            ->where('establishment_id', $establishment_id)
+            ->whereIn('status', ['pending', 'waiting_payment', 'paid'])
+            ->first();
+    }
     
 }
