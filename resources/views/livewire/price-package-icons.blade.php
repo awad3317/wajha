@@ -22,7 +22,7 @@
         <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
             <div class="row g-4">
                 <!-- Icon Upload Field -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label class="form-label text-primary fw-bold d-block text-right mb-3">
                             <i class="fas fa-upload me-2"></i>
@@ -62,25 +62,6 @@
                                     <i class="fas fa-image text-muted fa-lg"></i>
                                 </div>
                             @endif
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Search Field -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label text-primary fw-bold d-block text-right mb-3">
-                            <i class="fas fa-search me-2"></i>
-                            البحث عن الأيقونات
-                        </label>
-                        
-                        <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                            <input type="text" class="form-control border-0 text-right py-3"
-                                   placeholder="ابحث باسم الأيقونة..."
-                                   wire:model.debounce.300ms.live="search">
-                            <span class="input-group-text bg-white border-0">
-                                <i class="fas fa-search text-primary"></i>
-                            </span>
                         </div>
                     </div>
                 </div>
