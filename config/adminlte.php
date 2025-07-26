@@ -350,12 +350,18 @@ return [
 
 
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'الايقونات',
+            'icon' => 'fas fa-icons',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'اسعار الباقات',
+                    'url' => '/packages',
+                    'icon' => 'fas fa-icons',
+                ],
+                [
+                    'text' => 'مميزات المنشئة',
+                    'url' => '/',
+                    'icon' => 'fas fa-icons',
                 ],
                 [
                     'text' => 'level_one',
@@ -381,10 +387,7 @@ return [
                         ],
                     ],
                 ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
+               
             ],
         ],
         ['header' => 'labels'],
