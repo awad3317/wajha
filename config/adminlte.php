@@ -352,11 +352,11 @@ return [
                     'url' => '/packages',
                     'icon' => 'fas fa-icons',
                 ],
-                [
-                    'text' => 'مميزات المنشئة',
-                    'url' => '/',
-                    'icon' => 'fas fa-icons',
-                ],
+                // [
+                //     'text' => 'مميزات المنشئة',
+                //     'url' => '/',
+                //     'icon' => 'fas fa-icons',
+                // ],
                 [
                     'text' => 'level_one',
                     'url' => '#',
