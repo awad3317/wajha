@@ -9,6 +9,7 @@ use App\Services\CouponService;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
 use App\Services\FirebaseService;
+use App\Services\BookingStatusService;
 use App\Http\Controllers\Controller;
 use App\Repositories\bookingRepository;
 use App\Notifications\NewBookingNotification;
@@ -19,7 +20,7 @@ class BookingController extends Controller
      /**
      * Create a new class instance.
      */
-    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService,private CouponService $couponService,private EstablishmentRepository $EstablishmentRepository)
+    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService,private CouponService $couponService,private EstablishmentRepository $EstablishmentRepository,private BookingStatusService $bookingStatusService)
     {
         //
     }
@@ -88,7 +89,7 @@ class BookingController extends Controller
             $owner = $establishment->owner;
 
             // send database notification to the owner
-            $owner->notify(new NewBookingNotification($booking));
+            $owner->notify(new NewBookingNotification($booking,'حجز جديد','حجز جديد في منشأتك: ' . $this->booking->establishment->name,'owner'));
 
             // send to FCM notification to the owner
             $title = "حجز جديد في منشأتك";
@@ -104,6 +105,39 @@ class BookingController extends Controller
         } catch (Exception $e) {
             return ApiResponseClass::sendError('Error saving booking: ' . $e->getMessage());
         }
+    }
+
+    public function markAsWaitingPayment(Request $request)
+    {
+        $fields = $request->validate([
+          'booking_id'=>['required',Rule::exists('bookings','id')]
+        ]);
+        try {
+            $booking= $this->bookingRepository->getById($fields['booking_id']);
+            $bookingStatus = $this->bookingStatusService->markAsWaitingPayment($booking);
+            $user = $booking->user;
+            $establishment = $booking->establishment;
+
+            $user->notify(new NewBookingNotification($booking,'بانتظار الدفع',"حجزك في {$this->booking->establishment->name} بانتظار الدفع",'customer'));
+
+            $title = "بانتظار الدفع";
+            $body = "حجزك في {$establishment->name} بانتظار الدفع. الرجاء إتمام الدفع قبل تاريخ الحجز: " . $booking->booking_date;
+        
+            $data = [
+                'type' => 'بانتظار الدفع',
+                'booking_id' => $booking->id,
+                'establishment_id' => $establishment->id,
+                'user_id' => $user->id,
+            ];
+        
+            if ($user->device_token) {
+                $this->firebaseService->sendNotification($user->device_token, $title, $body, $data);
+            }
+            return ApiResponseClass::sendResponse($booking,'تم تحديث حالة الحجز إلى "بانتظار الدفع" بنجاح');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('حدث خطأ أثناء تحديث حالة الحجز: ' . $e->getMessage(), [], 500);
+        }
+        
     }
 
     /**

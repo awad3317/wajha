@@ -13,13 +13,19 @@ class NewBookingNotification extends Notification
     use Queueable;
 
     protected $booking;
+    protected $type;
+    protected $message;
+    protected $targetUserType;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(booking $booking)
+    public function __construct(Booking $booking, string $type,string $message, string $targetUserType = 'owner')
     {
         $this->booking = $booking;
+        $this->type = $type;
+        $this->targetUserType = $targetUserType;
+        $this->message = $message;
     }
 
     /**
@@ -47,9 +53,12 @@ class NewBookingNotification extends Notification
     {
         return [
             'booking_id' => $this->booking->id,
+            'establishment_id' => $this->booking->establishment->id,
             'establishment_name' => $this->booking->establishment->name,
             'booking_date' => $this->booking->booking_date->format('Y-m-d H:i'),
-            'message' => 'حجز جديد في منشأتك: ' . $this->booking->establishment->name,
+            'type' => $this->type,
+            'target_user_type' => $this->targetUserType,
+            'message' => $this->message,
         ];
     }
 
