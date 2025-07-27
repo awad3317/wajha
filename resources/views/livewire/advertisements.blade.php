@@ -288,15 +288,7 @@
                         {{-- أزرار التحكم --}}
                         <div class="card-footer bg-transparent  pt-1 px-0 mx-2">
                             <div class="d-flex justify-content-between align-items-center gap-3 mx-1">
-                                <!-- زر التعديل مع تحسينات -->
-                                <button
-                                    class="btn btn-outline-primary btn-sm rounded-pill flex-grow-1 py-2 d-flex align-items-center justify-content-center"
-                                    wire:click.prevent="edit({{ $ad->id }})" data-bs-toggle="tooltip"
-                                    title="تعديل الإعلان">
-
-                                    <span class="d-none d-sm-inline-block">تعديل</span>
-                                    <i class="fas fa-edit ml-2"></i>
-                                </button>
+                         
 
                                 <!-- زر الحذف مع تحسينات -->
                                 <button
@@ -305,6 +297,15 @@
                                     title="حذف الإعلان">
                                     <span class="d-none d-sm-inline-block">حذف</span>
                                     <i class="fas fa-trash-alt ml-2"></i>
+                                </button>
+                                       <!-- زر التعديل مع تحسينات -->
+                                <button
+                                    class="btn btn-outline-primary btn-sm rounded-pill flex-grow-1 py-2 d-flex align-items-center justify-content-center"
+                                    wire:click.prevent="edit({{ $ad->id }})" data-bs-toggle="tooltip"
+                                    title="تعديل الإعلان">
+
+                                    <span class="d-none d-sm-inline-block">تعديل</span>
+                                    <i class="fas fa-edit ml-2"></i>
                                 </button>
                             </div>
                         </div>
