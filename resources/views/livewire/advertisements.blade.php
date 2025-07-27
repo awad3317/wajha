@@ -244,6 +244,20 @@
                                 </div>
 
                                 <div class="row mt-3 g-2">
+                                      <div class="col-6">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="text-end me-2">
+                                                <div class="fw-semibold small text-dark">
+                                                    تاريخ النهاية
+                                                    <i class="fas fa-calendar-check text-success ms-2"></i>
+                                                </div>
+                                                <div class="text-muted extra-small">
+                                                    {{ $ad->end_date ? \Carbon\Carbon::parse($ad->end_date)->format('Y-m-d') : 'لا نهاية' }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-6">
                                         <div class="d-flex align-items-center justify-content-end">
                                             <div class="text-end me-2">
@@ -259,20 +273,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6">
-                                        <div class="d-flex align-items-center justify-content-end">
-                                            <div class="text-end me-2">
-                                                <div class="fw-semibold small text-dark">
-                                                    تاريخ النهاية
-                                                    <i class="fas fa-calendar-check text-success ms-2"></i>
-                                                </div>
-                                                <div class="text-muted extra-small">
-                                                    {{ $ad->end_date ? \Carbon\Carbon::parse($ad->end_date)->format('Y-m-d') : 'لا نهاية' }}
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  
                                 </div>
                             </div>
                         </a>
