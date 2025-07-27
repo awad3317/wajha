@@ -86,9 +86,9 @@
                                     {{-- زر الحفظ/الإضافة --}}
                                     <div class="flex-grow-1">
                                         <button type="submit"
-                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-2 py-md-3">
-                                            <span>{{ $isEdit ? 'حفظ التغييرات' : 'إضافة منطقة' }}</span>
-                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} me-2"></i>
+                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
                                         </button>
                                     </div>
                                 </div>

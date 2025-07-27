@@ -1,10 +1,9 @@
 <div>
 
 
-   
+
 
     <div class="container mt-4">
-        <h3 class="main-title text-right"> إدارة الباقات </h3>
 
         @if (session()->has('success'))
             <div class="alert alert-success text-right rounded-pill px-4 py-2 mb-3">
@@ -12,18 +11,25 @@
             </div>
         @endif
 
-        @if (!$showForm)
-            <button wire:click="create" class="btn btn-primary add-btn mb-4 " >
-                    إضافة باقة جديدة
-                    <i class="fas fa-plus-circle me-2"></i>
-            </button>
-        @endif
+   
+       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2">
+
+    @if (!$showForm && !$isEdit)
+        <button wire:click="create" class="btn btn-primary add-btn d-flex align-items-center">
+            <span>إضافة باقة جديدة</span>
+            <i class="fas fa-plus-circle me-2"></i>
+        </button>
+    @endif
+
+    <h3 class="text-md-left d-none d-md-block mb-md-2 text-right">إدارة الباقات</h3>
+</div>
+
 
         @if ($showForm)
             <div class="card mb-4 shadow-sm border-primary rounded-4 text-right">
                 <div class="card-header text-right">
                     {{ $isEdit ? 'تعديل الباقة' : 'إضافة باقة جديدة' }}
-                     <i class="fas fa-gift me-2"></i>
+                    <i class="fas fa-gift me-2"></i>
                 </div>
                 <div class="card-body">
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
@@ -80,7 +86,8 @@
                             </div>
 
                             <div class="col-md-6 my-2">
-                                <label class="form-label fw-semibold">أيقونة الباقة<span class="text-danger">*</span></label>
+                                <label class="form-label fw-semibold">أيقونة الباقة<span
+                                        class="text-danger">*</span></label>
                                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
                                     <select wire:model.defer="icon_id" class="form-control text-right border-0">
                                         <option value="">-- اختر أيقونة --</option>
@@ -136,7 +143,7 @@
         @endif
 
         {{-- Search --}}
-        <div class="col-md-12 mb-4">
+        <div class="col-md-12 mb-1">
             <div class="input-group input-group-xl shadow-sm rounded-pill overflow-hidden">
                 <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم الاعلان"
                     wire:model.debounce.300ms.live="search">
@@ -152,7 +159,7 @@
         <div class="card-body">
             <div class="row g-4">
                 @forelse ($packages as $package)
-                    <div class="col-12 col-md-6 col-lg-4 text-right">
+                    <div class="col-12 col-md-6 col-lg-4 text-right mb-2">
                         <div class="card package-card h-100 border-0">
                             <div class="package-header">
                                 <span class="price-badge">

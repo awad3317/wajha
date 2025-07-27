@@ -71,15 +71,16 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <button type="button" wire:click="cancel"
-                                    class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                <i class="fas fa-times me-2"></i> إلغاء
+                                    class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
+                                 إلغاء<i class="fas fa-times ml-2"></i>
                             </button>
                         </div>
                         <div class="col-md-6">
                             <button type="submit"
                                     class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} me-2"></i>
+                              
                                 {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
+                                  <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
                             </button>
                         </div>
                     </div>
@@ -118,9 +119,9 @@
                                     <div class="d-flex justify-content-center">
                                         <img src="{{ url($package->icon) }}" 
                                              alt="أيقونة الباقة" 
-                                             class="rounded-circle  border-3 border-primary p-1"
-                                             width="70" 
-                                             height="70"
+                                             class="rounded  border-3 border-primary p-1"
+                                             width="150" 
+                                             height="100"
                                              style="object-fit: cover; background-color: #f8f9fa;">
                                     </div>
                                 @else
@@ -135,7 +136,7 @@
                             
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-3">
-                                    <button class="btn btn-icon btn-sm btn-info rounded-circle shadow-sm"
+                                    <button class="btn btn-icon btn-sm btn-info rounded-circle shadow-sm mx-1"
                                             wire:click="edit({{ $package->id }})"
                                             data-bs-toggle="tooltip"
                                             title="تعديل الباقة">
