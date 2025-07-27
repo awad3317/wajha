@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('establishment_unavailabilities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('establishment_id')->constrained('establishments');
+            $table->foreignId('establishment_id')->constrained('establishments')->onDelete('cascade');;
             $table->date('unavailable_date');
             $table->timestamps();
             
