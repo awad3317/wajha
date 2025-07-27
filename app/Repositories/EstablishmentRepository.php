@@ -3,6 +3,7 @@
 namespace App\Repositories;
 use App\Models\Region;
 use App\Models\Establishment;
+use App\Models\booking;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\RepositoriesInterface;
 
@@ -82,6 +83,7 @@ class EstablishmentRepository implements RepositoriesInterface
      */
     public function delete($id): bool
     {
+        booking::where('establishment_id', $id)->delete();
         return Establishment::where('id', $id)->delete() > 0;
     }
     
