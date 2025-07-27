@@ -43,7 +43,8 @@ class Banks extends Component
     {
         $this->validate([
             'name' => 'required|string|max:100|unique:banks,name',
-            'iconFile' => 'required|image|max:2048',
+           'iconFile' => 'required|mimes:jpg,jpeg,png,gif,svg,ico|max:2048',
+
         ]);
         $imageService = new ImageService();
         $iconPath = null;

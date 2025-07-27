@@ -77,7 +77,9 @@ class Advertisements extends Component
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => $this->isEdit ? 'nullable|image|max:2048' : 'required|image|max:2048',
+            'image' => $this->isEdit
+                ? 'nullable|mimes:jpg,jpeg,png,gif,svg,ico|max:2048'
+                : 'required|mimes:jpg,jpeg,png,gif,svg,ico|max:2048',
             'is_active' => 'boolean',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
