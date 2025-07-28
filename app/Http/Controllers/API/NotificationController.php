@@ -35,6 +35,28 @@ class NotificationController extends Controller
     }
 
     /**
+     * Mark all notifications as read for the authenticated user.
+     */
+    public function markAllAsRead()
+    {
+        try {
+            $user = auth('sanctum')->user();
+            $user->unreadNotifications->markAsRead();
+            return ApiResponseClass::sendResponse([
+                'stats' => [
+                'total' => $user->notifications->count(),
+                'unread' => $user->unreadNotifications->count(),
+                'read' => $user->readNotifications->count(),
+            ]
+        ], 'All notifications have been marked as read.');
+            
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('Error marking notifications as read: ' . $e->getMessage());
+        }
+    }
+    
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

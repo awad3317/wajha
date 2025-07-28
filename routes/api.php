@@ -48,6 +48,7 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/notifications',[NotificationController::class,'index']);
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
     Route::post('/DeviceToken',[UserController::class,'updateDeviceToken']);
     Route::apiResource('/EstablishmentImage', EstablishmentImageController::class)->except(['index','show']);
     
