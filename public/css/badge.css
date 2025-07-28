@@ -156,3 +156,11 @@ body {
     border-radius: 1rem !important;
     margin: 0 0.15rem;
 }
+.card-header-custom {
+    background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
+    color: #fff;
+    padding: 1.5rem 1rem 1rem;
+    position: relative;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}

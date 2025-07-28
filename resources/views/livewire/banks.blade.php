@@ -129,9 +129,9 @@
 
         {{-- جدول البنوك --}}
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-            <div class="card-header bg-primary text-white py-3">
-                <h5 class="mb-0 text-center">
-                    <i class="fas fa-university mr-2"></i> قائمة البنوك
+            <div class="card-header-custom bg-primary text-white py-3">
+                <h5 class="mb-0 text-right mr-2">
+                    قائمة البنوك<i class="fas fa-university ml-2"></i> 
                 </h5>
             </div>
             <div class="card-body p-0" dir="rtl">
