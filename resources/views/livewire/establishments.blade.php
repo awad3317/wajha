@@ -49,7 +49,7 @@
  
   <div class="row">
     @forelse ($establishments as $establishment)
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+        <div class=" col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
             <div class="package-card shadow-sm w-100 text-right position-relative">
                 <a href="{{ route('establishment.show', $establishment->id) }}"
                     class="text-decoration-none text-dark">
