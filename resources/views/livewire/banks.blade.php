@@ -13,7 +13,6 @@
                     <i class="fas fa-plus ms-1"></i>
                 </button>
             @endif
-            <h3 class="text-md-left text-right">إدارة البنوك</h3>
         </div>
 
         {{-- نموذج الإضافة / التعديل --}}
