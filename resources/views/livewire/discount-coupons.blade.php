@@ -192,7 +192,7 @@
             <div class="col-md-8">
                 <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
                     <input type="text" wire:model.debounce.300ms.live="search"
-                        class="form-control border-0 text-right py-2" placeholder="..ابحث باسم الإعلان">
+                        class="form-control border-0 text-right py-2" placeholder="..ابحث باسم الكوبون">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-search text-primary"></i>
                     </span>
