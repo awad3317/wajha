@@ -17,8 +17,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('discount_type', ['percentage', 'fixed_amount']);
             $table->decimal('discount_value', 10, 2);
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
+
             $table->integer('max_uses')->nullable();
             $table->integer('current_uses')->default(0);
             $table->boolean('is_active')->default(true);

@@ -337,8 +337,8 @@ return [
         ],
 
         [
-            'text' => 'اسعار الباقات',
-            'url' => '/price_packages',
+            'text' => 'كوبونات الخصم ',
+            'url' => '/discount_coupons',
             'icon' => 'fas fa-shopping-bag',
         ],
 

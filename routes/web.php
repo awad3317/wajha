@@ -4,6 +4,7 @@ use App\Http\Controllers\AdvertisementsController;
 use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\BanksController;
+use App\Http\Controllers\Discount_couponsController;
 use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Http\Request;
@@ -48,3 +49,5 @@ Route::get('establishment/{id}', [EstablishmentController::class, 'show'])->name
 
 Route::get('packages', [BanksController::class, 'show_package']);
 Route::get('price_packages', [BanksController::class, 'show_packages']);
+
+Route::get('/discount_coupons', [Discount_couponsController::class, 'index'])->name('discount-coupons.index');

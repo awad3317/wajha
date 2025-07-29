@@ -45,6 +45,7 @@ class DiscountCoupon extends Model
      /**
      * Get the establishment types that the coupon applies to.
      */
+    
     public function establishmentTypes()
     {
         return $this->belongsToMany(EstablishmentType::class, 'coupon_establishment_types', 'coupon_id', 'type_id');
