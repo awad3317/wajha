@@ -17,7 +17,7 @@ class FavoriteRepository implements RepositoriesInterface
 
     public function index($userId)
     {
-        return Favorite::with(['establishment:id,name,region_id,primary_image','establishment.region:id,name,parent_id' ,'establishment.region.parent:id,name' ])
+        return Favorite::with(['establishment:id,name,region_id,primary_image,type_id','establishment.region:id,name,parent_id' ,'establishment.region.parent:id,name' ])
         ->where('user_id','=',$userId)->paginate(10);
     }
 
