@@ -22,7 +22,9 @@ class Users extends Component
         if ($user) {
             $user->is_banned = !$user->is_banned;
             $user->save();
-
+            if ($user->is_banned) {
+                $user->tokens()->delete();
+            }
             $this->dispatch('show-toast', [
                 'type' => 'success',
                 'message' => $user->is_banned ? 'تم حظر المستخدم بنجاح' : 'تم فك حظر المستخدم بنجاح'
