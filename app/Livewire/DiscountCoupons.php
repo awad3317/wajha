@@ -217,13 +217,18 @@ class DiscountCoupons extends Component
     }
     public function toggleVerification($id)
     {
-        $coupon = DiscountCoupon::find($id);
-        if ($coupon) {
-            $coupon->is_active = !$coupon->is_active;
-            $coupon->save();
+      
+         $coupon = DiscountCoupon::find($id);
+        $coupon->update([
+            'is_active' => !$coupon->is_active
+        ]);
 
-            $this->coupons = DiscountCoupon::latest()->get();
-        }
+        $this->loadCoupons(); 
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => $coupon->is_active ? 'تم تفعيل الإعلان بنجاح' : 'تم إلغاء تفعيل الإعلان بنجاح'
+        ]);
     }
     public function cancel()
     {

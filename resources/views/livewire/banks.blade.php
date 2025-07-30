@@ -6,11 +6,12 @@
     <div class="container py-4">
         {{-- العنوان وزر الإضافة --}}
         <div
-            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2">
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2" dir="rtl">
             @if (!$showForm && !$isEdit)
                 <button wire:click="create" class="btn btn-primary add-btn">
+                      <i class="fas fa-plus ms-1"></i>
                     <span class="d-none d-md-inline">إضافة بنك</span>
-                    <i class="fas fa-plus ms-1"></i>
+                  
                 </button>
             @endif
         </div>
@@ -30,7 +31,7 @@
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
                         <div class="row">
                             {{-- الأيقونة --}}
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label text-primary fw-bold d-block text-right mb-2">
                                     <i class="fas fa-image mr-2"></i> أيقونة البنك <span class="text-danger">*</span>
                                 </label>
@@ -68,7 +69,7 @@
                             </div>
 
                             {{-- اسم البنك --}}
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label text-primary fw-bold d-block text-right mb-2">
                                     <i class="fas fa-signature mr-2"></i> اسم البنك <span class="text-danger">*</span>
                                 </label>
@@ -87,19 +88,7 @@
                                 @enderror
                             </div>
 
-                            {{-- البحث --}}
-                            <div class="col-12 col-md-4">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    <i class="fas fa-search mr-2"></i> بحث سريع
-                                </label>
-                                <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                    <input type="text" wire:model.debounce.300ms.live="search"
-                                        class="form-control border-0 text-right py-3" placeholder="ابحث باسم البنك...">
-                                    <span class="input-group-text bg-white border-0">
-                                        <i class="fas fa-search text-primary"></i>
-                                    </span>
-                                </div>
-                            </div>
+                          
 
                             {{-- الأزرار --}}
                             <div class="col-12 mt-4">
@@ -128,11 +117,25 @@
 
         {{-- جدول البنوك --}}
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-            <div class="card-header-custom bg-primary text-white py-3">
-                <h5 class="mb-0 text-right mr-2">
-                    قائمة البنوك<i class="fas fa-university ml-2"></i> 
-                </h5>
+                 <div class="card-header-custom bg-light py-2 py-md-3">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-6 mb-2  mb-md-0">
+                            <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
+                            <input type="text" class="form-control border-0 text-right py-2 "
+                                placeholder="...ابحث باسم البنك" wire:model.debounce.300ms.live="search">
+                            <span class="input-group-text bg-white border-0 rounded-0">
+                                <i class="fas fa-search text-primary"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 d-none d-md-block">
+                       <h5 class="mb-0 text-white ">
+                            قائمة البنوك <i class="fas fa-map-marked-alt ml-2"></i>
+                        </h5>
+                    </div>
+                </div>
             </div>
+            
             <div class="card-body p-0" dir="rtl">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">

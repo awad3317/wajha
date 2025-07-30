@@ -52,20 +52,6 @@ class Advertisements extends Component
         $this->resetForm();
     }
 
-
-    public function toggleActive($adId)
-    {
-        $ad = Advertisement::find($adId);
-        if ($ad) {
-            $ad->is_active = !$ad->is_active;
-            $ad->save();
-
-            $this->dispatch('show-toast', [
-                'type' => 'success',
-                'message' => $ad->is_active ? 'تم تفعيل الإعلان بنجاح' : 'تم إلغاء تفعيل الإعلان بنجاح'
-            ]);
-        }
-    }
     public function create()
     {
         $this->resetForm();
@@ -207,13 +193,17 @@ class Advertisements extends Component
     }
     public function toggleVerification($id)
     {
-        $ad = Advertisement::find($id);
-        if ($ad) {
-            $ad->is_active = !$ad->is_active;
-            $ad->save();
+       $ad = Advertisement::findOrFail($id);
+        $ad->update([
+            'is_active' => !$ad->is_active
+        ]);
 
-            $this->advertisements = Advertisement::latest()->get();
-        }
+        $this->loadAdvertisements(); 
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => $ad->is_active ? 'تم تفعيل الإعلان بنجاح' : 'تم إلغاء تفعيل الإعلان بنجاح'
+        ]);
     }
 
 

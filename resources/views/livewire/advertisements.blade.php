@@ -212,8 +212,8 @@
         <div class="row">
             @forelse ($advertisements as $ad)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                    <div class="card package-card  shadow-sm w-100 text-right position-relative border-0">
-                        <a href="#" class="text-decoration-none text-dark">
+                    <div class="card   shadow-sm w-100 text-right position-relative border-0">
+                        <div  class="text-decoration-none text-dark">
                             <div class="card-header p-0" style="height: 180px; overflow: hidden;">
                                 @if ($ad->image)
                                     <img src="{{ asset('storage/' . $ad->image) }}"
@@ -276,7 +276,7 @@
                                   
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                         {{-- حالة التفعيل --}}
                         <span wire:click.prevent="toggleVerification({{ $ad->id }})"

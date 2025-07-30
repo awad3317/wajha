@@ -4,11 +4,11 @@
     @endif
     <div class="container py-2 py-md-4">
 
-        <div class="d-flex justify-content-between align-items-center my-2">
+        <div class="d-flex justify-content-between align-items-start my-2" dir="rtl">
             @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary add-btn text-left">
-                    <span>إضافة منطقة</span>
+                <button wire:click="create" class="btn btn-primary add-btn text-right">
                     <i class="fas fa-plus me-1 d-none d-md-inline"></i>
+                    <span>إضافة منطقة</span>
 
                 </button>
             @endif
@@ -38,7 +38,7 @@
                                             <i class="fas fa-layer-group text-primary"></i>
                                         </span>
                                         <select wire:model.defer="parent_id"
-                                            class="form-control text-right border-0 py-2 py-md-3">
+                                            class="form-control text-right border-0 ">
                                             <option value="">بدون منطقة رئيسية</option>
                                             @foreach ($parents as $parent)
                                                 <option value="{{ $parent->id }}">{{ $parent->name }}</option>
@@ -73,20 +73,21 @@
                             </div>
 
                             {{-- زر الإرسال والإلغاء --}}
-                            <div class="col-12 mt-2 mt-md-4">
-                                <div class="d-flex flex-column flex-md-row gap-2 gap-md-3">
+                            <div class="col-12 m-2 mt-md-4">
+                                <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 mx-1">
                                     {{-- زر الإلغاء --}}
                                     <div class="flex-grow-1">
                                         <button type="button" wire:click="cancel"
-                                            class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-2 py-md-3">
-                                            <i class="fas fa-times me-2"></i> إلغاء
+                                            class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm ">
+                                           إلغاء <i class="fas fa-times me-2"></i> 
+                                            
                                         </button>
                                     </div>
 
                                     {{-- زر الحفظ/الإضافة --}}
                                     <div class="flex-grow-1">
                                         <button type="submit"
-                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm ">
                                             {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
                                             <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
                                         </button>
