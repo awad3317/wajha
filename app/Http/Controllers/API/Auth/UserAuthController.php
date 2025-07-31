@@ -45,7 +45,7 @@ class UserAuthController extends Controller
         $user=$this->UserRepository->findByPhone($fields['phone']);
 
         if ($user && $user->user_type == 'admin') {
-            return ApiResponseClass::sendError('Admins cannot login through this application', null, 403);
+            return ApiResponseClass::sendError('لا يمكن للمشرفين تسجيل الدخول من خلال هذا التطبيق', null, 403);
         }
         
         if($user && Hash::check($fields['password'], $user->password)){
@@ -57,10 +57,10 @@ class UserAuthController extends Controller
                 $this->HypersenderService->sendTextMessage($user->phone,strval($otp));
             
 
-                return ApiResponseClass::sendError("Your account is not yet activated. A new verification code has been sent to you.", null,403);
+                return ApiResponseClass::sendError("حسابك غير مفعل بعد. تم إرسال رمز تحقق جديد إليك.", null, 403);
             }
             if($user->is_banned){
-                return ApiResponseClass::sendError('Account is banned',null,401);
+                return ApiResponseClass::sendError('الحساب محظور', null, 401);
             }
 
             $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
@@ -70,7 +70,7 @@ class UserAuthController extends Controller
                 'token_type' => 'Bearer'
             ], 'User logged in successfully');
         }
-         return ApiResponseClass::sendError('Unauthorized', ['error' => 'Invalid credentials'], 401);
+        return ApiResponseClass::sendError('غير مصرح', ['error' => 'بيانات الاعتماد غير صالحة'], 401);
         
     }
 
@@ -78,7 +78,7 @@ class UserAuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return ApiResponseClass::sendResponse(null, 'User logged out successfully');
+        return ApiResponseClass::sendResponse(null, 'تم تسجيل الخروج بنجاح');
     }
 
    
