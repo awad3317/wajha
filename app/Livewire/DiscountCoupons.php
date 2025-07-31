@@ -30,8 +30,8 @@ class DiscountCoupons extends Component
 
     public function mount()
     {
-        $this->start_date = now()->format('Y-m-d\TH:i');
-        $this->end_date = now()->addMonth()->format('Y-m-d\TH:i');
+        // $this->start_date = now()->format('Y-m-d\TH:i');
+        // $this->end_date = now()->addMonth()->format('Y-m-d\TH:i');
 
         $this->establishments = Establishment::orderBy('name')->get();
         $this->establishmentTypes = EstablishmentType::orderBy('name')->get();
@@ -46,6 +46,32 @@ class DiscountCoupons extends Component
             ->when(is_numeric($this->selectedStatu), fn($q) => $q->where('is_active', $this->selectedStatu))
             ->orderBy('id', 'desc')
             ->get();
+    }
+    protected function rules()
+    {
+        return [
+            'code' => 'required|string|unique:discount_coupons,code',
+            'discount_type' => 'required|in:percentage,fixed_amount',
+            'discount_value' => 'required|numeric|min:0',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'max_uses' => 'required|integer|min:1',
+            'is_active' => 'boolean',
+            'applies_to' => 'required|in:all_establishments,specific_establishments,specific_types',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'code' => 'مطلوب|نصي|فريد في جدول كوبونات الخصم',
+            'discount_type' => 'مطلوب|يجب أن يكون أحد: نسبة مئوية أو مبلغ ثابت',
+            'discount_value' => 'مطلوب|رقم|يجب أن يكون أكبر من أو يساوي الصفر',
+            'start_date' => 'مطلوب|تاريخ',
+            'end_date' => 'مطلوب|تاريخ|يجب أن يكون بعد تاريخ البداية',
+            'max_uses' => 'مطلوب|عدد صحيح|يجب أن يكون على الأقل 1',
+            'is_active' => 'قيمة منطقية (نعم/لا)',
+            'applies_to' => 'مطلوب|يجب أن يكون أحد: كل المنشآت، منشآت محددة، أنواع محددة',
+        ];
     }
 
     public function updatedSearch()
@@ -66,16 +92,6 @@ class DiscountCoupons extends Component
 
     public function store()
     {
-        $rules = [
-            'code' => 'required|string|unique:discount_coupons,code',
-            'discount_type' => 'required|in:percentage,fixed_amount',
-            'discount_value' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'max_uses' => 'required|integer|min:1',
-            'is_active' => 'boolean',
-            'applies_to' => 'required|in:all_establishments,specific_establishments,specific_types',
-        ];
 
         if ($this->applies_to === 'specific_establishments') {
             $rules['selectedEstablishments'] = 'required|array|min:1';
@@ -85,7 +101,7 @@ class DiscountCoupons extends Component
             $rules['selectedTypes'] = 'required|array|min:1';
         }
 
-        $this->validate($rules);
+        $this->validate();
 
         $coupon = DiscountCoupon::create([
             'code' => strtoupper($this->code),
@@ -145,16 +161,6 @@ class DiscountCoupons extends Component
     {
         $coupon = DiscountCoupon::findOrFail($this->couponBeingEdited);
 
-        $rules = [
-            'code' => 'required|string|unique:discount_coupons,code,' . $coupon->id,
-            'discount_type' => 'required|in:percentage,fixed_amount',
-            'discount_value' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'max_uses' => 'required|integer|min:1',
-            'is_active' => 'boolean',
-            'applies_to' => 'required|in:all_establishments,specific_establishments,specific_types',
-        ];
 
         if ($this->applies_to === 'specific_establishments') {
             $rules['selectedEstablishments'] = 'required|array|min:1';
@@ -164,7 +170,7 @@ class DiscountCoupons extends Component
             $rules['selectedTypes'] = 'required|array|min:1';
         }
 
-        $this->validate($rules);
+        $this->validate();
 
         $coupon->update([
             'code' => strtoupper($this->code),
@@ -217,13 +223,13 @@ class DiscountCoupons extends Component
     }
     public function toggleVerification($id)
     {
-      
-         $coupon = DiscountCoupon::find($id);
+
+        $coupon = DiscountCoupon::find($id);
         $coupon->update([
             'is_active' => !$coupon->is_active
         ]);
 
-        $this->loadCoupons(); 
+        $this->loadCoupons();
 
         $this->dispatch('show-toast', [
             'type' => 'success',

@@ -14,6 +14,9 @@
                   
                 </button>
             @endif
+             <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
+                إدارة البنوك
+            </h3>
         </div>
 
         {{-- نموذج الإضافة / التعديل --}}

@@ -12,6 +12,9 @@
 
                 </button>
             @endif
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
+                إدارة المناطق
+            </h3>
         </div>
 
         @if ($showForm || $isEdit)
@@ -37,8 +40,7 @@
                                         <span class="input-group-text bg-white border-0">
                                             <i class="fas fa-layer-group text-primary"></i>
                                         </span>
-                                        <select wire:model.defer="parent_id"
-                                            class="form-control text-right border-0 ">
+                                        <select wire:model.defer="parent_id" class="form-control text-right border-0 ">
                                             <option value="">بدون منطقة رئيسية</option>
                                             @foreach ($parents as $parent)
                                                 <option value="{{ $parent->id }}">{{ $parent->name }}</option>
@@ -79,8 +81,8 @@
                                     <div class="flex-grow-1">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm ">
-                                           إلغاء <i class="fas fa-times me-2"></i> 
-                                            
+                                            إلغاء <i class="fas fa-times me-2"></i>
+
                                         </button>
                                     </div>
 
@@ -104,7 +106,7 @@
             <div class="card-header-custom bg-light py-2 py-md-3">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-6 mb-2  mb-md-0">
-                            <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
+                        <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
                             <input type="text" class="form-control border-0 text-right py-2 "
                                 placeholder="...ابحث باسم المنطقة" wire:model.debounce.300ms.live="search">
                             <span class="input-group-text bg-white border-0 rounded-0">
@@ -113,7 +115,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 d-none d-md-block">
-                       <h5 class="mb-0 text-white ">
+                        <h5 class="mb-0 text-white ">
                             قائمة المناطق <i class="fas fa-map-marked-alt ml-2"></i>
                         </h5>
                     </div>

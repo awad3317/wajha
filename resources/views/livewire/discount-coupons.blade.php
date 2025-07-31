@@ -5,7 +5,7 @@
             <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start">إدارة كوبونات الخصم</h3>
 
             @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary rounded-pill px-4 py-2">
+                <button wire:click="create" class="btn btn-primary rounded-pill add-btn px-4 py-2">
                     إضافة كوبون جديد
                     <i class="fas fa-plus-circle ms-2"></i>
                 </button>
@@ -18,7 +18,7 @@
                 <div class="card-header  bg-primary text-white py-3">
                     <h5 class="mb-0 text-right">
                         {{ $isEdit ? 'تعديل كود خصم ' : 'إضافة كود خصم جديد' }}
-                              <i class="fas fa-edit ml-2"></i>
+                        <i class="fas fa-edit ml-2"></i>
                     </h5>
                 </div>
                 <div class="card-body text-right">
@@ -28,48 +28,7 @@
                         <h5 class="border-bottom pb-2 mb-3">المعلومات الأساسية</h5>
                         <div class="form-row">
 
-
-                            <div class="form-group col-md-6">
-                                <label for="discount_type">نوع الخصم <span class="text-danger"><span
-                                            class="text-danger">*</span></span></label>
-                                <select wire:model.live="discount_type" class="form-control text-right"
-                                    id="discount_type">
-                                    <option value="percentage">نسبة مئوية %</option>
-                                    <option value="fixed_amount">مبلغ ثابت</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="code ">كود الكوبون <span class="text-danger"><span
-                                            class="text-danger">*</span></span></label>
-                                <input type="text" wire:model="code"
-                                    class="form-control text-right @error('code') is-invalid @enderror" id="code"
-                                    placeholder="مثال: SUMMER20">
-                                @error('code')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="discount_value">قيمة الخصم <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input type="number" wire:model="discount_value" class="form-control text-right"
-                                        id="discount_value" placeholder="0">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            @if ($discount_type == 'percentage')
-                                                %
-                                            @else
-                                                {{ config('settings.currency_symbol') }}
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                                @error('discount_value')
-                                    <div class="text-danger small">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-6 d-flex align-items-center mt-4">
+                            <div class="form-group col-md-1 d-flex align-items-center mt-4 ">
                                 <div class="d-flex align-items-center justify-content-start mt-2">
                                     <span class="me-2 small">{{ $is_active ? 'مفعل' : 'غير مفعل' }}</span>
                                     <div class="form-switch {{ $is_active ? 'switch-active' : 'switch-banned' }}">
@@ -80,12 +39,68 @@
                                 </div>
 
                             </div>
+                            <div class="form-group col-md-5">
+                                <label for="discount_type">نوع الخصم <span class="text-danger"><span
+                                            class="text-danger">*</span></span></label>
+                                <select wire:model.live="discount_type"
+                                    class="form-control text-right @error('discount_type') is-invalid @enderror "
+                                    id="discount_type">
+                                    <option value="percentage">نسبة مئوية %</option>
+                                    <option value="fixed_amount">مبلغ ثابت</option>
+                                    @error('discount_type')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </select>
+
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="code ">كود الكوبون <span class="text-danger"><span
+                                            class="text-danger">*</span></span></label>
+                                <input type="text" wire:model="code"
+                                    class="form-control text-right @error('code') is-invalid @enderror  " id="code"
+                                    placeholder="مثال: SUMMER20">
+                                @error('code')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="discount_value">قيمة الخصم <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" wire:model="discount_value"
+                                        class="form-control text-right @error('discount_value') is-invalid @enderror  "
+                                        id="discount_value" placeholder="0">
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            @if ($discount_type == 'percentage')
+                                                %
+                                            @else
+                                                {{ config('settings.currency_symbol') }}
+                                            @endif
+                                        </span>
+                                    </div>
+
+                                </div>
+                                @error('discount_value')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+
+
 
                             <div class="form-group col-md-12">
                                 <label for="description">وصف الكوبون</label>
-                                <textarea class="form-control text-right" wire:model="description" id="description" rows="2"
-                                    placeholder="..وصف مختصر عن الكوبون."></textarea>
+                                <textarea class="form-control text-right @error('description') is-invalid @enderror" wire:model="description"
+                                    id="description" rows="2" placeholder="...وصف مختصر عن الكوبون"></textarea>
+                                @error('description')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
+
+
                         </div>
 
                         <!-- الفترة الزمنية -->
@@ -94,12 +109,25 @@
 
                             <div class="form-group col-md-6">
                                 <label for="end_date">تاريخ النهاية <span class="text-danger">*</span></label>
-                                <input type="datetime-local" wire:model="end_date" class="form-control" id="end_date">
+                                <input type="datetime-local" wire:model="end_date"
+                                    class="form-control text-right @error('end_date') is-invalid @enderror "
+                                    id="end_date">
+                                @error('end_date')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
+                            @error('end_date')
+                                <div class="text-danger small">{{ $message }}</div>
+                            @enderror
+
                             <div class="form-group col-md-6">
                                 <label for="start_date">تاريخ البداية <span class="text-danger">*</span></label>
-                                <input type="datetime-local" wire:model="start_date" class="form-control"
+                                <input type="datetime-local" wire:model="start_date"
+                                    class="form-control text-right @error('start_date') is-invalid @enderror "
                                     id="start_date">
+                                @error('start_date')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -108,18 +136,27 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="max_uses">الحد الأقصى للاستخدام <span class="text-danger">*</span></label>
-                                <input type="number" wire:model="max_uses" class="form-control" id="max_uses">
+                                <input type="number" wire:model="max_uses"
+                                    class="form-control text-right @error('max_uses') is-invalid @enderror "
+                                    id="max_uses">
+                                @error('max_uses')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
                         <!-- التطبيق -->
                         <h5 class="border-bottom pb-2 mb-3 mt-4">تطبيق الكوبون على</h5>
                         <div class="form-group">
-                            <select wire:model.live="applies_to" class="form-control">
+                            <select wire:model.live="applies_to"
+                                class="form-control text-right @error('applies_to') is-invalid @enderror ">
                                 <option value="all_establishments">جميع المنشآت</option>
                                 <option value="specific_establishments">منشآت محددة</option>
                                 <option value="specific_types">أنواع محددة من المنشآت</option>
                             </select>
+                             @error('applies_to')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                         </div>
 
                         <!-- منشآت محددة -->
@@ -168,7 +205,7 @@
                             <div class="col-md-6 mt-4">
                                 <button type="button" wire:click="cancel"
                                     class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                   إلغاء <i class="fas fa-times ml-2"></i> 
+                                    إلغاء <i class="fas fa-times ml-2"></i>
 
                                 </button>
                             </div>
@@ -192,7 +229,7 @@
             <div class="col-md-8">
                 <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
                     <input type="text" wire:model.debounce.300ms.live="search"
-                        class="form-control border-0 text-right py-2" placeholder="..ابحث باسم الكوبون">
+                        class="form-control  border-0 text-right py-2" placeholder="..ابحث باسم الكوبون">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-search text-primary"></i>
                     </span>
@@ -201,7 +238,7 @@
 
             <div class="col-md-4">
                 <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
-                    <select wire:model.live="selectedStatu" class="form-control border-0 text-right py-2">
+                    <select wire:model.live="selectedStatu" class="form-control  border-0 text-right py-2">
                         <option value="">كل الحالات</option>
                         <option value="1">المفعلة</option>
                         <option value="0">غير المفعلة</option>
@@ -217,7 +254,7 @@
         <div class="row">
             @forelse ($coupons as $coupon)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch ">
-                    <div class="card package-card shadow-sm w-100 text-right position-relative border-0">
+                    <div class="card shadow-sm w-100 text-right position-relative border-0">
                         <div class="card-header p-0"
                             style="height: 160px; overflow: hidden; background: linear-gradient(135deg, #3b82f6, #0d47a1);">
                             <div class="d-flex align-items-center justify-content-center h-100">

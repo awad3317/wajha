@@ -48,7 +48,7 @@
                                     placeholder="...أدخل عنوان الإعلان هنا">
                                 @error('title')
                                     <div class="invalid-feedback text-right d-block mt-2">
-                                        {{ $message }}<i class="fas fa-exclamation-circle me-1"></i>
+                                        {{ $message }}<i class="fas fa-exclamation-circle ml-1"></i>
                                     </div>
                                 @enderror
                             </div>
@@ -79,7 +79,7 @@
 
                                 @error('image')
                                     <div class="text-danger small text-right mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        <i class="fas fa-exclamation-circle ml-1"></i>{{ $message }}
                                     </div>
                                 @enderror
 
@@ -116,7 +116,7 @@
                                     placeholder="...أدخل وصف الإعلان هنا"></textarea>
                                 @error('description')
                                     <div class="invalid-feedback text-right d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                       {{ $message }} <i class="fas fa-exclamation-circle ml-1"></i>
                                     </div>
                                 @enderror
                             </div>
@@ -137,7 +137,7 @@
                                 </div>
                                 @error('end_date')
                                     <div class="invalid-feedback text-right d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        {{ $message }}<i class="fas fa-exclamation-circle ml-1"></i>
                                     </div>
                                 @enderror
                             </div>
@@ -155,7 +155,7 @@
                                 </div>
                                 @error('start_date')
                                     <div class="invalid-feedback text-right d-block mt-2">
-                                        <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
+                                        {{ $message }}<i class="fas fa-exclamation-circle ml-1"></i>
                                     </div>
                                 @enderror
                             </div>
@@ -165,14 +165,14 @@
                             <div class="col-md-6 mt-4">
                                 <button type="button" wire:click="cancel"
                                     class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    <i class="fas fa-times ml-2"></i> إلغاء
+                                   إلغاء <i class="fas fa-times ml-2"></i> 
                                 </button>
                             </div>
 
                             <div class="col-md-6 mt-4">
                                 <button type="submit"
-                                    class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
+                                    class="btn btn-{{ $isEdit ? 'warning' : 'primary ' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                    {{ $isEdit ? 'حفظ التعديلات' : 'إضافةاعلان جديد' }}
                                     <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
                                 </button>
                             </div>
@@ -341,11 +341,11 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary rounded-pill px-4"
                                 wire:click="$set('deleteId', null)">
-                                <i class="fas fa-times me-1"></i> إلغاء
+                                <i class="fas fa-times ml-1"></i> إلغاء
                             </button>
                             <button type="button" class="btn btn-danger rounded-pill px-4"
                                 wire:click="deleteAdvertisement">
-                                <i class="fas fa-trash me-1"></i> نعم، احذف
+                                <i class="fas fa-trash ml-1"></i> نعم، احذف
                             </button>
                         </div>
                     </div>
