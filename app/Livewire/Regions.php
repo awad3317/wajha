@@ -124,7 +124,7 @@ public function cancel()
 
     public function render()
     {
-        $parents = Region::all();
+        $parents = Region::with('parent')->get();
         return view('livewire.regions', compact('parents'));
     }
 }

@@ -23,7 +23,7 @@
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-lg rounded-3">
                 <div class="card-header bg-primary text-white py-3 rounded-top-3">
-                    <h5 class="mb-0 text-center">
+                    <h5 class="mb-0 text-right">
 
                         {{ $isEdit ? 'تعديل بيانات البنك' : 'إضافة بنك جديد' }}
                         <i class="fas fa-university mr-2"></i>

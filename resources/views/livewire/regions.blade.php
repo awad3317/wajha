@@ -19,10 +19,10 @@
 
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-sm rounded-3">
-                <div class="card-header bg-gradient-primary text-white py-2 py-md-3 rounded-top-3">
-                    <h5 class="mb-0 text-center">
-                        <i class="fas fa-map-marked-alt me-2"></i>
+                <div class="card-header text-white py-2 py-md-3 rounded-top-3">
+                    <h5 class="mb-0 text-right">
                         {{ $isEdit ? 'تعديل المنطقة' : 'إضافة منطقة جديدة' }}
+                        <i class="fas fa-map-marked-alt ml-2"></i>
                     </h5>
                 </div>
 

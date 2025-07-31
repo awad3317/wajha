@@ -150,136 +150,175 @@
 
 
     {{-- البيانات الأساسية --}}
-    <div class="card card-custom mb-5 text-right">
-        <div class="card-header bg-primary text-white section-header">البيانات الأساسية</div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <h6 class="text-muted">الاسم</h6>
-                    <p class="font-weight-bold">{{ $establishment->name }}</p>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h6 class="text-muted">النوع</h6>
-                    <p>{{ $establishment->type->name ?? '-' }}</p>
-                </div>
+   <div class="card shadow-sm border-0 mb-5 text-right">
+    <div class="card-header bg-primary text-white fw-bold">
+       البيانات الأساسية <i class="fas fa-info-circle ml-2"></i> 
+    </div>
+    <div class="card-body">
+        <div class="row g-4">
+            <!-- الاسم -->
+            <div class="col-md-6">
+                <small class="text-muted">الاسم</small>
+                <div class="fw-semibold fs-6">{{ $establishment->name }}</div>
+            </div>
 
-                <div class="col-md-6 mb-4">
-                    <h6 class="text-muted">المالك</h6>
-                    <p>{{ $establishment->owner->name ?? '-' }}</p>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h6 class="text-muted">المنطقة</h6>
-                    <p>{{ $establishment->region->name ?? '-' }}</p>
-                </div>
+            <!-- النوع -->
+            <div class="col-md-6">
+                <small class="text-muted">النوع</small>
+                <div>{{ $establishment->type->name ?? '-' }}</div>
+            </div>
 
-                <div class="col-12 mb-4">
-                    <h6 class="text-muted">العنوان</h6>
-                    <p>{{ $establishment->address ?? 'غير متوفر' }}</p>
-                </div>
+            <!-- المالك -->
+            <div class="col-md-6">
+                <small class="text-muted">المالك</small>
+                <div>{{ $establishment->owner->name ?? '-' }}</div>
+            </div>
 
-                <div class="col-md-4 mb-3">
-                    <h6 class="text-muted">الحالة</h6>
-                    <span class="badge badge-custom badge-{{ $establishment->is_active ? 'success' : 'danger' }}">
-                        {{ $establishment->is_active ? 'مفعلة' : 'غير مفعلة' }}
-                    </span>
+            <!-- المنطقة -->
+            <div class="col-md-6">
+                <small class="text-muted">المنطقة</small>
+                <div>{{ $establishment->region->name ?? '-' }}</div>
+            </div>
+
+            <!-- العنوان -->
+            <div class="col-12">
+                <small class="text-muted">العنوان</small>
+                <div class="bg-light rounded p-2 border">
+                    {{ $establishment->address ?? 'غير متوفر' }}
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h6 class="text-muted">التحقق</h6>
-                    <span class="badge badge-custom badge-{{ $establishment->is_verified ? 'info' : 'secondary' }}">
-                        {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
-                    </span>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h6 class="text-muted">الموقع على الخريطة</h6>
-                    <a href="https://www.google.com/maps?q={{ $establishment->latitude }},{{ $establishment->longitude }}"
-                        target="_blank" class="btn btn-outline-primary btn-sm font-weight-bold">
-                        عرض الخريطة <i class="fas fa-map-marker-alt mr-1"></i>
-                    </a>
-                </div>
+            </div>
+
+            <!-- الحالة -->
+            <div class="col-md-4">
+                <small class="text-muted">الحالة</small><br>
+                <span class="badge rounded-pill bg-{{ $establishment->is_active ? 'success' : 'danger' }} px-3 py-2">
+                    {{ $establishment->is_active ? 'مفعلة' : 'غير مفعلة' }}
+                </span>
+            </div>
+
+            <!-- التحقق -->
+            <div class="col-md-4">
+                <small class="text-muted">التحقق</small><br>
+                <span class="badge rounded-pill bg-{{ $establishment->is_verified ? 'info' : 'secondary' }} px-3 py-2">
+                    {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
+                </span>
+            </div>
+
+            <!-- الموقع على الخريطة -->
+            <div class="col-md-4">
+                <small class="text-muted">الموقع على الخريطة</small><br>
+                <a href="https://www.google.com/maps?q={{ $establishment->latitude }},{{ $establishment->longitude }}"
+                   target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                    <i class="fas fa-map-marker-alt ms-1"></i> عرض الخريطة
+                </a>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-  {{-- معرض الصور --}}
-    <div class="card card-custom mb-5 text-right col-md-6">
-        <div class="card-header bg-secondary text-white section-header">معرض الصور</div>
-        <div class="card-body">
-            <div class="row">
-                @forelse ($images as $image)
-                    <div class="col-md-3 col-6 mb-4">
-                        <img src="{{ asset('storage/' . $image->image) }}" alt="صورة"
-                            class="img-gallery shadow-sm">
-                    </div>
-                @empty
-                    <div class="col-12 text-center text-muted">لا توجد صور.</div>
-                @endforelse
+
+  <div class="row g-4 ">
+    {{-- معرض الصور --}}
+    <div class="col-md-6 ">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-secondary text-white fw-bold">
+              معرض الصور  <i class="fas fa-images ml-2"></i> 
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    @forelse ($images as $image)
+                        <div class="col-6 col-md-4">
+                            <img src="{{ asset('storage/' . $image->image) }}" alt="صورة"
+                                 class="img-fluid rounded shadow-sm border" style="object-fit: cover; width: 100%; height: 120px;">
+                        </div>
+                    @empty
+                        <div class="col-12 text-center text-muted">لا توجد صور.</div>
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>
 
     {{-- المميزات --}}
-    <div class="card card-custom mb-5 text-right col-md-6">
-        <div class="card-header bg-success text-white section-header">المميزات</div>
-        <div class="card-body">
-            <div class="row">
-                @forelse ($features as $feature)
-                    <div class="col-md-6 d-flex align-items-start mb-4">
-                        @if ($feature->icon)
-                            <img src="{{ asset('storage/' . $feature->icon) }}" alt="أيقونة" class="feature-icon">
-                        @else
-                            <i class="fas fa-check-circle text-success fa-lg mr-3 mt-1"></i>
-                        @endif
-                        <div>
-                            <h6 class="feature-title">{{ $feature->name }}</h6>
-                            <p class="text-muted mb-0">{{ $feature->description }}</p>
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-success text-white fw-bold">
+               المميزات <i class="fas fa-star ml-2"></i> 
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    @forelse ($features as $feature)
+                        <div class="col-12 d-flex">
+                            <div class="me-3">
+                                @if ($feature->icon)
+                                    <img src="{{ asset('storage/' . $feature->icon) }}" alt="أيقونة" style="width: 32px; height: 32px;">
+                                @else
+                                    <i class="fas fa-check-circle text-success fa-lg mt-1"></i>
+                                @endif
+                            </div>
+                            <div>
+                                <h6 class="mb-1">{{ $feature->name }}</h6>
+                                <p class="text-muted small mb-0">{{ $feature->description }}</p>
+                            </div>
                         </div>
-                    </div>
-                @empty
-                    <div class="col-12 text-center text-muted">لا توجد مميزات.</div>
-                @endforelse
+                    @empty
+                        <div class="col-12 text-center text-muted">لا توجد مميزات.</div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-4">
+    {{-- المواصفات --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-warning text-white fw-bold">
+              المواصفات  <i class="fas fa-cogs ml-2"></i> 
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @forelse ($specifications as $spec)
+                        <li class="list-group-item d-flex align-items-center justify-content-end">
+                            <span class="ml-2">
+                                @if ($spec->icon)
+                                    <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة" style="width: 20px; height: 20px;">
+                                @else
+                                    <i class="fas fa-info-circle text-secondary"></i>
+                                @endif
+                            </span>
+                            {{ $spec->name }}
+                        </li>
+                    @empty
+                        <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
+                    @endforelse
+                </ul>
             </div>
         </div>
     </div>
 
-    </div>
-
-     <div class="row">
-   {{-- المواصفات --}}
-    <div class="card card-custom mb-5 text-right col-md-6">
-        <div class="card-header bg-warning text-dark section-header">المواصفات</div>
-        <div class="card-body">
-            <ul class="list-group list-group-flush text-right">
-                @forelse ($specifications as $spec)
-                    <li class="list-group-item d-flex align-items-center">
-                        @if ($spec->icon)
-                            <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة" class="spec-icon">
-                        @else
-                            <i class="fas fa-info-circle text-secondary ml-3"></i>
-                        @endif
-                        {{ $spec->name }}
-                    </li>
-                @empty
-                    <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
-                @endforelse
-            </ul>
-        </div>
-    </div>
-
     {{-- القواعد --}}
-    <div class="card card-custom mb-5 text-right col-md-6">
-        <div class="card-header bg-info text-white section-header">القواعد</div>
-        <div class="card-body">
-            <ol class="rules-list list-group list-group-numbered text-right mb-0">
-                @forelse ($rules as $rule)
-                    <li>{{ $rule->rule }}</li>
-                @empty
-                    <li class="text-center text-muted">لا توجد قواعد.</li>
-                @endforelse
-            </ol>
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-info text-white fw-bold">
+              القواعد  <i class="fas fa-list-ol ml-2"></i> 
+            </div>
+            <div class="card-body">
+                @if ($rules->count())
+                    <ol class="list-group list-group-numbered list-unstyled ps-3 pe-0">
+                        @foreach ($rules as $rule)
+                            <li class="mb-2">{{ $rule->rule }}</li>
+                        @endforeach
+                    </ol>
+                @else
+                    <div class="text-center text-muted">لا توجد قواعد.</div>
+                @endif
+            </div>
         </div>
     </div>
-     </div>
+</div>
+
       <div class="d-flex "></div>
   
 
