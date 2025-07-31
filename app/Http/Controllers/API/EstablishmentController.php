@@ -238,6 +238,7 @@ class EstablishmentController extends Controller
                         'description' => $package['description'] ?? null,
                         'icon_id' => $package['icon_id'],
                         'price' => $package['price'],
+                        'currency_id' => $package['currency_id'],
                         'features' => !empty($package['features']) ? json_encode($package['features']) : null,
                     ];
                     if (isset($package['id'])) {
