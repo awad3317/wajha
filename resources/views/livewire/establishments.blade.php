@@ -46,61 +46,69 @@
     </div>
 
     <!-- عرض المنشآت -->
- 
-  <div class="row">
-    @forelse ($establishments as $establishment)
-        <div class=" col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-            <div class="package-card shadow-sm w-100 text-right position-relative">
-                <a href="{{ route('establishment.show', $establishment->id) }}"
-                    class="text-decoration-none text-dark">
-                    <div class="package-header" style="height: 180px; overflow: hidden; padding: 0;">
-                        <img src="{{ url($establishment->primary_image) }}" class="w-100 h-100"
-                            style="object-fit: cover;" alt="{{ $establishment->name }}">
-                    </div>
 
-                    <div class="package-body d-flex flex-column">
-                        <div class="row mb-2">
-                            <div class="col-7 d-flex justify-content-end align-items-center">
-                                <h5 class="mb-0 text-primary">
-                                    {{ $establishment->name }}<i class="fas fa-store-alt mx-2"></i>
-                                </h5>
-                            </div>
-                            <div class="col-5 d-flex justify-content-end align-items-center">
-                                <h5 class="mb-0 text-dark">
-                                    {{ $establishment->owner->name }} <i class="fas fa-user mx-2"></i>
-                                </h5>
-                            </div>
+    <div class="row">
+        @forelse ($establishments as $establishment)
+            <div class=" col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                <div class="package-card shadow-sm w-100 text-right position-relative">
+                    <a href="{{ route('establishment.show', $establishment->id) }}"
+                        class="text-decoration-none text-dark">
+                        <div class="package-header" style="height: 180px; overflow: hidden; padding: 0;">
+                            <img src="{{ url($establishment->primary_image) }}" class="w-100 h-100"
+                                style="object-fit: cover;" alt="{{ $establishment->name }}">
                         </div>
 
-                        <div class="row">
-                            <div class="col-7 d-flex justify-content-end align-items-center text-muted">
-                                <span>{{ $establishment->type->name ?? '-' }}</span>
-                                <i class="fas fa-building text-primary mx-2"></i>
+                        <div class="package-body d-flex flex-column">
+                            <div class="row mb-2">
+                                <div class="col-6 d-flex justify-content-end align-items-center">
+
+                                    <h5 class="mb-0 text-primary text-truncate"
+                                        style="width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+                                        title="{{ $establishment->name }}">
+                                        {{ $establishment->name }}
+                                    </h5>
+                                    <i class="fas fa-store-alt text-primary ml-2"></i>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end align-items-center">
+
+                                    <h5 class="mb-0 text-primary text-truncate"
+                                        style="width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+                                        title="{{ $establishment->name }}">
+                                        {{ $establishment->owner->name }}
+                                    </h5>
+                                    <i class="fas fa-user text-primary mx-2"></i>
+                                </div>
                             </div>
-                            <div class="col-5 d-flex justify-content-end align-items-center text-muted">
-                                <span>{{ $establishment->region->name ?? '-' }}</span>
-                                <i class="fas fa-map-marker-alt text-danger mx-2"></i>
+
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-end align-items-center text-muted">
+                                    <span>{{ $establishment->type->name ?? '-' }}</span>
+                                    <i class="fas fa-building text-primary mx-2"></i>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end align-items-center text-muted">
+                                    <span>{{ $establishment->region->name ?? '-' }}</span>
+                                    <i class="fas fa-map-marker-alt text-danger mx-2"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
 
-                {{-- حالة التوثيق (خارج الرابط) --}}
-                <span wire:click.prevent="toggleVerification({{ $establishment->id }})"
-                    class="feature-badge position-absolute"
-                    style="top: 10px; left: 10px; font-size: 0.9rem; cursor: pointer; z-index: 10; background: {{ $establishment->is_verified ? '#4CAF50' : '#F44336' }}!important; color: white !important;">
-                    {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
-                </span>
+                    {{-- حالة التوثيق (خارج الرابط) --}}
+                    <span wire:click.prevent="toggleVerification({{ $establishment->id }})"
+                        class="feature-badge position-absolute"
+                        style="top: 10px; left: 10px; font-size: 0.9rem; cursor: pointer; z-index: 10; background: {{ $establishment->is_verified ? '#4CAF50' : '#F44336' }}!important; color: white !important;">
+                        {{ $establishment->is_verified ? 'موثقة' : 'غير موثقة' }}
+                    </span>
+                </div>
             </div>
-        </div>
-    @empty
-        <div class="col-12">
-            <div class="alert alert-warning text-center shadow-sm rounded">
-                لا توجد منشآت مطابقة لبحثك.
+        @empty
+            <div class="col-12">
+                <div class="alert alert-warning text-center shadow-sm rounded">
+                    لا توجد منشآت مطابقة لبحثك.
+                </div>
             </div>
-        </div>
-    @endforelse
-</div>
+        @endforelse
+    </div>
 
     {{-- روابط التصفح --}}
     @if ($establishments->hasPages())
