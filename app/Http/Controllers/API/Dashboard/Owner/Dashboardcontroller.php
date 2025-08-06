@@ -8,10 +8,11 @@ use App\Models\Establishment;
 use App\Classes\ApiResponseClass;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Repositories\EstablishmentRepository;
 
 class Dashboardcontroller extends Controller
 {
-    public function __construct()
+    public function __construct(private EstablishmentRepository $EstablishmentRepository)
     {
     
     }
@@ -40,5 +41,18 @@ class Dashboardcontroller extends Controller
             'bookings_count' => $totalBookings,
             'my_stablishments' => $myEstablishments
         ], 'Dashboard data retrieved successfully.');
+    }
+
+    public function showMyStablishment($id){
+        try {
+            $user= auth('sanctum')->user();
+            $establishment = $this->EstablishmentRepository->find($id);
+            if($user->user_type !== 'owner' || $user->id !== $establishment->owner_id) {
+                return ApiResponseClass::sendError('Unauthorized access.', null, 403);
+            }
+            return ApiResponseClass::sendResponse($establishment, 'Establishment retrieved successfully.');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('Establishment not found.', 404);
+        }
     }
 }
