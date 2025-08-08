@@ -28,7 +28,7 @@
                         <h5 class="border-bottom pb-2 mb-3">المعلومات الأساسية</h5>
                         <div class="form-row">
 
-                            <div class="form-group col-md-1 d-flex align-items-center mt-4 ">
+                            <div class="form-group col-md-2 d-flex align-items-center mt-4 ">
                                 <div class="d-flex align-items-center justify-content-start mt-2">
                                     <span class="me-2 small">{{ $is_active ? 'مفعل' : 'غير مفعل' }}</span>
                                     <div class="form-switch {{ $is_active ? 'switch-active' : 'switch-banned' }}">
@@ -39,7 +39,7 @@
                                 </div>
 
                             </div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-4">
                                 <label for="discount_type">نوع الخصم <span class="text-danger"><span
                                             class="text-danger">*</span></span></label>
                                 <select wire:model.live="discount_type"
