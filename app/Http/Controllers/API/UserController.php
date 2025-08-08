@@ -55,7 +55,6 @@ class UserController extends Controller
         }
         $fields=$request->validate([
             'name'=>['sometimes','string','max:100'],
-            'phone'=>['sometimes','string','min:9','max:15',Rule::unique('users')->ignore($id)],
             'current_password' => ['sometimes', 'required_with:new_password', 'string'],
             'new_password' => ['sometimes', 'required_with:current_password', 'string', 'min:6', 'confirmed']
         ]);
