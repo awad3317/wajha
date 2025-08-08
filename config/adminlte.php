@@ -358,38 +358,47 @@ return [
             'url' => '/packages',
             'icon' => 'fas fa-icons',
         ],
-        // [
-        //     'text' => 'الايقونات',
-        //     'icon' => 'fas fa-icons',
-        //     'submenu' => [
-           // ],
-        //         [
-        //             'text' => 'level_one',
-        //             'url' => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'level_two',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'level_two',
-        //                     'url' => '#',
-        //                     'submenu' => [
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url' => '#',
-        //                         ],
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url' => '#',
-        //                         ],
-        //                     ],
-        //                 ],
-        //             ],
-        //         ],
+        [
+            'text' => 'الايقونات',
+            'icon' => 'fas fa-icons',
+            'submenu' => [
+                // [
+                //     'text' => 'اسعار الباقات',
+                //     'url' => '/packages',
+                //     'icon' => 'fas fa-icons',
+                // ],
+                // [
+                //     'text' => 'مميزات المنشئة',
+                //     'url' => '/',
+                //     'icon' => 'fas fa-icons',
+                // ],
+                [
+                    'text' => 'level_one',
+                    'url' => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'level_two',
+                            'url' => '#',
+                        ],
+                        [
+                            'text' => 'level_two',
+                            'url' => '#',
+                            'submenu' => [
+                                [
+                                    'text' => 'level_three',
+                                    'url' => '#',
+                                ],
+                                [
+                                    'text' => 'level_three',
+                                    'url' => '#',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
 
-        //     ],
-        // ],
+            ],
+        ],
         ['header' => 'labels'],
         [
             'text' => 'important',
