@@ -307,6 +307,7 @@ return [
             'text' => 'لوحة التحكم',
             'url' => '/',
             'icon' => 'fas fa-fw fa-home',
+
         ],
         [
             'text' => 'المستخدمين',
@@ -341,49 +342,54 @@ return [
             'url' => '/discount_coupons',
             'icon' => 'fas fa-shopping-bag',
         ],
-
+        [
+            'text' => 'اسعار الباقات ',
+            'url' => '/price_packages',
+            'icon' => 'fas fa-tags',
+        ],
+        [
+            'text' => 'العملات',
+            'url' => '/currency',
+            'icon' => 'fas fa-coins',
+        ],
 
         [
             'text' => 'الايقونات',
+            'url' => '/packages',
             'icon' => 'fas fa-icons',
-            'submenu' => [
-                [
-                    'text' => 'اسعار الباقات',
-                    'url' => '/packages',
-                    'icon' => 'fas fa-icons',
-                ],
-                // [
-                //     'text' => 'مميزات المنشئة',
-                //     'url' => '/',
-                //     'icon' => 'fas fa-icons',
-                // ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-               
-            ],
         ],
+        // [
+        //     'text' => 'الايقونات',
+        //     'icon' => 'fas fa-icons',
+        //     'submenu' => [
+           // ],
+        //         [
+        //             'text' => 'level_one',
+        //             'url' => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text' => 'level_two',
+        //                     'url' => '#',
+        //                 ],
+        //                 [
+        //                     'text' => 'level_two',
+        //                     'url' => '#',
+        //                     'submenu' => [
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url' => '#',
+        //                         ],
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url' => '#',
+        //                         ],
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+
+        //     ],
+        // ],
         ['header' => 'labels'],
         [
             'text' => 'important',

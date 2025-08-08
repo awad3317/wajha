@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdvertisementsController;
 use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\BankController;
+use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\BanksController;
+use App\Http\Controllers\CurrenciesController;
 use App\Http\Controllers\Discount_couponsController;
 use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\RegionController;
@@ -11,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Livewire\Currencies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 // Route::get('/', function () {
@@ -42,6 +45,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('region', [RegionController::class, 'index']);
 Route::get('bank', [BanksController::class, 'index']);
 Route::get('advertisement', [AdvertisementsController::class, 'index']);
+Route::get('currency', [CurrenciesController::class, 'index']);
+
 
 Route::get('establishments', [EstablishmentController::class, 'index']);
 Route::get('establishment/{id}', [EstablishmentController::class, 'show'])->name('establishment.show');
