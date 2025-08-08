@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'وجهة | ايقونات الباقات')
+@section('title', 'وجهة | ايقونات المميزات')
 
 
 
@@ -10,7 +10,7 @@
 @stop
 
 @section('content')
-@livewire('price-package-icons')
+@livewire('establishment-features-icons')
 
 <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
 <script>

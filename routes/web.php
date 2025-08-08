@@ -46,7 +46,7 @@ Route::get('region', [RegionController::class, 'index']);
 Route::get('bank', [BanksController::class, 'index']);
 Route::get('advertisement', [AdvertisementsController::class, 'index']);
 Route::get('currency', [CurrenciesController::class, 'index']);
-
+Route::get('establishment_features_icons', [CurrenciesController::class, 'establishment_features_icons']);
 
 Route::get('establishments', [EstablishmentController::class, 'index']);
 Route::get('establishment/{id}', [EstablishmentController::class, 'show'])->name('establishment.show');

@@ -5,7 +5,7 @@
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center my-2">
        
-            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">إدارة ايقونات الباقات</h3>
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">إدارة ايقونات المميزات</h3>
                  @if (!$showForm && !$isEdit)
                 <button wire:click="create" class="btn btn-primary add-btn text-left">إضافة الأيقونة     <i class="fas fa-plus ms-1"></i></button>
             @endif
