@@ -45,6 +45,7 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     // Route::apiResource('/review', ReviewController::class)->except(['index','show']);
     Route::apiResource('/unavailabilityDays', EstablishmentUnavailabilityController::class)->except(['index','show','update']);
     Route::apiResource('/booking', BookingController::class)->except([]);
+    Route::post('/booking/markAsWaitingPayment', [BookingController::class, 'markAsWaitingPayment']);
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/showMyStablishment/{id}',[Dashboardcontroller::class,'showMyStablishment']);

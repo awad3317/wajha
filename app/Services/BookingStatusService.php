@@ -17,7 +17,6 @@ class BookingStatusService
                 'status' => 'waiting_payment',
             ]);
 
-            // يمكنك إضافة إرسال إشعار للعميل هنا
             return $booking;
         });
     }
