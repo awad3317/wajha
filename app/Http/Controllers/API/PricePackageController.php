@@ -38,6 +38,8 @@ class PricePackageController extends Controller
             'name' => ['required','string','max:100'],
             'description' => ['nullable','string','max:1000'],
             'price' =>['required','numeric','min:0'],
+            'currency_id' => ['required', Rule::exists('currencies', 'id')],
+            'time_period' => ['nullable', 'string', 'in:morning,evening,any'],
             'features' => ['nullable', 'array'],
             'features.*' => ['required', 'string', 'max:100'],
         ]);
@@ -48,6 +50,7 @@ class PricePackageController extends Controller
             if (!$establishment || $establishment->owner_id !== $userId) {
                 return ApiResponseClass::sendError('Unauthorized. You are not authorized to add Price Package to this establishment.', [], 403);
             }
+            $fields['time_period'] = $fields['time_period'] ?? 'any';
             $package=$this->PricePackageRepository->store($fields);
             return ApiResponseClass::sendResponse($package, 'Price package created successfully with features stored as JSON.');
 
@@ -74,6 +77,8 @@ class PricePackageController extends Controller
             'description' => ['nullable', 'string', 'max:1000'],
             'icon_id' => ['sometimes',Rule::exists('price_package_icons','id')],
             'price' => ['sometimes', 'numeric', 'min:0'],
+            'currency_id' => ['required', Rule::exists('currencies', 'id')],
+            'time_period' => ['sometimes', 'string', 'in:morning,evening,any'],
             'features' => ['nullable', 'array'],
             'features.*' => ['required_with:features', 'string', 'max:100'],
         ]);

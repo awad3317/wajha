@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->json('features')->nullable();
+            $table->enum('time_period', ['morning', 'evening', 'any'])->default('any');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

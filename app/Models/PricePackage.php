@@ -17,6 +17,7 @@ class PricePackage extends Model
         'currency_id',
         'price',
         'features',
+        'time_period',
         'is_active',
     ];
 
