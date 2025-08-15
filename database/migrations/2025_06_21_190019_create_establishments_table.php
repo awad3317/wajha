@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_active')->default(true);
-            $table->string('cancellation_policy'); 
+            $table->string('policy'); 
             $table->timestamps();
             
             $table->index(['owner_id', 'type_id', 'region_id']);
