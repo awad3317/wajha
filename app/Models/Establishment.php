@@ -23,7 +23,8 @@ class Establishment extends Model
         'latitude',
         'longitude',
         'is_verified',
-        'is_active'
+        'is_active',
+        'policy', 
     ];
 
     public function getPrimaryImageAttribute($value)
