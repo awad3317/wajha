@@ -27,15 +27,15 @@ class PricePackage extends Model
     ];
 
     public function getTimePeriodAttribute($value)
-{
-    $translations = [
+    {
+        $translations = [
         'morning' => 'صباحاً',
         'evening' => 'مساءً',
         'any' => 'أي وقت'
-    ];
+        ];
     
-    return $translations[$value] ?? $value;
-}
+        return $translations[$value] ?? $value;
+    }
 
     public function icon()
     {
