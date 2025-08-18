@@ -26,6 +26,17 @@ class PricePackage extends Model
         'is_active' => 'boolean',
     ];
 
+    public function getTimePeriodAttribute($value)
+{
+    $translations = [
+        'morning' => 'صباحاً',
+        'evening' => 'مساءً',
+        'any' => 'أي وقت'
+    ];
+    
+    return $translations[$value] ?? $value;
+}
+
     public function icon()
     {
         return $this->belongsTo(pricePackageIcon::class);
