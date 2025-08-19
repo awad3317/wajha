@@ -305,7 +305,7 @@ return [
 
         [
             'text' => 'لوحة التحكم',
-            'url' => '/',
+            'url' => '/homepage',
             'icon' => 'fas fa-fw fa-home',
 
         ],

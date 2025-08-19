@@ -8,6 +8,7 @@ use App\Http\Controllers\BanksController;
 use App\Http\Controllers\CurrenciesController;
 use App\Http\Controllers\Discount_couponsController;
 use App\Http\Controllers\EstablishmentController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +42,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-
+Route::get('homepage', [HomeController::class, 'homepage']);
 Route::get('region', [RegionController::class, 'index']);
 Route::get('bank', [BanksController::class, 'index']);
 Route::get('advertisement', [AdvertisementsController::class, 'index']);
