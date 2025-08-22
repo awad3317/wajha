@@ -11,18 +11,19 @@
             </div>
         @endif
 
-   
-       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2">
 
-    @if (!$showForm && !$isEdit)
-        <button wire:click="create" class="btn btn-primary add-btn d-flex align-items-center">
-            <span>إضافة باقة جديدة</span>
-            <i class="fas fa-plus-circle me-2"></i>
-        </button>
-    @endif
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2">
 
-    <h3 class="text-md-left d-none d-md-block mb-md-2 text-right">إدارة الباقات</h3>
-</div>
+            @if (!$showForm && !$isEdit)
+                <button wire:click="create" class="btn btn-primary add-btn d-flex align-items-center">
+                    <span>إضافة باقة جديدة</span>
+                    <i class="fas fa-plus-circle me-2"></i>
+                </button>
+            @endif
+
+            <h3 class="text-md-left d-none d-md-block mb-md-2 text-right">إدارة الباقات</h3>
+        </div>
 
 
         @if ($showForm)
@@ -109,6 +110,8 @@
                                 <label class="form-label fw-semibold">الحالة</label>
                                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
                                     <select wire:model.defer="is_active" class="form-control text-right border-0">
+                                        <option value="">--الحاله--</option>
+
                                         <option value="1">نشط</option>
                                         <option value="0">غير نشط</option>
                                     </select>

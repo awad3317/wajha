@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\PricePackage;
-use App\Models\PricePackageIcon;
+use App\Models\pricePackageIcon;
 use App\Models\Establishment;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -133,7 +133,7 @@ class PricePackages extends Component
 
         return view('livewire.price-packages', [
             'packages' => $packages,
-            'icons' => PricePackageIcon::all(),
+            'icons' => pricePackageIcon::all(),
             'establishments' => Establishment::all(),
         ]);
     }
