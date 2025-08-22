@@ -124,7 +124,7 @@
                                         @if ($package->icon)
                                             <div class="d-flex justify-content-center">
                                                 <img src="{{ url($package->icon) }}" alt="أيقونة الباقة"
-                                                    class="rounded  border-3 border-primary p-1" width="100"
+                                                    class="rounded  border-3 border-primary p-2" width="100"
                                                     height="100"
                                                     style="object-fit: cover; background-color: #f8f9fa;">
                                             </div>
