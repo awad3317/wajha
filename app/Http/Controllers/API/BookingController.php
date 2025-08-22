@@ -233,6 +233,9 @@ class BookingController extends Controller
         $user = $booking->user;
         $establishment = $booking->establishment;
 
+        if (auth('sanctum')->id() != $establishment->owner_id) {
+            return ApiResponseClass::sendError('غير مصرح لك بتأكيد هذا الحجز', [], 403);
+        }
         $user->notify(new NewBookingNotification(
             $booking, 
             'تم تأكيد الحجز', 
