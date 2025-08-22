@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\BankController;
 use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\BanksController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CurrenciesController;
 use App\Http\Controllers\Discount_couponsController;
 use App\Http\Controllers\EstablishmentController;
@@ -51,6 +52,8 @@ Route::get('establishment_features_icons', [CurrenciesController::class, 'establ
 
 Route::get('establishments', [EstablishmentController::class, 'index']);
 Route::get('establishment/{id}', [EstablishmentController::class, 'show'])->name('establishment.show');
+
+Route::get('booking', [BookingController::class, 'index']);
 
 
 Route::get('packages', [BanksController::class, 'show_package']);
