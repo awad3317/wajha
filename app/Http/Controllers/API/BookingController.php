@@ -155,6 +155,72 @@ class BookingController extends Controller
         
     }
 
+    public function markAsPaid(Request $request)
+{
+    $fields = $request->validate([
+        'booking_id' => ['required', Rule::exists('bookings', 'id')],
+        'receipt_image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+    ]);
+
+    try {
+        $booking = $this->bookingRepository->getById($fields['booking_id']);
+        
+        if ($request->hasFile('receipt_image')) {
+            $receiptImage = $request->file('receipt_image')->storeAs(
+        'payment-receipts', 
+        'receipt_' . time() . '.' . $request->file('receipt_image')->extension(),
+         'private'
+            );
+        } else {
+            return ApiResponseClass::sendError('صورة الإيصال مطلوبة', [], 400);
+        }
+
+        $bookingStatus = $this->bookingStatusService->markAsPaid($booking, $receiptImage);
+        $user = $booking->user;
+        $establishment = $booking->establishment;
+
+        $user->notify(new NewBookingNotification(
+            $booking, 
+            'تم الدفع', 
+            "تم تأكيد الدفع لحجزك في {$establishment->name}", 
+            'customer'
+        ));
+
+        $establishmentOwner = $establishment->user;
+        $establishmentOwner->notify(new NewBookingNotification(
+            $booking, 
+            'تم دفع حجز جديد', 
+            "تم دفع حجز جديد في {$establishment->name} من قبل {$user->name}", 
+            'owner'
+        ));
+
+        $title = "تم الدفع بنجاح";
+        $body = "تم تأكيد الدفع لحجزك في {$establishment->name}. رقم الحجز: {$booking->id}";
+    
+        $data = [
+            'type' => 'تم الدفع',
+            'booking_id' => $booking->id,
+            'establishment_id' => $establishment->id,
+            'user_id' => $user->id,
+        ];
+    
+        if ($user->device_token) {
+            $this->firebaseService->sendNotification($user->device_token, $title, $body, $data);
+        }
+
+        if ($establishmentOwner->device_token) {
+            $ownerTitle = "حجز جديد مدفوع";
+            $ownerBody = "حجز جديد مدفوع في {$establishment->name} من قبل {$user->name}";
+            $this->firebaseService->sendNotification($establishmentOwner->device_token, $ownerTitle, $ownerBody, $data);
+        }
+
+        return ApiResponseClass::sendResponse($booking, 'تم تحديث حالة الحجز إلى "تم الدفع" بنجاح');
+
+    } catch (Exception $e) {
+        return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الدفع: ' . $e->getMessage(), [], 500);
+    }
+}
+
     /**
      * Display the specified resource.
      */

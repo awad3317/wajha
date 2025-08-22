@@ -28,13 +28,10 @@ class BookingStatusService
             if ($booking->status === 'cancelled') {
                 throw new \Exception('لا يمكن تعديل الحجز الملغي');
             }
-
             $booking->update([
                 'status' => 'paid',
                 'payment_receipt_image' => $receiptImage
             ]);
-            
-            // إرسال إشعار للمالك
             return $booking;
         });
     }

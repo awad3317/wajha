@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Services\FirebaseService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BankController;
+use App\Http\Controllers\api\FileController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\RegionController;
 use App\Http\Controllers\API\ReviewController;
@@ -46,6 +47,11 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::apiResource('/unavailabilityDays', EstablishmentUnavailabilityController::class)->except(['index','show','update']);
     Route::apiResource('/booking', BookingController::class)->except([]);
     Route::post('/booking/markAsWaitingPayment', [BookingController::class, 'markAsWaitingPayment']);
+    Route::post('/booking/markAsPaid', [BookingController::class, 'markAsPaid']);
+    Route::post('/downloadReceipt/{filename}', [FileController::class, 'downloadReceipt']);
+    Route::post('/viewReceipt/{filename}', [FileController::class, 'viewReceipt']);
+    
+    
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/showMyStablishment/{id}',[Dashboardcontroller::class,'showMyStablishment']);
