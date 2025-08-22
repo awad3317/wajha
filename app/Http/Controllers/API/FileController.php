@@ -13,19 +13,17 @@ class FileController extends Controller
     public function downloadReceipt($filename)
 {
     try {
-        $filePath = 'payment-receipts/' . $filename;
         $user = auth('sanctum')->user();
-        
         
         if (!$user) {
             return response()->json(['error' => 'غير مصرح بالوصول'], 403);
         }
-        $booking = booking::where('payment_receipt_image', $filename)->first();
+        $booking = Booking::where('payment_receipt_image', 'like', '%' .  $filename)->first();
         
         if (!$booking) {
             return response()->json(['error' => 'الملف غير موجود'], 404);
         }
-    
+        $filePath = $booking->payment_receipt_image;
         if ($user->user_type === 'admin') {
             return Storage::disk('private')->download($filePath);
         }
@@ -55,18 +53,19 @@ class FileController extends Controller
     public function viewReceipt($filename)
 {
     try {
-        $filePath = 'payment-receipts/' . $filename;
         $user = auth('sanctum')->user();
         
         if (!$user) {
             return response()->json(['error' => 'غير مصرح بالوصول'], 403);
         }
     
-        $booking = Booking::where('payment_receipt_image', $filename)->first();
+        $booking = Booking::where('payment_receipt_image', 'like', '%' .  $filename)->first();
         
+
         if (!$booking) {
             return response()->json(['error' => 'الملف غير موجود'], 404);
         }
+        $filePath = $booking->payment_receipt_image;
         if (!Storage::disk('private')->exists($filePath)) {
             return response()->json(['error' => 'الملف غير موجود'], 404);
         }
