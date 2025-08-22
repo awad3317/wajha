@@ -48,6 +48,8 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::apiResource('/booking', BookingController::class)->except([]);
     Route::post('/booking/markAsWaitingPayment', [BookingController::class, 'markAsWaitingPayment']);
     Route::post('/booking/markAsPaid', [BookingController::class, 'markAsPaid']);
+    Route::post('/booking/confirmBooking', [BookingController::class, 'confirmBooking']);
+    
     Route::get('/downloadReceipt/{filename}', [FileController::class, 'downloadReceipt']);
     Route::get('/viewReceipt/{filename}', [FileController::class, 'viewReceipt']);
     

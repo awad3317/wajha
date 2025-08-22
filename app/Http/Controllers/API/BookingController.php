@@ -175,7 +175,7 @@ class BookingController extends Controller
             return ApiResponseClass::sendError('صورة الإيصال مطلوبة', [], 400);
         }
 
-        $bookingStatus = $this->bookingStatusService->markAsPaid($booking, $receiptImage);
+        $booking = $this->bookingStatusService->markAsPaid($booking, $receiptImage);
         $user = $booking->user;
         $establishment = $booking->establishment;
 
@@ -218,6 +218,60 @@ class BookingController extends Controller
 
     } catch (Exception $e) {
         return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الدفع: ' . $e->getMessage(), [], 500);
+    }
+}
+    public function confirmBooking(Request $request)
+{
+    $fields = $request->validate([
+        'booking_id' => ['required', Rule::exists('bookings', 'id')],
+    ]);
+
+    try {
+        $booking = $this->bookingRepository->getById($fields['booking_id']);
+        
+        $booking = $this->bookingStatusService->confirmBooking($booking);
+        $user = $booking->user;
+        $establishment = $booking->establishment;
+
+        $user->notify(new NewBookingNotification(
+            $booking, 
+            'تم تأكيد الحجز', 
+            "تم تأكيد حجزك في {$establishment->name}", 
+            'customer'
+        ));
+
+        $establishmentOwner = $establishment->user;
+        $establishmentOwner->notify(new NewBookingNotification(
+            $booking, 
+            'تم تأكيد حجز', 
+            "تم تأكيد حجز في {$establishment->name} من قبل {$user->name}", 
+            'owner'
+        ));
+
+        $title = "تم تأكيد الحجز";
+        $body = "تم تأكيد حجزك في {$establishment->name}. رقم الحجز: {$booking->id}";
+    
+        $data = [
+            'type' => 'تم التأكيد',
+            'booking_id' => $booking->id,
+            'establishment_id' => $establishment->id,
+            'user_id' => $user->id,
+        ];
+    
+        if ($user->device_token) {
+            $this->firebaseService->sendNotification($user->device_token, $title, $body, $data);
+        }
+
+        if ($establishmentOwner->device_token) {
+            $ownerTitle = "تم تأكيد حجز";
+            $ownerBody = "تم تأكيد حجز في {$establishment->name} من قبل {$user->name}";
+            $this->firebaseService->sendNotification($establishmentOwner->device_token, $ownerTitle, $ownerBody, $data);
+        }
+
+        return ApiResponseClass::sendResponse($booking, 'تم تأكيد الحجز بنجاح');
+
+    } catch (Exception $e) {
+        return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الحجز: ' . $e->getMessage(), [], 500);
     }
 }
 

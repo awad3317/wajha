@@ -48,7 +48,7 @@ class BookingStatusService
 
             $booking->update(['status' => 'confirmed']);
             
-            // إرسال إشعار للعميل
+        
             return $booking;
         });
     }
@@ -61,7 +61,7 @@ class BookingStatusService
             }
             $booking->update(['status' => 'cancelled']);
             
-            // إرسال إشعار للعميل
+            
             return $booking;
         });
     }
