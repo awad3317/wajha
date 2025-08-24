@@ -369,12 +369,12 @@ return [
             'icon' => 'fas fa-icons',
             'submenu' => [
                 [
-                    'text' => 'ايقونات الباقات',
+                    'text' => 'الباقات',
                     'url' => '/packages',
                     'icon' => 'fas fa-icons',
                 ],
                 [
-                    'text' => 'ايقونات مييزات المنشئة',
+                    'text' => 'مييزات المنشئة',
                     'url' => '/establishment_features_icons',
                     'icon' => 'fas fa-icons',
                 ],
