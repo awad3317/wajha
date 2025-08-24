@@ -278,6 +278,73 @@ class BookingController extends Controller
     }
 }
 
+public function cancelledBooking(Request $request)
+{
+    $fields = $request->validate([
+        'booking_id' => ['required', Rule::exists('bookings', 'id')],
+        'cancellation_reason' => ['nullable', 'string', 'max:500'],
+    ]);
+
+    try {
+        $booking = $this->bookingRepository->getById($fields['booking_id']);
+        $user = auth('sanctum')->user();
+        $establishment = $booking->establishment;
+
+        if ($user->id !== $booking->user_id && $user->id !== $establishment->owner_id) {
+            return ApiResponseClass::sendError('غير مصرح لك بإلغاء هذا الحجز', [], 403);
+        }
+
+        $booking = $this->bookingStatusService->cancelledBooking($booking, $fields['cancellation_reason'] ?? null);
+
+        $userType = ($user->id === $booking->user_id) ? 'customer' : 'owner';
+        $recipientType = ($userType === 'customer') ? 'owner' : 'customer';
+        
+        $recipient = ($userType === 'customer') ? $establishment->user : $booking->user;
+
+        $recipient->notify(new NewBookingNotification(
+            $booking, 
+            'تم إلغاء الحجز', 
+            "تم إلغاء الحجز في {$establishment->name}" . 
+            ($userType === 'customer' ? " من قبل العميل" : " من قبل مالك المنشأة"),
+            $recipientType
+        ));
+        $title = "تم إلغاء الحجز";
+        $body = "تم إلغاء الحجز في {$establishment->name}";
+        
+        if (!empty($fields['cancellation_reason'])) {
+            $body .= ". السبب: " . $fields['cancellation_reason'];
+        }
+
+        $data = [
+            'type' => 'تم الإلغاء',
+            'booking_id' => $booking->id,
+            'establishment_id' => $establishment->id,
+            'user_id' => $booking->user_id,
+        ];
+
+        if ($recipient->device_token) {
+            $this->firebaseService->sendNotification(
+                $recipient->device_token, 
+                $title, 
+                $body, 
+                $data
+            );
+        }
+
+        return ApiResponseClass::sendResponse(
+            $booking, 
+            'تم إلغاء الحجز بنجاح'
+        );
+
+    } catch (Exception $e) {
+        return ApiResponseClass::sendError(
+            'حدث خطأ أثناء إلغاء الحجز: ' . $e->getMessage(), 
+            [], 
+            500
+        );
+    }
+}
+
     /**
      * Display the specified resource.
      */
