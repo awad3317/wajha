@@ -50,6 +50,8 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::post('/booking/markAsPaid', [BookingController::class, 'markAsPaid']);
     Route::post('/booking/confirmBooking', [BookingController::class, 'confirmBooking']);
     Route::post('/booking/cancelledBooking', [BookingController::class, 'cancelledBooking']);
+    Route::post('/booking/revertBookingStatus', [BookingController::class, 'revertBookingStatus']);
+    
     
     Route::get('/downloadReceipt/{filename}', [FileController::class, 'downloadReceipt']);
     Route::get('/viewReceipt/{filename}', [FileController::class, 'viewReceipt']);

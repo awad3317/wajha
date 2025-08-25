@@ -9,9 +9,10 @@ use App\Services\CouponService;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
 use App\Services\FirebaseService;
-use App\Services\BookingStatusService;
 use App\Http\Controllers\Controller;
+use App\Services\BookingStatusService;
 use App\Repositories\bookingRepository;
+use Illuminate\Support\Facades\Storage;
 use App\Notifications\NewBookingNotification;
 use App\Repositories\EstablishmentRepository;
 
@@ -164,12 +165,16 @@ class BookingController extends Controller
 
     try {
         $booking = $this->bookingRepository->getById($fields['booking_id']);
+        $currentReceiptImage = $booking->receipt_image;
         
         if ($request->hasFile('receipt_image')) {
+            if ($currentReceiptImage && Storage::disk('private')->exists($currentReceiptImage)) {
+                Storage::disk('private')->delete($currentReceiptImage);
+            }
             $receiptImage = $request->file('receipt_image')->storeAs(
-        'payment-receipts', 
-        'receipt_' . time() . '.' . $request->file('receipt_image')->extension(),
-         'private'
+                'payment-receipts', 
+                'receipt_' . time() . '_' . uniqid() . '.' . $request->file('receipt_image')->extension(),
+                'private'
             );
         } else {
             return ApiResponseClass::sendError('صورة الإيصال مطلوبة', [], 400);
@@ -217,6 +222,9 @@ class BookingController extends Controller
         return ApiResponseClass::sendResponse($booking, 'تم تحديث حالة الحجز إلى "تم الدفع" بنجاح');
 
     } catch (Exception $e) {
+        if (isset($receiptImage) && Storage::disk('private')->exists($receiptImage)) {
+            Storage::disk('private')->delete($receiptImage);
+        }
         return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الدفع: ' . $e->getMessage(), [], 500);
     }
 }
@@ -343,6 +351,73 @@ public function cancelledBooking(Request $request)
             500
         );
     }
+}
+
+    public function revertBookingStatus(Request $request)
+{
+    $fields = $request->validate([
+        'booking_id' => ['required', Rule::exists('bookings', 'id')],
+        'target_status' => ['required', Rule::in(['pending', 'waiting_payment', 'paid', 'confirmed'])]
+    ]);
+
+    try {
+        $booking = $this->bookingRepository->getById($fields['booking_id']);
+        $user = auth('sanctum')->user();
+        $establishment = $booking->establishment;
+
+        if ($user->id !== $establishment->owner_id) {
+            return ApiResponseClass::sendError('غير مصرح لك بالتراجع عن حالة هذا الحجز', [], 403);
+        }
+
+        $booking = $this->bookingStatusService->revertBookingStatus($booking, $fields['target_status']);
+
+        $customer = $booking->user;
+
+        $customer->notify(new NewBookingNotification(
+            $booking, 
+            'تم تعديل حالة الحجز', 
+            "تم تعديل حالة حجزك في {$establishment->name} إلى: " . $this->getArabicStatus($fields['target_status']),
+            'customer'
+        ));
+            $title = "تم تعديل حالة الحجز";
+        $body = "تم تعديل حالة حجزك في {$establishment->name} إلى: " . $this->getArabicStatus($fields['target_status']);
+    
+        $data = [
+            'type' => 'تعديل الحالة',
+            'booking_id' => $booking->id,
+            'establishment_id' => $establishment->id,
+            'user_id' => $customer->id,
+            'old_status' => $booking->status,
+            'new_status' => $fields['target_status']
+        ];
+    
+        if ($customer->device_token) {
+            $this->firebaseService->sendNotification($customer->device_token, $title, $body, $data);
+        }
+        return ApiResponseClass::sendResponse(
+            $booking, 
+            'تم التراجع عن حالة الحجز بنجاح إلى "' . $this->getArabicStatus($fields['target_status']) . '"'
+        );
+    } catch (Exception $e) {
+        return ApiResponseClass::sendError(
+            'حدث خطأ أثناء التراجع عن حالة الحجز: ' . $e->getMessage(), 
+            [], 
+            500
+        );
+    }
+}
+private function getArabicStatus($status)
+{
+    $statusMap = [
+        'pending' => 'قيد الانتظار',
+        'waiting_payment' => 'بانتظار الدفع',
+        'paid' => 'تم الدفع',
+        'confirmed' => 'تم التأكيد',
+        'cancelled' => 'ملغي',
+        'completed' => 'مكتمل'
+    ];
+
+    return $statusMap[$status] ?? $status;
 }
 
     /**

@@ -76,6 +76,41 @@ class BookingStatusService
         });
     }
 
+      public function revertBookingStatus(Booking $booking, $targetStatus)
+    {
+        return DB::transaction(function () use ($booking, $targetStatus) {
+            if ($booking->status === 'cancelled') {
+                throw new \Exception('لا يمكن تعديل الحجز الملغي');
+            }
+
+            $oldStatus = $booking->status;
+            
+            $allowedTransitions = [
+                'waiting_payment' => ['pending'],
+                'paid' => ['pending', 'waiting_payment'],
+                'confirmed' => ['pending', 'waiting_payment', 'paid'],
+                'cancelled' => ['pending', 'waiting_payment', 'paid', 'confirmed']
+            ];
+
+            if (!isset($allowedTransitions[$oldStatus]) || 
+                !in_array($targetStatus, $allowedTransitions[$oldStatus])) {
+                throw new \Exception('لا يمكن التراجع من الحالة الحالية إلى الحالة المستهدفة');
+            }
+
+            $booking->update(['status' => $targetStatus]);
+            
+            $this->logStatusChange(
+                $booking, 
+                $oldStatus, 
+                $targetStatus, 
+                'revertBookingStatus',
+                ['reverted_from' => $oldStatus, 'reverted_to' => $targetStatus]
+            );
+
+            return $booking;
+        });
+    }
+
     protected function logStatusChange(Booking $booking, $fromStatus, $toStatus, $action, $notes = null) {
         $user = auth('sanctum')->user();
         BookingLog::create([
