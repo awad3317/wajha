@@ -423,9 +423,14 @@ private function getArabicStatus($status)
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        try {
+            $booking=$this->bookingRepository->getById($id);
+            return ApiResponseClass::sendResponse($booking,'data getted successfully');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('Error returned establishment: ' . $e->getMessage());
+        }
     }
 
     /**

@@ -140,9 +140,9 @@ class EstablishmentController extends Controller
     {
         try {
             $establishment=$this->EstablishmentRepository->getById($id);
-            return ApiResponseClass::sendResponse($establishment,'establishment');
+            return ApiResponseClass::sendResponse($establishment,'data getted successfully');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error save establishment: ' . $e->getMessage());
+            return ApiResponseClass::sendError('Error returned establishment: ' . $e->getMessage());
         }
     }
 
