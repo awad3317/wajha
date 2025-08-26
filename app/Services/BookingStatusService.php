@@ -124,9 +124,9 @@ class BookingStatusService
         ]);
     }
 
-    public function getBookingLogs(Booking $booking)
+    public function getBookingLogs($booking_id)
     {
-        return BookingLog::where('booking_id', $booking->id)
+        return BookingLog::where('booking_id', $booking_id)
             ->with('user')
             ->orderBy('created_at', 'desc')
             ->get();
