@@ -11,15 +11,15 @@
         <div
             class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
             <!-- العنوان -->
-        <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
-    إدارة الإعلانات
-</h3>
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
+                إدارة الإعلانات
+            </h3>
 
             <!-- زر الإضافة - يظهر فقط عندما لا تكون النماذج ظاهرة -->
             @if (!$showForm && !$isEdit)
                 <button wire:click="create" class="btn btn-primary add-btn py-2 px-3 px-sm-4 rounded-pill flex-shrink-0">
                     <span class="d-none d-inline">إضافة إعلان جديد</span>
-              
+
                     <i class="fas fa-plus-circle ms-1 ms-sm-2"></i>
                 </button>
             @endif
@@ -116,7 +116,7 @@
                                     placeholder="...أدخل وصف الإعلان هنا"></textarea>
                                 @error('description')
                                     <div class="invalid-feedback text-right d-block mt-2">
-                                       {{ $message }} <i class="fas fa-exclamation-circle ml-1"></i>
+                                        {{ $message }} <i class="fas fa-exclamation-circle ml-1"></i>
                                     </div>
                                 @enderror
                             </div>
@@ -165,7 +165,7 @@
                             <div class="col-md-6 mt-4">
                                 <button type="button" wire:click="cancel"
                                     class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                   إلغاء <i class="fas fa-times ml-2"></i> 
+                                    إلغاء <i class="fas fa-times ml-2"></i>
                                 </button>
                             </div>
 
@@ -185,7 +185,7 @@
         {{-- Search and Filter Section --}}
         <div class="row g-3 mb-4">
             <div class="col-md-8">
-                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
                     <input type="text" wire:model.debounce.300ms.live="search"
                         class="form-control border-0 text-right py-2" placeholder="..ابحث باسم الإعلان">
                     <span class="input-group-text bg-white border-0">
@@ -195,7 +195,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
                     <select wire:model.live="selectedStatu" class="form-control border-0 text-right py-2">
                         <option value="">كل الحالات</option>
                         <option value="1">المفعلة</option>
@@ -213,7 +213,7 @@
             @forelse ($advertisements as $ad)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
                     <div class="card   shadow-sm w-100 text-right position-relative border-0">
-                        <div  class="text-decoration-none text-dark">
+                        <div class="text-decoration-none text-dark">
                             <div class="card-header p-0" style="height: 180px; overflow: hidden;">
                                 @if ($ad->image)
                                     <img src="{{ asset('storage/' . $ad->image) }}"
@@ -244,7 +244,7 @@
                                 </div>
 
                                 <div class="row mt-3 g-2">
-                                      <div class="col-6">
+                                    <div class="col-6">
                                         <div class="d-flex align-items-center justify-content-end">
                                             <div class="text-end me-2">
                                                 <div class="fw-semibold small text-dark">
@@ -273,7 +273,7 @@
                                         </div>
                                     </div>
 
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -288,7 +288,7 @@
                         {{-- أزرار التحكم --}}
                         <div class="card-footer bg-transparent  pt-1 px-0 mx-2">
                             <div class="d-flex justify-content-between align-items-center gap-3 mx-1">
-                         
+
 
                                 <!-- زر الحذف مع تحسينات -->
                                 <button
@@ -298,7 +298,7 @@
                                     <span class="d-none d-sm-inline-block">حذف</span>
                                     <i class="fas fa-trash-alt ml-2"></i>
                                 </button>
-                                       <!-- زر التعديل مع تحسينات -->
+                                <!-- زر التعديل مع تحسينات -->
                                 <button
                                     class="btn btn-outline-primary btn-sm rounded-pill flex-grow-1 py-2 d-flex align-items-center justify-content-center"
                                     wire:click.prevent="edit({{ $ad->id }})" data-bs-toggle="tooltip"

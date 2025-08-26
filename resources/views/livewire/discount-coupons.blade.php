@@ -227,7 +227,8 @@
         @endif
         <div class="row g-3 mb-4">
             <div class="col-md-8">
-                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
+
                     <input type="text" wire:model.debounce.300ms.live="search"
                         class="form-control  border-0 text-right py-2" placeholder="..ابحث باسم الكوبون">
                     <span class="input-group-text bg-white border-0">
@@ -237,7 +238,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
                     <select wire:model.live="selectedStatu" class="form-control  border-0 text-right py-2">
                         <option value="">كل الحالات</option>
                         <option value="1">المفعلة</option>
