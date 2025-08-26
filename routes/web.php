@@ -54,7 +54,7 @@ Route::get('establishments', [EstablishmentController::class, 'index']);
 Route::get('establishment/{id}', [EstablishmentController::class, 'show'])->name('establishment.show');
 
 Route::get('booking', [BookingController::class, 'index']);
-
+Route::get('show_booking/{id}', [BookingController::class, 'show'])->name('show_booking');
 
 Route::get('packages', [BanksController::class, 'show_package']);
 Route::get('price_packages', [BanksController::class, 'show_packages']);

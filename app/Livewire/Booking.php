@@ -14,7 +14,9 @@ class Booking extends Component
     public $statusFilter = '';
 
     protected $paginationTheme = 'bootstrap';
-
+    public $showBookingDetails = false;
+    
+    
     public function updatingSearch()
     {
         $this->resetPage();

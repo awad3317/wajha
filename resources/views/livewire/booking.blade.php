@@ -110,6 +110,8 @@
                         <th>كود الخصم</th>
                         <th>حالة الحجز</th>
                         <th>الإيصال</th>
+                        <th>العمليات</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -128,7 +130,7 @@
                             <td>
                                 {{ $booking->coupon->code ?? '-' }}
                             </td>
-                            
+
                             <td>
                                 @php
                                     $statusLabels = [
@@ -178,6 +180,14 @@
                                     -
                                 @endif
                             </td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{{ url('show_booking/' . $booking->id) }}" class="btn btn-sm btn-success">
+                                        عرض التفاصيل
+                                    </a>
+
+
+                                </div>
                         </tr>
                     @empty
                         <tr>
