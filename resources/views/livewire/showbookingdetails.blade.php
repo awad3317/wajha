@@ -184,12 +184,12 @@
                                 </span>
                             </p>
 
-
+{{-- 
                             <p><strong>الإجراء:</strong> {{ $log->action }}</p>
                             @if ($log->notes)
                                 <p class="text-secondary"><strong>ملاحظة:</strong> {{ $log->notes }}</p>
                             @endif
-                            <small class="text-muted">IP: {{ $log->ip_address }}</small>
+                            <small class="text-muted">IP: {{ $log->ip_address }}</small> --}}
                         </div>
                     </div>
                 @endforeach
