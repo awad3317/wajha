@@ -62,7 +62,7 @@
                             <div class="row mb-2">
                                 <div class="col-6 d-flex justify-content-end align-items-center">
 
-                                    <h5 class="mb-0 text-primary text-truncate"
+                                    <h5 class="mb-0 text-primary text-truncate "
                                         style="width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
                                         title="{{ $establishment->name }}">
                                         {{ $establishment->name }}

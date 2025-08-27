@@ -217,14 +217,15 @@
     </div>
 
 
-    <div class="row g-4 ">
-        {{-- معرض الصور --}}
-        <div class="col-md-6 ">
-            <div class="card shadow-sm border-0 text-right h-100">
-                <div class="card-header bg-secondary text-white fw-bold">
-                    معرض الصور <i class="fas fa-images ml-2"></i>
-                </div>
-                <div class="card-body">
+<div class="row g-4">
+    {{-- معرض الصور --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-secondary text-white fw-bold">
+                معرض الصور <i class="fas fa-images ml-2"></i>
+            </div>
+            <div class="card-body p-0">
+                <div class="overflow-auto p-3" style="max-height: 300px;">
                     <div class="row g-3">
                         @forelse ($images as $image)
                             <div class="col-6 col-md-4">
@@ -239,182 +240,84 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        {{-- المميزات --}}
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 text-right h-100">
-                <div class="card-header bg-success text-white fw-bold">
-                    المميزات <i class="fas fa-star ml-2"></i>
+    {{-- المميزات --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-success text-white fw-bold">
+                المميزات <i class="fas fa-star ml-2"></i>
+            </div>
+            <div class="card-body p-3 overflow-auto" style="max-height: 300px;">
+                <div class="features-list">
+                    @forelse ($features as $feature)
+                        <div class="feature-item">
+                            <div class="feature-icon-wrapper">
+                                @if ($feature->icon)
+                                    <div class="feature-icon-img">
+                                        <img src="{{ url($feature->icon) }}" alt="{{ $feature->name }}" class="img-fluid">
+                                    </div>
+                                @else
+                                    <div class="feature-icon-default">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="feature-content">
+                                <h5 class="feature-title">{{ $feature->name }}</h5>
+                                <p class="feature-desc">{{ $feature->description }}</p>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="no-features">
+                            <i class="far fa-folder-open"></i>
+                            <p>لا توجد مميزات متاحة حالياً</p>
+                        </div>
+                    @endforelse
                 </div>
-                <div class="card-body overflow-auto">
-                    <div class="features-list overflow-auto" >
-                        @forelse ($features as $feature)
-                            <div class="feature-item">
-                                <div class="feature-icon-wrapper">
-                                    @if ($feature->icon)
-                                        <div class="feature-icon-img">
-                                            <img src="{{ url($feature->icon) }}" alt="{{ $feature->name }}"
-                                                class="img-fluid">
-                                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-4">
+    {{-- المواصفات --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-warning text-white fw-bold">
+                المواصفات <i class="fas fa-cogs ml-2"></i>
+            </div>
+            <div class="card-body p-0">
+                <div class="overflow-auto" style="max-height: 300px;">
+                    <ul class="list-group list-group-flush">
+                        @forelse ($specifications as $spec)
+                            <li class="list-group-item d-flex align-items-center justify-content-end">
+                                <span class="ml-2">
+                                    @if ($spec->icon)
+                                        <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة" class="img-fluid" style="max-width: 20px; max-height: 20px;">
                                     @else
-                                        <div class="feature-icon-default">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
+                                        <i class="fas fa-info-circle text-secondary"></i>
                                     @endif
-                                </div>
-                                <div class="feature-content">
-                                    <h5 class="feature-title">{{ $feature->name }}</h5>
-                                    <p class="feature-desc">{{ $feature->description }}</p>
-                                </div>
-                            </div>
+                                </span>
+                                {{ $spec->name }}
+                            </li>
                         @empty
-                            <div class="no-features">
-                                <i class="far fa-folder-open"></i>
-                                <p>لا توجد مميزات متاحة حالياً</p>
-                            </div>
+                            <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
                         @endforelse
-                    </div>
-
-                    <style>
-                        .features-list {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 1.5rem;
-                        }
-
-                        .feature-item {
-                            display: flex;
-                            align-items: flex-start;
-                            gap: 1.25rem;
-                            padding: 1rem;
-                            border-radius: 12px;
-                            transition: all 0.3s ease;
-                            background-color: rgba(245, 245, 245, 0.5);
-                        }
-
-                        .feature-item:hover {
-                            background-color: #f8f9fa;
-                            transform: translateY(-2px);
-                            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-                        }
-
-                        .feature-icon-wrapper {
-                            flex-shrink: 0;
-                        }
-
-                        .feature-icon-img,
-                        .feature-icon-default {
-                            width: 48px;
-                            height: 48px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            border-radius: 12px;
-                        }
-
-                        .feature-icon-img {
-                            background-color: #f0f7ff;
-                            padding: 10px;
-                        }
-
-                        .feature-icon-img img {
-                            max-width: 28px;
-                            max-height: 28px;
-                            object-fit: contain;
-                        }
-
-                        .feature-icon-default {
-                            background-color: #e6f7ee;
-                            color: #28a745;
-                            font-size: 1.5rem;
-                        }
-
-                        .feature-content {
-                            flex-grow: 1;
-                        }
-
-                        .feature-title {
-                            font-size: 1.05rem;
-                            font-weight: 600;
-                            color: #2c3e50;
-                            margin-bottom: 0.5rem;
-                        }
-
-                        .feature-desc {
-                            font-size: 0.9rem;
-                            color: #7f8c8d;
-                            margin-bottom: 0;
-                            line-height: 1.5;
-                        }
-
-                        .no-features {
-                            text-align: center;
-                            padding: 2rem;
-                            color: #95a5a6;
-                        }
-
-                        .no-features i {
-                            font-size: 2.5rem;
-                            margin-bottom: 1rem;
-                            color: #bdc3c7;
-                        }
-
-                        @media (max-width: 576px) {
-                            .feature-item {
-                                flex-direction: column;
-                                align-items: center;
-                                text-align: center;
-                            }
-
-                            .feature-content {
-                                text-align: center;
-                            }
-                        }
-                    </style>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row g-4 mt-4">
-        {{-- المواصفات --}}
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 text-right h-100">
-                <div class="card-header bg-warning text-white fw-bold">
-                    المواصفات <i class="fas fa-cogs ml-2"></i>
-                </div>
-                <div class="card-body p-0 overflow-hidden"> <!-- أضفنا overflow-hidden -->
-                    <div class="overflow-auto" style="max-height: 300px;"> <!-- استخدمنا كلاس Bootstrap للتمرير -->
-                        <ul class="list-group list-group-flush">
-                            @forelse ($specifications as $spec)
-                                <li class="list-group-item d-flex align-items-center justify-content-end">
-                                    <span class="ml-2">
-                                        @if ($spec->icon)
-                                            <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة"
-                                                class="img-fluid" style="max-width: 20px; max-height: 20px;">
-                                            <!-- استخدمنا كلاسات Bootstrap للصور -->
-                                        @else
-                                            <i class="fas fa-info-circle text-secondary"></i>
-                                        @endif
-                                    </span>
-                                    {{ $spec->name }}
-                                </li>
-                            @empty
-                                <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
+    {{-- القواعد --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 text-right h-100">
+            <div class="card-header bg-info text-white fw-bold">
+                القواعد <i class="fas fa-list-ol ml-2"></i>
             </div>
-        </div>
-
-        {{-- القواعد --}}
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 text-right h-100">
-                <div class="card-header bg-info text-white fw-bold">
-                    القواعد <i class="fas fa-list-ol ml-2"></i>
-                </div>
-                <div class="card-body p-0 overflow-hidden">
+            <div class="card-body p-0">
+                <div class="overflow-auto p-3" style="max-height: 300px;">
                     @if ($rules->count())
                         <ol class="list-group list-group-numbered list-unstyled ps-3 pe-0">
                             @foreach ($rules as $rule)
@@ -428,35 +331,77 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="d-flex "></div>
+<style>
+    .features-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        padding: 1rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        background-color: rgba(245, 245, 245, 0.5);
+    }
+    .feature-item:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    }
+    .feature-icon-img,
+    .feature-icon-default {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+    .feature-icon-img {
+        background-color: #f0f7ff;
+        padding: 10px;
+    }
+    .feature-icon-default {
+        background-color: #e6f7ee;
+        color: #28a745;
+        font-size: 1.5rem;
+    }
+    .feature-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-bottom: 0;
+        line-height: 1.5;
+    }
+    .no-features {
+        text-align: center;
+        padding: 2rem;
+        color: #95a5a6;
+    }
+    .no-features i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #bdc3c7;
+    }
+    @media (max-width: 576px) {
+        .feature-item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    }
+</style>
 
 
-
-
-    <!-- {{-- الأيام غير المتاحة --}}
-    <div class="card card-custom mb-5 text-right">
-        <div class="card-header bg-danger text-white section-header">الأيام غير المتاحة</div>
-        <div class="card-body p-0">
-            @if ($unavailabilities->isNotEmpty())
-<table class="table table-striped table-bordered text-right m-0">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>التاريخ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($unavailabilities as $un)
-<tr>
-                                <td>{{ \Carbon\Carbon::parse($un->unavailable_date)->format('Y-m-d') }}</td>
-                            </tr>
-@endforeach
-                    </tbody>
-                </table>
-@else
-<div class="p-4 text-center text-muted">لا توجد أيام غير متاحة.</div>
-@endif
-        </div>
-    </div> -->
 
 </div>
