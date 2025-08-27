@@ -60,7 +60,26 @@
                         <h6 class="text-primary mb-3"><i class="fas fa-calendar-check me-1"></i> معلومات الحجز</h6>
                         <p class="mb-2"><strong>رقم الحجز:</strong> #{{ $booking->id }}</p>
                         <p class="mb-2"><strong>الحالة:</strong>
-                            <span class="badge bg-success">{{ $booking->status }}</span>
+                            @php
+                                $statusLabels = [
+                                    'pending' => 'قيد الانتظار',
+                                    'waiting_payment' => 'بانتظار الدفع',
+                                    'paid' => 'مدفوع',
+                                    'confirmed' => 'مؤكد',
+                                    'cancelled' => 'ملغى',
+                                    'completed' => 'مكتمل',
+                                ];
+                                $statusClasses = [
+                                    'pending' => 'bg-secondary',
+                                    'waiting_payment' => 'bg-warning text-dark',
+                                    'paid' => 'bg-info',
+                                    'confirmed' => 'bg-primary',
+                                    'cancelled' => 'bg-danger',
+                                    'completed' => 'bg-success',
+                                ];
+                            @endphp
+                            <span
+                                class="badge {{ $statusClasses[$booking->status] }}">{{ $statusLabels[$booking->status] }}</span>
                         </p>
                         <p class="mb-2">
                             <strong>تاريخ الحجز:</strong>
@@ -96,32 +115,76 @@
         </div>
         <div class="card-body">
             <div class="timeline-container">
+                @php
+                    $statusLabels = [
+                        'pending' => 'قيد الانتظار',
+                        'waiting_payment' => 'بانتظار الدفع',
+                        'paid' => 'مدفوع',
+                        'confirmed' => 'مؤكد',
+                        'cancelled' => 'ملغى',
+                        'completed' => 'مكتمل',
+                    ];
+                    $statusClasses = [
+                        'pending' => 'bg-secondary',
+                        'waiting_payment' => 'bg-warning text-dark',
+                        'paid' => 'bg-info text-white',
+                        'confirmed' => 'bg-primary',
+                        'cancelled' => 'bg-danger',
+                        'completed' => 'bg-success',
+                    ];
+                @endphp
+
                 @foreach ($bookingLogs as $log)
+                    @php
+                        $fromStatusKey = $log->from_status_key ?? $log->from_status;
+                        $toStatusKey = $log->to_status_key ?? $log->to_status;
+
+                        $fromLabel = $statusLabels[$fromStatusKey] ?? $log->from_status;
+                        $toLabel = $statusLabels[$toStatusKey] ?? $log->to_status;
+
+                        $fromClass = $statusClasses[$fromStatusKey] ?? 'bg-secondary';
+                        $toClass = $statusClasses[$toStatusKey] ?? 'bg-secondary';
+                    @endphp
+
                     <div
                         class="timeline-card 
-                    @if ($log->to_status == 'مكتمل') status-complete 
-                    @elseif($log->to_status == 'ملغى') status-cancel 
-                    @else status-pending @endif">
+                @if ($toStatusKey == 'completed') status-complete 
+                @elseif($toStatusKey == 'cancelled') status-cancel 
+                @else status-pending @endif">
+
                         <div class="timeline-icon">
                             <i class="bi bi-person-circle"></i>
                         </div>
+
                         <div class="timeline-content">
 
+                        
+                            {{-- وقت وتاريخ الإجراء --}}
                             <h6 class="text-right">
                                 <span class="badge bg-secondary">
                                     {{ \Carbon\Carbon::parse($log->created_at)->format('h:i A') }}
-
                                 </span>
                                 - {{ \Carbon\Carbon::parse($log->created_at)->format('Y-m-d') }}
-
                                 ({{ $log->user->name ?? 'النظام' }})
                             </h6>
 
-                            <p>
-                                <span class="badge-status bg-primary">{{ $log->from_status }}</span>
-                                <i class="bi bi-arrow-right"></i>
-                                <span class="badge-status bg-success">{{ $log->to_status }}</span>
+                            {{-- البادجات --}}
+                            <p class="d-flex align-items-center gap-2">
+                                 الحالة: <span class="text-primary mr-2">
+                                     <span class="badge-status {{ $toClass }}" style="padding:0.5rem 1rem;">
+                                        من
+                                    {{ $toLabel }}
+                            
+                                </span>
+                               
+                                <span style="font-weight: bold; font-size: 1.2rem; color: #555;"> ←</span>
+                                <span class="badge-status {{ $fromClass }}" style="padding:0.5rem 1rem;">
+                                    الى
+                                    {{ $fromLabel }}
+                                </span>
                             </p>
+
+
                             <p><strong>الإجراء:</strong> {{ $log->action }}</p>
                             @if ($log->notes)
                                 <p class="text-secondary"><strong>ملاحظة:</strong> {{ $log->notes }}</p>
@@ -132,6 +195,7 @@
                 @endforeach
             </div>
         </div>
+
     </div>
 
     {{-- مخطط بياني للحالات --}}
