@@ -25,9 +25,9 @@ class EstablishmentTypeController extends Controller
     {
         try {
             $EstablishmentTypes=$this->EstablishmentTypeRepository->index();
-            return ApiResponseClass::sendResponse($EstablishmentTypes,'All EstablishmentTypes retrieved successfully.');
+            return ApiResponseClass::sendResponse($EstablishmentTypes,'تم جلب جميع أنواع المنشآت بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error retrieving EstablishmentType: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب أنواع المنشآت: '  . $e->getMessage());
         }
     }
 

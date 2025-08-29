@@ -41,12 +41,12 @@ class EstablishmentUnavailabilityController extends Controller
             $user = auth('sanctum')->user();
             $establishment= $this->EstablishmentRepository->getById($fields['establishment_id']);
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can add unavailable date. ', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه إضافة التواريخ غير المتاحة', null, 403);
             }
             $unavailable_date = $this->EstablishmentUnavailabilityRepository->store($fields);
-            return ApiResponseClass::sendResponse($unavailable_date, 'Establishment unavailable date saved successfully.');
+            return ApiResponseClass::sendResponse($unavailable_date, 'تم حفظ التاريخ غير المتاح للمنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error saving establishment unavailable date: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ التاريخ غير المتاح للمنشأة: ' . $e->getMessage());
         }
     }
 
@@ -76,14 +76,14 @@ class EstablishmentUnavailabilityController extends Controller
             $unavailable_date=$this->EstablishmentUnavailabilityRepository->getById($id);
             $establishment=$unavailable_date->establishment;
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can delete unavailable date.', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه حذف التواريخ غير المتاحة', null, 403);
             }
             if($this->EstablishmentUnavailabilityRepository->delete($id)){
-                return ApiResponseClass::sendResponse($unavailable_date, "{$unavailable_date->id} unsaved successfully.");
+                return ApiResponseClass::sendResponse($unavailable_date, "تم حذف التاريخ غير المتاح رقم {$unavailable_date->id} بنجاح");
             }
-            return ApiResponseClass::sendError("unavailable date with ID {$id} may not be found or not deleted. Try again.");
+            return ApiResponseClass::sendError("التاريخ غير المتاح رقم {$id} قد لا يكون موجوداً أو لم يتم حذفه. حاول مرة أخرى.");
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error deleting unavailable date: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حذف التاريخ غير المتاح: ' . $e->getMessage());
         }
     }
 }

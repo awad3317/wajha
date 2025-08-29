@@ -27,9 +27,9 @@ class FavoriteController extends Controller
         try {
             $userId=auth('sanctum')->id();
             $Favorite = $this->FavoriteRepository->index($userId);
-            return ApiResponseClass::sendResponse($Favorite, 'Establishment Favorite retrieved successfully.');
+            return ApiResponseClass::sendResponse($Favorite,  'تم جلب المنشآت المفضلة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('An error occurred while fetching Favorite.', $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ أثناء جلب المنشآت المفضلة', $e->getMessage());
         }
     }
 
@@ -46,14 +46,14 @@ class FavoriteController extends Controller
             $favorite = $this->FavoriteRepository->grtByUserIdAndEstablishmentId($fields['user_id'],$fields['establishment_id']);
             if ($favorite) {
                 $favorite->delete();
-                $message = 'Establishment favorite removed successfully.';
+                $message = 'تم إزالة المنشأة من المفضلة بنجاح';
             } else {
                 $favorite = $this->FavoriteRepository->store($fields);
-                $message = 'Establishment favorite saved successfully.';
+                $message = 'تم إضافة المنشأة إلى المفضلة بنجاح';
             }
             return ApiResponseClass::sendResponse($favorite, $message);
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error saving favorite: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ المفضلة: ' . $e->getMessage());
         }
     }
 

@@ -42,12 +42,12 @@ class EstablishmentSpecificationController extends Controller
             $user = auth('sanctum')->user();
             $establishment= $this->EstablishmentRepository->getById($fields['establishment_id']);
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can add specification. ', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه إضافة المواصفات', null, 403);
             }
             $specification = $this->EstablishmentSpecificationRepository->store($fields);
-            return ApiResponseClass::sendResponse($specification, 'Establishment specification saved successfully.');
+            return ApiResponseClass::sendResponse($specification, 'تم حفظ مواصفات المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error saving establishment specification: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ مواصفات المنشأة: ' . $e->getMessage());
         }
     }
 

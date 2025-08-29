@@ -25,9 +25,9 @@ class AdvertisementController extends Controller
     {
         try {
             $Advertisements = $this->AdvertisementRepository->index();
-            return ApiResponseClass::sendResponse($Advertisements, 'Advertisements retrieved successfully.');
+            return ApiResponseClass::sendResponse($Advertisements, 'تم جلب الإعلانات بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('An error occurred while fetching Advertisements.', $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ أثناء جلب الإعلانات', $e->getMessage());
         }
     }
 

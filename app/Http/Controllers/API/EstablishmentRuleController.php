@@ -40,12 +40,12 @@ class EstablishmentRuleController extends Controller
             $user = auth('sanctum')->user();
             $establishment= $this->EstablishmentRepository->getById($fields['establishment_id']);
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can add rule. ', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه إضافة القواعد', null, 403);
             }
             $rule = $establishment->rules->create(['rule'=>$fields['rule']]);
-             return ApiResponseClass::sendResponse($rule, 'Establishment rule saved successfully.');
+             return ApiResponseClass::sendResponse($rule, 'تم حفظ قاعدة المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error saving establishment rule: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ قاعدة المنشأة: ' . $e->getMessage());
         }
     }
 
@@ -70,12 +70,12 @@ class EstablishmentRuleController extends Controller
             $user = auth('sanctum')->user();
             $establishment= $this->EstablishmentRepository->getById($fields['establishment_id']);
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can update rule.', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه تحديث القواعد', null, 403);
             }
             $rule = $this->EstablishmentRuleRepository->update($fields,$id);
-            return ApiResponseClass::sendResponse($rule, 'Establishment rule updated successfully.');
+            return ApiResponseClass::sendResponse($rule, 'تم تحديث قاعدة المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error updating establishment rule: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في تحديث قاعدة المنشأة: ' . $e->getMessage());
         }
     }
 
@@ -89,14 +89,14 @@ class EstablishmentRuleController extends Controller
             $rule=$this->EstablishmentRuleRepository->getById($id);
             $establishment=$rule->establishment;
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can delete rule.', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه حذف القواعد', null, 403);
             }
             if($this->EstablishmentRuleRepository->delete($id)){
-                return ApiResponseClass::sendResponse($rule, "{$rule->id} unsaved successfully.");
+                return ApiResponseClass::sendResponse($rule, $rule, "تم حذف القاعدة رقم {$rule->id} بنجاح");
             }
-            return ApiResponseClass::sendError("Rule with ID {$id} may not be found or not deleted. Try again.");
+            return ApiResponseClass::sendError("القاعدة رقم {$id} قد لا تكون موجودة أو لم يتم حذفها. حاول مرة أخرى.");
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error deleting rule: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حذف القاعدة: ' . $e->getMessage());
         }
     }
 }

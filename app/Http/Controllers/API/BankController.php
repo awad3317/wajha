@@ -25,9 +25,9 @@ class BankController extends Controller
     {
         try {
             $banks=$this->bankRepository->index();
-            return ApiResponseClass::sendResponse($banks,'All Banks retrieved successfully.');
+            return ApiResponseClass::sendResponse($banks,'تم جلب جميع البنوك بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error retrieving Banks: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب البنوك: ' . $e->getMessage());
         }
     }
 

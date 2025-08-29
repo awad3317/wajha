@@ -26,9 +26,9 @@ class OwnerAccountController extends Controller
     {
         try {
             $Accounts = $this->OwnerAccountRepository->index();
-            return ApiResponseClass::sendResponse($Accounts, 'All accounts retrieved successfully.');
+            return ApiResponseClass::sendResponse($Accounts, 'تم جلب جميع الحسابات بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error retrieving accounts: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب الحسابات: ' . $e->getMessage());
         } 
     }
 
@@ -38,7 +38,7 @@ class OwnerAccountController extends Controller
     public function store(Request $request)
     {
         if (auth('sanctum')->user()->user_type !== 'owner') {
-            return ApiResponseClass::sendError('Unauthorized: Only Owners can create establishment types', [], 403);
+            return ApiResponseClass::sendError('غير مصرح: فقط الملاك يمكنهم إنشاء حسابات', [], 403);
         }
         $fields=$request->validate([
             'bank_id'=>['required',Rule::exists('banks','id')],
@@ -47,9 +47,9 @@ class OwnerAccountController extends Controller
         try {
             $fields['owner_id'] = auth( 'sanctum')->id();
             $account = $this->OwnerAccountRepository->store($fields);
-            return ApiResponseClass::sendResponse($account, 'account saved successfully.');
+            return ApiResponseClass::sendResponse($account, 'تم حفظ الحساب بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error save account: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ الحساب: ' . $e->getMessage());
         }
     }
 

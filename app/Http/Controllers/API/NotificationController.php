@@ -26,10 +26,10 @@ class NotificationController extends Controller
                     'read' => $user->readNotifications->count(),
                 ]
             ],
-                'All Notifications retrieved successfully. '
+                'تم جلب جميع الإشعارات بنجاح'
             );
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error retrieving Notifications: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب الإشعارات: ' . $e->getMessage());
         }
         
     }
@@ -48,10 +48,10 @@ class NotificationController extends Controller
                 'unread' => $user->unreadNotifications->count(),
                 'read' => $user->readNotifications->count(),
             ]
-        ], 'All notifications have been marked as read.');
+        ], 'تم تحديد جميع الإشعارات كمقروءة بنجاح');
             
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error marking notifications as read: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في تحديد الإشعارات كمقروءة: ' . $e->getMessage());
         }
     }
     
