@@ -126,9 +126,9 @@ class EstablishmentController extends Controller
             'images' => $establishment->images,
             'features' => $establishment->features,
             'rules' => $establishment->rules]
-            ,'establishment saved successfully.');
+            ,'تم حفظ المنشأة بنجاح');
     } catch (Exception $e) {
-        return ApiResponseClass::sendError('Error save establishment: ' . $e->getMessage());
+        return ApiResponseClass::sendError('حدث خطأ في حفظ المنشأة: ' . $e->getMessage());
     }
     
     }
@@ -140,9 +140,9 @@ class EstablishmentController extends Controller
     {
         try {
             $establishment=$this->EstablishmentRepository->getById($id);
-            return ApiResponseClass::sendResponse($establishment,'data getted successfully');
+            return ApiResponseClass::sendResponse($establishment, 'تم جلب بيانات المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error returned establishment: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب بيانات المنشأة: ' . $e->getMessage());
         }
     }
 
@@ -198,7 +198,7 @@ class EstablishmentController extends Controller
             $user = auth('sanctum')->user();
             $establishment = $this->EstablishmentRepository->getById($id);
             if ($establishment->owner_id !== $user->id) {
-                return ApiResponseClass::sendError('You are not authorized to update this establishment', null, 403);
+                return ApiResponseClass::sendError('غير مصرح لك بتحديث هذه المنشأة', null, 403);
             }
             if ($request->hasFile('primary_image')) {
                 $this->ImageService->deleteImage($establishment->primary_image);
@@ -288,10 +288,10 @@ class EstablishmentController extends Controller
                 'rules' => $establishment->rules,
                 'price_packages' => $establishment->pricePackages,
                 'specifications' => $establishment->specifications
-            ], 'Establishment updated successfully.');
+            ], 'تم تحديث المنشأة بنجاح');
 
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error updating establishment: ' . $e->getMessage(), null, 500);
+            return ApiResponseClass::sendError('حدث خطأ في تحديث المنشأة: ' . $e->getMessage(), null, 500);
         }
     }
 
@@ -304,13 +304,13 @@ class EstablishmentController extends Controller
             $user = auth('sanctum')->user();
             $establishment = $this->EstablishmentRepository->find($id);
             if ($establishment->owner_id !== $user->id && $user->user_type !== 'admin') {
-                return ApiResponseClass::sendError('You are not authorized to delete this establishment', null, 403);
+                return ApiResponseClass::sendError('غير مصرح لك بحذف هذه المنشأة', null, 403);
             }
             $this->deleteEstablishmentImages($establishment);
             $this->EstablishmentRepository->delete($id);
-            return ApiResponseClass::sendResponse(null, 'Establishment deleted successfully');
+            return ApiResponseClass::sendResponse(null, 'تم حذف المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error deleting establishment: ' . $e->getMessage(), null, 500);
+            return ApiResponseClass::sendError('حدث خطأ في حذف المنشأة: ' . $e->getMessage(), null, 500);
         }
     }
 

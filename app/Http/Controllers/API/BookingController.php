@@ -117,9 +117,9 @@ class BookingController extends Controller
                 $this->firebaseService->sendNotification($owner->device_token, $title, $body, $data);
             }
             
-            return ApiResponseClass::sendResponse($booking, 'Booking saving successfully.');
+            return ApiResponseClass::sendResponse($booking, 'تم حفظ الحجز بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error saving booking: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ الحجز: ' . $e->getMessage());
         }
     }
 
@@ -449,9 +449,9 @@ private function getArabicStatus($status)
     {
         try {
             $booking=$this->bookingRepository->getById($id);
-            return ApiResponseClass::sendResponse($booking,'data getted successfully');
+            return ApiResponseClass::sendResponse($booking,'تم جلب البيانات بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error returned establishment: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب بيانات الحجز: ' . $e->getMessage());
         }
     }
 

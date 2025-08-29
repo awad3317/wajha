@@ -41,7 +41,7 @@ class EstablishmentImageController extends Controller
             $establishment = $this->establishmentRepository->getById($fields['establishment_id']);
         
             if (auth('sanctum')->id() != $establishment->owner_id) {
-                return ApiResponseClass::sendError('Unauthorized: You are not the owner of this establishment.', [], 403);
+                return ApiResponseClass::sendError('غير مصرح: أنت لست مالك هذه المنشأة', [], 403);
             }
             $imagePath = $this->imageService->saveImage($fields['image'], 'establishment-image');
             $EstablishmentImage=$this->EstablishmentImageRepository->store([
@@ -49,9 +49,9 @@ class EstablishmentImageController extends Controller
                 'image' => $imagePath,
             ]);
 
-            return ApiResponseClass::sendResponse($EstablishmentImage,'Image saved successfully.');
+            return ApiResponseClass::sendResponse($EstablishmentImage,'تم حفظ الصورة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Failed to saved image: ' . $e->getMessage());
+            return ApiResponseClass::sendError('فشل في حفظ الصورة: ' . $e->getMessage());
         }
     }
 
@@ -75,21 +75,21 @@ class EstablishmentImageController extends Controller
 
             $establishmentImage = $this->EstablishmentImageRepository->getById($id);
             if (!$establishmentImage) {
-                return ApiResponseClass::sendError('Establishment image not found', [], 404);
+                return ApiResponseClass::sendError('صورة المنشأة غير موجودة', [], 404);
             }
 
             $establishment = $this->establishmentRepository->getById($establishmentImage->establishment_id);
             if (auth('sanctum')->id() != $establishment->owner_id) {
-                return ApiResponseClass::sendError('Unauthorized: You are not the owner of this establishment.', [], 403);
+                return ApiResponseClass::sendError('غير مصرح: أنت لست مالك هذه المنشأة', [], 403);
             }
             $this->imageService->deleteImage($establishmentImage->image);
             $imagePath = $this->imageService->saveImage($fields['image'], 'establishment-image');
             $updated = $this->EstablishmentImageRepository->update([
                 'image' => $imagePath,
             ], $id);
-            return ApiResponseClass::sendResponse($updated, 'Image updated successfully.');
+            return ApiResponseClass::sendResponse($updated, 'تم تحديث الصورة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Failed to update image: ' . $e->getMessage());
+            return ApiResponseClass::sendError('فشل في تحديث الصورة: ' . $e->getMessage());
         }
     }
 
@@ -102,15 +102,15 @@ class EstablishmentImageController extends Controller
             $establishmentImage = $this->EstablishmentImageRepository->getById($id);
             $establishment = $this->establishmentRepository->getById($establishmentImage->establishment_id);
             if (auth('sanctum')->id() != $establishment->owner_id) {
-                return ApiResponseClass::sendError('Unauthorized: You are not the owner of this establishment.', [], 403);
+                return ApiResponseClass::sendError('غير مصرح: أنت لست مالك هذه المنشأة', [], 403);
             }
             $this->imageService->deleteImage($establishmentImage->image);
             if($this->EstablishmentImageRepository->delete($id)){
-                return ApiResponseClass::sendResponse([], 'Image deleted successfully.');
+                return ApiResponseClass::sendResponse([],  'تم حذف الصورة بنجاح');
             }
-            return ApiResponseClass::sendError('Establishment image not found', [], 404);
+            return ApiResponseClass::sendError('صورة المنشأة غير موجودة', [], 404);
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Failed to delete image: ' . $e->getMessage());
+            return ApiResponseClass::sendError('فشل في حذف الصورة: ' . $e->getMessage());
         }
     }
 }

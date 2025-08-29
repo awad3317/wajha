@@ -26,9 +26,9 @@ class CurrencyController extends Controller
     {
         try {
             $Currencies=$this->CurrencyRepository->index();
-            return ApiResponseClass::sendResponse($Currencies,'All Currencies retrieved successfully.');
+            return ApiResponseClass::sendResponse($Currencies,'تم جلب جميع العملات بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error retrieving Currencies: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب العملات: ' . $e->getMessage());
         }
     }
 

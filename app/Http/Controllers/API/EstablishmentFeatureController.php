@@ -26,9 +26,9 @@ class EstablishmentFeatureController extends Controller
     {
         try {
             $Features = $this->EstablishmentFeatureRepository->index();
-            return ApiResponseClass::sendResponse($Features, 'Establishment features retrieved successfully.');
+            return ApiResponseClass::sendResponse($Features, 'تم جلب ميزات المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('An error occurred while fetching establishment features.', $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ أثناء جلب ميزات المنشأة', $e->getMessage());
         }
        
     }
@@ -48,16 +48,16 @@ class EstablishmentFeatureController extends Controller
             $user = auth('sanctum')->user();
             $establishment= $this->EstablishmentRepository->getById($fields['establishment_id']);
             if ($establishment->owner_id != $user->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can add features. ', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه إضافة الميزات', null, 403);
             }
             $feature = $establishment->features()->create([
             'name' => $fields['name'],
             'description'=>$fields['description'] ?? null,
             'icon_id' => $fields['icon_id']
         ]);
-            return ApiResponseClass::sendResponse($feature, 'Establishment feature saved successfully.');
+            return ApiResponseClass::sendResponse($feature, 'تم حفظ ميزة المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error saving establishment feature: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حفظ ميزة المنشأة: ' . $e->getMessage());
         }
     }
 
@@ -83,12 +83,12 @@ class EstablishmentFeatureController extends Controller
             $feature = $this->EstablishmentFeatureRepository->getById($id);
             $establishment = $feature->establishment;
             if ($establishment->owner_id != auth('sanctum')->user()->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can update features.', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه تحديث الميزات', null, 403);
             }
             $feature = $this->EstablishmentFeatureRepository->update($fields,$id);
-            return ApiResponseClass::sendResponse($feature,'establishment feature update successfully.');
+            return ApiResponseClass::sendResponse($feature,'تم تحديث ميزة المنشأة بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error update establishment feature: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في تحديث ميزة المنشأة: ' . $e->getMessage());
         }
     }
 
@@ -101,14 +101,14 @@ class EstablishmentFeatureController extends Controller
             $feature = $this->EstablishmentFeatureRepository->getById($id);
             $establishment = $feature->establishment;
             if ($establishment->owner_id != auth('sanctum')->user()->id) {
-                return ApiResponseClass::sendError('Only the owner of the establishment can delete features.', null, 403);
+                return ApiResponseClass::sendError('فقط مالك المنشأة يمكنه حذف الميزات', null, 403);
             }
            if($this->EstablishmentFeatureRepository->delete($id)) {
-                return ApiResponseClass::sendResponse($feature, "{$feature->id} unsaved successfully.");
+                return ApiResponseClass::sendResponse($feature, "تم حذف الميزة رقم {$feature->id} بنجاح");
            }
-           return ApiResponseClass::sendError("Acount with ID {$id} may not be found or not deleted. Try again.");
+           return ApiResponseClass::sendError("الميزة رقم {$id} قد لا تكون موجودة أو لم يتم حذفها. حاول مرة أخرى.");
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error deleting establishment feature: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في حذف ميزة المنشأة: ' . $e->getMessage());
         }
     }
 }

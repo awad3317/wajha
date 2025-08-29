@@ -25,9 +25,9 @@ class EstablishmentFeaturesIconController extends Controller
     {
         try {
             $FeaturesIcon=$this->establishmentFeaturesIconRepository->index();
-            return ApiResponseClass::sendResponse($FeaturesIcon,'All Features Icon retrieved successfully.');
+            return ApiResponseClass::sendResponse($FeaturesIcon,'تم جلب جميع أيقونات الميزات بنجاح');
         } catch (Exception $e) {
-            return ApiResponseClass::sendError('Error retrieving FeaturesIcon: ' . $e->getMessage());
+            return ApiResponseClass::sendError('حدث خطأ في جلب أيقونات الميزات: ' . $e->getMessage());
         }
     }
 
