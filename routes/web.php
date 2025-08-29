@@ -40,7 +40,7 @@ Route::post('/github/deploy', function (Request $request) {
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'homepage'])->name('homepage');
 
 
 Route::get('homepage', [HomeController::class, 'homepage']);

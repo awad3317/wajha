@@ -46,9 +46,11 @@ class Homepage extends Component
             ->orderBy('date')
             ->get();
 
-        $typesChart = Establishment::selectRaw('type_id, COUNT(*) as total')
+        $typesChart = Establishment::with('type') // علاقة type في موديل Establishment
+            ->select('type_id', \DB::raw('COUNT(*) as total'))
             ->groupBy('type_id')
             ->get();
+
 
         $usersChart = User::selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')
