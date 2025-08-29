@@ -304,41 +304,63 @@ public function cancelledBooking(Request $request)
 
         $booking = $this->bookingStatusService->cancelledBooking($booking, $fields['cancellation_reason'] ?? null);
 
-        $userType = ($user->id === $booking->user_id) ? 'customer' : 'owner';
-        $recipientType = ($userType === 'customer') ? 'owner' : 'customer';
-        
-        $recipient = ($userType === 'customer') ? $establishment->user : $booking->user;
-
-        $recipient->notify(new NewBookingNotification(
+        if($user->id == $booking->user_id){
+            $establishmentOwner = $establishment->user;
+            $establishmentOwner->notify(new NewBookingNotification(
             $booking, 
             'تم إلغاء الحجز', 
-            "تم إلغاء الحجز في {$establishment->name}" . 
-            ($userType === 'customer' ? " من قبل العميل" : " من قبل مالك المنشأة"),
-            $recipientType
-        ));
-        $title = "تم إلغاء الحجز";
-        $body = "تم إلغاء الحجز في {$establishment->name}";
+            "تم إلغاء الحجز في {$establishment->name} من قبل العميل",
+            'owner'
+            ));
+            $title = "تم إلغاء الحجز";
+            $body = "تم إلغاء الحجز في {$establishment->name} من قبل العميل";
         
-        if (!empty($fields['cancellation_reason'])) {
-            $body .= ". السبب: " . $fields['cancellation_reason'];
-        }
-
-        $data = [
-            'type' => 'تم الإلغاء',
-            'booking_id' => $booking->id,
-            'establishment_id' => $establishment->id,
-            'user_id' => $booking->user_id,
-        ];
-
-        if ($recipient->device_token) {
+            if (!empty($fields['cancellation_reason'])) {
+                $body .= ". السبب: " . $fields['cancellation_reason'];
+            }
+            $data = [
+                'type' => 'تم الإلغاء',
+                'booking_id' => $booking->id,
+                'establishment_id' => $establishment->id,
+                'user_id' => $booking->user_id,
+            ];
+            if ($establishmentOwner->device_token) {
             $this->firebaseService->sendNotification(
-                $recipient->device_token, 
+                $establishmentOwner->device_token, 
                 $title, 
                 $body, 
                 $data
             );
         }
-
+        } else {
+           $customer = $booking->user;
+           $customer->notify(new NewBookingNotification(
+            $booking, 
+            'تم إلغاء الحجز', 
+            "تم إلغاء حجزك في {$establishment->name} من قبل مالك المنشأة",
+            'customer'
+            ));
+            $title = "تم إلغاء الحجز";
+            $body = "تم إلغاء حجزك في {$establishment->name} من قبل مالك المنشأة";
+        
+            if (!empty($fields['cancellation_reason'])) {
+                $body .= ". السبب: " . $fields['cancellation_reason'];
+            }
+            $data = [
+                'type' => 'تم الإلغاء',
+                'booking_id' => $booking->id,
+                'establishment_id' => $establishment->id,
+                'user_id' => $booking->user_id,
+            ];
+            if ($customer->device_token) {
+            $this->firebaseService->sendNotification(
+                $customer->device_token, 
+                $title, 
+                $body, 
+                $data
+            );
+            }
+        }
         return ApiResponseClass::sendResponse(
             $booking, 
             'تم إلغاء الحجز بنجاح'
