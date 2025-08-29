@@ -1,7 +1,7 @@
 <div>
     {{-- Success Message --}}
     @if (session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show text-right" role="alert">
+        <div class="alert alert-success alert-dismissible fade show " role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -11,25 +11,24 @@
         <div
             class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
             <!-- العنوان -->
+
+
+            @if (!$showForm && !$isEdit)
+                <button wire:click="create" class="btn btn-primary add-btn py-2 px-3 px-sm-4 rounded-pill flex-shrink-0">
+                    <i class="fas fa-plus-circle ms-1 ms-sm-2"></i> <span class="d-none d-inline">إضافة إعلان
+                        جديد</span>
+                </button>
+            @endif
             <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
                 إدارة الإعلانات
             </h3>
-
-            <!-- زر الإضافة - يظهر فقط عندما لا تكون النماذج ظاهرة -->
-            @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary add-btn py-2 px-3 px-sm-4 rounded-pill flex-shrink-0">
-                    <span class="d-none d-inline">إضافة إعلان جديد</span>
-
-                    <i class="fas fa-plus-circle ms-1 ms-sm-2"></i>
-                </button>
-            @endif
         </div>
 
         {{-- Form Section --}}
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-lg">
                 <div class="card-header bg-primary text-white py-3">
-                    <h5 class="mb-0 text-right">
+                    <h5 class="mb-0 ">
                         <i class="fas fa-edit ml-2"></i>
                         {{ $isEdit ? 'تعديل الإعلان' : 'إضافة إعلان جديد' }}
                     </h5>
@@ -40,14 +39,14 @@
                         <div class="row g-4">
                             {{-- Title Field --}}
                             <div class="col-12">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    عنوان الإعلان <i class="fas fa-heading ml-2"></i><span class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                    <span class="text-danger">*</span> <i class="fas fa-heading mr-2"></i> عنوان الإعلان
                                 </label>
                                 <input type="text" wire:model.defer="title"
-                                    class="form-control form-control-lg text-right py-3 rounded-3 @error('title') is-invalid @enderror"
+                                    class="form-control form-control-lg  py-3 rounded-3 @error('title') is-invalid @enderror"
                                     placeholder="...أدخل عنوان الإعلان هنا">
                                 @error('title')
-                                    <div class="invalid-feedback text-right d-block mt-2">
+                                    <div class="invalid-feedback  d-block mt-2">
                                         {{ $message }}<i class="fas fa-exclamation-circle ml-1"></i>
                                     </div>
                                 @enderror
@@ -55,18 +54,18 @@
 
                             {{-- Image Field --}}
                             <div class="col-12">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    صورة الإعلان <i class="fas fa-image ml-2"></i>
-                                    <span class="text-danger">{{ $isEdit = '*' }}</span>
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                    <span class="text-danger">{{ $isEdit = '*' }}</span> <i
+                                        class="fas fa-image mr-2"></i>
+                                    صورة الإعلان
                                 </label>
-
                                 <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
                                     <label class="input-group-text btn btn-primary text-white border-0"
                                         style="cursor: pointer;">
                                         <i class="fas fa-cloud-upload-alt ml-2"></i> اختر صورة
                                         <input type="file" wire:model="image" accept="image/*" class="d-none">
                                     </label>
-                                    <span class="form-control text-right bg-light text-truncate">
+                                    <span class="form-control  bg-light text-truncate">
                                         @if ($image)
                                             {{ $image->getClientOriginalName() }}
                                         @elseif($imagePreview)
@@ -76,9 +75,8 @@
                                         @endif
                                     </span>
                                 </div>
-
                                 @error('image')
-                                    <div class="text-danger small text-right mt-2">
+                                    <div class="text-danger small  mt-2">
                                         <i class="fas fa-exclamation-circle ml-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -107,16 +105,14 @@
 
                             {{-- Description Field --}}
                             <div class="col-12">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    وصف الإعلان <i class="fas fa-align-left ml-2"></i> <span
-                                        class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                    <span class="text-danger">*</span> <i class="fas fa-align-left mr-2"></i> وصف الإعلان
                                 </label>
                                 <textarea wire:model.defer="description" rows="5"
-                                    class="form-control form-control-lg text-right py-3 rounded-3 @error('description') is-invalid @enderror"
-                                    placeholder="...أدخل وصف الإعلان هنا"></textarea>
+                                    class="form-control form-control-lg  py-3 rounded-3 @error('description') is-invalid @enderror"
+                                    placeholder="أدخل وصف الإعلان هنا"></textarea>
                                 @error('description')
-                                    <div class="invalid-feedback text-right d-block mt-2">
-                                        {{ $message }} <i class="fas fa-exclamation-circle ml-1"></i>
+                                    <div class="invalid-feedback  d-block mt-2">
                                     </div>
                                 @enderror
                             </div>
@@ -124,38 +120,39 @@
                             {{-- Dates Section --}}
 
                             <div class="col-md-6">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    تاريخ الانتهاء <i class="fas fa-calendar-times ml-2"></i><span
-                                        class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                    <span class="text-danger">*</span>
+                                    <i class="fas fa-calendar-times mr-2"></i> تاريخ الانتهاء
+
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-3">
                                     <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-calendar-alt text-primary"></i>
                                     </span>
                                     <input type="datetime-local" wire:model.defer="end_date"
-                                        class="form-control border-0 text-right py-3 @error('end_date') is-invalid @enderror">
+                                        class="form-control border-0  py-3 @error('end_date') is-invalid @enderror">
                                 </div>
                                 @error('end_date')
-                                    <div class="invalid-feedback text-right d-block mt-2">
-                                        {{ $message }}<i class="fas fa-exclamation-circle ml-1"></i>
+                                    <div class="invalid-feedback  d-block mt-2">
+                                        {{ $message }}<i class="fas fa-exclamation-circle mr-1"></i>
                                     </div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    تاريخ البدء <i class="fas fa-calendar-plus ml-2"></i><span
-                                        class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                    <span class="text-danger">*</span>
+                                    <i class="fas fa-calendar-plus mr-2"></i> تاريخ البدء
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-3">
                                     <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-calendar-alt text-primary"></i>
                                     </span>
                                     <input type="datetime-local" wire:model.defer="start_date"
-                                        class="form-control border-0 text-right py-3 @error('start_date') is-invalid @enderror">
+                                        class="form-control border-0  py-3 @error('start_date') is-invalid @enderror">
                                 </div>
                                 @error('start_date')
-                                    <div class="invalid-feedback text-right d-block mt-2">
-                                        {{ $message }}<i class="fas fa-exclamation-circle ml-1"></i>
+                                    <div class="invalid-feedback  d-block mt-2">
+                                        {{ $message }}<i class="fas fa-exclamation-circle mr-1"></i>
                                     </div>
                                 @enderror
                             </div>
@@ -165,15 +162,17 @@
                             <div class="col-md-6 mt-4">
                                 <button type="button" wire:click="cancel"
                                     class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    إلغاء <i class="fas fa-times ml-2"></i>
+                                    <i class="fas fa-times mr-2"></i> إلغاء
                                 </button>
                             </div>
 
                             <div class="col-md-6 mt-4">
+
+
                                 <button type="submit"
                                     class="btn btn-{{ $isEdit ? 'warning' : 'primary ' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
                                     {{ $isEdit ? 'حفظ التعديلات' : 'إضافةاعلان جديد' }}
-                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
                                 </button>
                             </div>
                         </div>
@@ -186,24 +185,26 @@
         <div class="row g-3 mb-4">
             <div class="col-md-8">
                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                    <input type="text" wire:model.debounce.300ms.live="search"
-                        class="form-control border-0 text-right py-2" placeholder="..ابحث باسم الإعلان">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-search text-primary"></i>
                     </span>
+                    <input type="text" wire:model.debounce.300ms.live="search" class="form-control border-0  py-2"
+                        placeholder="..ابحث باسم الإعلان">
+
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                    <select wire:model.live="selectedStatu" class="form-control border-0 text-right py-2">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-filter text-primary"></i>
+                    </span>
+                    <select wire:model.live="selectedStatu" class="form-control border-0  py-2">
                         <option value="">كل الحالات</option>
                         <option value="1">المفعلة</option>
                         <option value="0">غير المفعلة</option>
                     </select>
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fas fa-filter text-primary"></i>
-                    </span>
+
                 </div>
             </div>
         </div>
@@ -212,7 +213,7 @@
         <div class="row">
             @forelse ($advertisements as $ad)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                    <div class="card   shadow-sm w-100 text-right position-relative border-0">
+                    <div class="card   shadow-sm w-100  position-relative border-0">
                         <div class="text-decoration-none text-dark">
                             <div class="card-header p-0" style="height: 180px; overflow: hidden;">
                                 @if ($ad->image)
@@ -296,7 +297,7 @@
                                     wire:click.prevent="confirmDelete({{ $ad->id }})" data-bs-toggle="tooltip"
                                     title="حذف الإعلان">
                                     <span class="d-none d-sm-inline-block">حذف</span>
-                                    <i class="fas fa-trash-alt ml-2"></i>
+                                    <i class="fas fa-trash-alt mr-2"></i>
                                 </button>
                                 <!-- زر التعديل مع تحسينات -->
                                 <button
@@ -305,7 +306,7 @@
                                     title="تعديل الإعلان">
 
                                     <span class="d-none d-sm-inline-block">تعديل</span>
-                                    <i class="fas fa-edit ml-2"></i>
+                                    <i class="fas fa-edit mr-2"></i>
                                 </button>
                             </div>
                         </div>
@@ -333,7 +334,7 @@
                             </h5>
 
                         </div>
-                        <div class="modal-body text-right">
+                        <div class="modal-body ">
                             <p>هل أنت متأكد أنك تريد حذف الإعلان التالي؟</p>
                             <p class="fw-bold text-danger">"{{ $deleteTitle }}"</p>
                             <p class="small text-muted">ملاحظة: لا يمكن استعادة الإعلان بعد الحذف</p>
@@ -341,11 +342,11 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary rounded-pill px-4"
                                 wire:click="$set('deleteId', null)">
-                                <i class="fas fa-times ml-1"></i> إلغاء
+                                <i class="fas fa-times mr-1"></i> إلغاء
                             </button>
                             <button type="button" class="btn btn-danger rounded-pill px-4"
                                 wire:click="deleteAdvertisement">
-                                <i class="fas fa-trash ml-1"></i> نعم، احذف
+                                <i class="fas fa-trash mr-1"></i> نعم، احذف
                             </button>
                         </div>
                     </div>

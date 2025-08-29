@@ -1,4 +1,4 @@
-<div class="container-fluid" style="direction: rtl; text-align: right;">
+<div class="container-fluid">
 
     <!-- الإحصائيات الرئيسية -->
     <div class="row">

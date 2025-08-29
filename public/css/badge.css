@@ -161,7 +161,7 @@ body {
     color: #fff;
     padding: 1.5rem 1rem 1rem;
     position: relative;
-    text-align: right;
+    /* text-align: left; */
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 .form-switch {

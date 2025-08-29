@@ -1,6 +1,6 @@
-<div class="container py-4 " dir="rtl">
+<div class="container py-4 ">
     {{-- معلومات الحجز --}}
-    <div class="card shadow-soft rounded-4 mb-4 text-right">
+    <div class="card shadow-soft rounded-4 mb-4 ">
         <div class="card-header bg-primary text-white rounded-top-4">
             <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i> تفاصيل الحجز</h5>
         </div>
@@ -109,7 +109,7 @@
     </div>
 
     {{-- سجل تتبع الحجز --}}
-    <div class="card shadow-soft rounded-4 mb-4 text-right">
+    <div class="card shadow-soft rounded-4 mb-4 ">
         <div class="card-header card-header-custom">
             <h5 class="mb-0">تتبع حالة الحجز</h5>
         </div>
@@ -160,7 +160,7 @@
 
                         
                             {{-- وقت وتاريخ الإجراء --}}
-                            <h6 class="text-right">
+                            <h6 >
                                 <span class="badge bg-secondary">
                                     {{ \Carbon\Carbon::parse($log->created_at)->format('h:i A') }}
                                 </span>

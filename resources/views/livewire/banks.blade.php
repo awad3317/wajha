@@ -23,7 +23,7 @@
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-lg rounded-3">
                 <div class="card-header bg-primary text-white py-3 rounded-top-3">
-                    <h5 class="mb-0 text-right">
+                    <h5 class="mb-0">
 
                         {{ $isEdit ? 'تعديل بيانات البنك' : 'إضافة بنك جديد' }}
                         <i class="fas fa-university mr-2"></i>
@@ -35,8 +35,8 @@
                         <div class="row">
                             {{-- الأيقونة --}}
                             <div class="col-12 col-md-6">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    <i class="fas fa-image mr-2"></i> أيقونة البنك <span class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block mb-2">
+                                  <span class="text-danger">*</span>  <i class="fas fa-image mr-2"></i> أيقونة البنك 
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
                                     <label class="input-group-text btn btn-primary text-white border-0"
@@ -44,7 +44,7 @@
                                         <i class="fas fa-cloud-upload-alt mr-2"></i> رفع
                                         <input type="file" wire:model="iconFile" class="d-none" accept="image/*">
                                     </label>
-                                    <span class="form-control text-right bg-light text-truncate">
+                                    <span class="form-control bg-light text-truncate">
                                         @if ($iconFile)
                                             {{ $iconFile->getClientOriginalName() }}
                                         @elseif($icon)
@@ -55,7 +55,7 @@
                                     </span>
                                 </div>
                                 @error('iconFile')
-                                    <div class="text-danger small text-right mt-2">
+                                    <div class="text-danger small  mt-2">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -73,19 +73,20 @@
 
                             {{-- اسم البنك --}}
                             <div class="col-12 col-md-6">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
-                                    <i class="fas fa-signature mr-2"></i> اسم البنك <span class="text-danger">*</span>
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                  <span class="text-danger">*</span> <i class="fas fa-signature mr-2"></i> اسم البنك 
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                    <input type="text" wire:model.defer="name"
-                                        class="form-control border-0 text-right py-3 @error('name') is-invalid @enderror"
-                                        placeholder="أدخل اسم البنك هنا...">
-                                    <span class="input-group-text bg-white border-0">
+                                     <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-university text-primary"></i>
                                     </span>
+                                    <input type="text" wire:model.defer="name"
+                                        class="form-control border-0  py-3 @error('name') is-invalid @enderror"
+                                        placeholder="أدخل اسم البنك هنا...">
+                                   
                                 </div>
                                 @error('name')
-                                    <div class="invalid-feedback text-right d-block mt-2">
+                                    <div class="invalid-feedback  d-block mt-2">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -99,14 +100,14 @@
                                     <div class="col-12 col-md-6">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
-                                            إلغاء<i class="fas fa-times ml-2"></i>
+                                       <i class="fas fa-times mr-2"></i>     إلغاء
                                         </button>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
-                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>      {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
+                                      
 
                                         </button>
                                     </div>
@@ -124,22 +125,23 @@
                 <div class="row align-items-center">
                     <div class="col-12 col-md-6 mb-2  mb-md-0">
                             <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
-                            <input type="text" class="form-control border-0 text-right py-2 "
-                                placeholder="...ابحث باسم البنك" wire:model.debounce.300ms.live="search">
-                            <span class="input-group-text bg-white border-0 rounded-0">
+                                  <span class="input-group-text bg-white border-0 rounded-0">
                                 <i class="fas fa-search text-primary"></i>
                             </span>
+                            <input type="text" class="form-control border-0  py-2 "
+                                placeholder="...ابحث باسم البنك" wire:model.debounce.300ms.live="search">
+                       
                         </div>
                     </div>
                     <div class="col-12 col-md-6 d-none d-md-block">
                        <h5 class="mb-0 text-white ">
-                            قائمة البنوك <i class="fas fa-map-marked-alt ml-2"></i>
+                         <i class="fas fa-map-marked-alt mr-2"></i>   قائمة البنوك 
                         </h5>
                     </div>
                 </div>
             </div>
             
-            <div class="card-body p-0" dir="rtl">
+            <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="bg-light-primary">
@@ -200,7 +202,7 @@
 
         {{-- مودال الحذف --}}
         @if ($deleteId)
-            <div class="modal fade show d-block text-right" tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
+            <div class="modal fade show d-block " tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
@@ -210,7 +212,8 @@
                         <div class="modal-body">
                             هل أنت متأكد من حذف البنك: <strong class="text-danger">{{ $deleteName }}</strong> ؟
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer justify-content-start">
+
                             <button type="button" class="btn btn-secondary" wire:click="resetDelete">إلغاء</button>
                             <button type="button" class="btn btn-danger" wire:click="deleteBank">نعم، حذف</button>
                         </div>

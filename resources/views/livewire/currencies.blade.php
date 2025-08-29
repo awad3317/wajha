@@ -1,6 +1,6 @@
 <div>
     @if (session()->has('success'))
-        <div class="alert alert-success text-right">{{ session('success') }}</div>
+        <div class="alert alert-success ">{{ session('success') }}</div>
     @endif
 
     <div class="container py-4">
@@ -8,7 +8,7 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2" dir="rtl">
             @if (!$showForm && !$isEdit)
                 <button wire:click="create" class="btn btn-primary add-btn">
-                    <i class="fas fa-plus ms-1"></i>
+                    <i class="fas fa-plus mr-1"></i>
                     <span class="d-none d-md-inline">إضافة عملة</span>
                 </button>
             @endif
@@ -21,9 +21,9 @@
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-lg rounded-3">
                 <div class="card-header bg-primary text-white py-3 rounded-top-3">
-                    <h5 class="mb-0 text-right">
-                        {{ $isEdit ? 'تعديل بيانات العملة' : 'إضافة عملة جديدة' }}
-                        <i class="fas fa-coins mr-2"></i>
+                    <h5 class="mb-0 ">
+                        <i class="fas fa-coins mr-2"></i>  {{ $isEdit ? 'تعديل بيانات العملة' : 'إضافة عملة جديدة' }}
+                      
                     </h5>
                 </div>
 
@@ -32,7 +32,7 @@
                         <div class="row">
                             {{-- أيقونة العملة --}}
                             <div class="col-12 col-md-6 mb-3">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
                                     <i class="fas fa-image mr-2"></i> أيقونة العملة <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
@@ -40,7 +40,7 @@
                                         <i class="fas fa-cloud-upload-alt mr-2"></i> رفع
                                         <input type="file" wire:model="iconFile" class="d-none" accept="image/*">
                                     </label>
-                                    <span class="form-control text-right bg-light text-truncate">
+                                    <span class="form-control  bg-light text-truncate">
                                         @if ($iconFile)
                                             {{ $iconFile->getClientOriginalName() }}
                                         @elseif($icon)
@@ -51,7 +51,7 @@
                                     </span>
                                 </div>
                                 @error('iconFile')
-                                    <div class="text-danger small text-right mt-2">
+                                    <div class="text-danger small  mt-2">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -66,19 +66,20 @@
 
                             {{-- اسم العملة --}}
                             <div class="col-12 col-md-6 mb-3">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
                                     <i class="fas fa-signature mr-2"></i> اسم العملة <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                    <input type="text" wire:model.defer="name"
-                                        class="form-control border-0 text-right py-3 @error('name') is-invalid @enderror"
-                                        placeholder="أدخل اسم العملة هنا...">
-                                    <span class="input-group-text bg-white border-0">
+                                       <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-coins text-primary"></i>
                                     </span>
+                                    <input type="text" wire:model.defer="name"
+                                        class="form-control border-0  py-3 @error('name') is-invalid @enderror"
+                                        placeholder="أدخل اسم العملة هنا...">
+                                 
                                 </div>
                                 @error('name')
-                                    <div class="invalid-feedback text-right d-block mt-2">
+                                    <div class="invalid-feedback  d-block mt-2">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -86,19 +87,20 @@
 
                             {{-- كود العملة --}}
                             <div class="col-12 col-md-6 mb-3">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
                                     <i class="fas fa-code mr-2"></i> كود العملة <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                    <input type="text" wire:model.defer="code"
-                                        class="form-control border-0 text-right py-3 @error('code') is-invalid @enderror"
-                                        placeholder="مثال: USD">
-                                    <span class="input-group-text bg-white border-0">
+                                     <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-tag text-primary"></i>
                                     </span>
+                                    <input type="text" wire:model.defer="code"
+                                        class="form-control border-0  py-3 @error('code') is-invalid @enderror"
+                                        placeholder="مثال: USD">
+                                   
                                 </div>
                                 @error('code')
-                                    <div class="invalid-feedback text-right d-block mt-2">
+                                    <div class="invalid-feedback  d-block mt-2">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -106,19 +108,20 @@
 
                             {{-- رمز العملة --}}
                             <div class="col-12 col-md-6 mb-3">
-                                <label class="form-label text-primary fw-bold d-block text-right mb-2">
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
                                     <i class="fas fa-dollar-sign mr-2"></i> رمز العملة <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                    <input type="text" wire:model.defer="symbol"
-                                        class="form-control border-0 text-right py-3 @error('symbol') is-invalid @enderror"
-                                        placeholder="مثال: $">
-                                    <span class="input-group-text bg-white border-0">
+                                       <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-dollar-sign text-primary"></i>
                                     </span>
+                                    <input type="text" wire:model.defer="symbol"
+                                        class="form-control border-0  py-3 @error('symbol') is-invalid @enderror"
+                                        placeholder="مثال: $">
+                                 
                                 </div>
                                 @error('symbol')
-                                    <div class="invalid-feedback text-right d-block mt-2">
+                                    <div class="invalid-feedback  d-block mt-2">
                                         <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -129,13 +132,13 @@
                                 <div class="row g-3">
                                     <div class="col-12 col-md-6">
                                         <button type="button" wire:click="cancel" class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
-                                            إلغاء <i class="fas fa-times ml-2"></i>
+                                           <i class="fas fa-times mr-2"></i> إلغاء 
                                         </button>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <button type="submit" class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة عملة' }}
-                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
+                                         <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>    {{ $isEdit ? 'حفظ التعديلات' : 'إضافة عملة' }}
+                                           
                                         </button>
                                     </div>
                                 </div>
@@ -152,16 +155,17 @@
                 <div class="row align-items-center">
                     <div class="col-12 col-md-6 mb-2 mb-md-0">
                         <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
-                            <input type="text" class="form-control border-0 text-right py-2"
-                                placeholder="...ابحث باسم العملة" wire:model.debounce.300ms.live="search">
-                            <span class="input-group-text bg-white border-0 rounded-0">
+                               <span class="input-group-text bg-white border-0 rounded-0">
                                 <i class="fas fa-search text-primary"></i>
                             </span>
+                            <input type="text" class="form-control border-0  py-2"
+                                placeholder="...ابحث باسم العملة" wire:model.debounce.300ms.live="search">
+                         
                         </div>
                     </div>
                     <div class="col-12 col-md-6 d-none d-md-block">
                         <h5 class="mb-0 text-white">
-                            قائمة العملات <i class="fas fa-coins ml-2"></i>
+                        <i class="fas fa-coins mr-2"></i>   قائمة العملات 
                         </h5>
                     </div>
                 </div>
@@ -226,7 +230,7 @@
 
         {{-- مودال الحذف --}}
         @if ($deleteId)
-            <div class="modal fade show d-block text-right" tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
+            <div class="modal fade show d-block " tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
@@ -236,7 +240,7 @@
                         <div class="modal-body">
                             هل أنت متأكد من حذف العملة: <strong class="text-danger">{{ $deleteName }}</strong> ؟
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer justify-content-start">
                             <button type="button" class="btn btn-secondary" wire:click="resetDelete">إلغاء</button>
                             <button type="button" class="btn btn-danger" wire:click="deleteCurrency">نعم، حذف</button>
                         </div>

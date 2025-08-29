@@ -1,4 +1,4 @@
-<div dir="rtl" class="container py-4">
+<div class="container py-4">
     <style>
         /* Switch Toggle Styles */
         .form-switch {
@@ -78,7 +78,7 @@
         <div class="card border-0 shadow-sm">
             <!-- Card Header -->
             <div class="card-header card-header-custom text-white">
-                <h5 class="mb-0 text-right">
+                <h5 class="mb-0 ">
                     <i class="fas fa-users-cog me-2"></i>
                     إدارة المستخدمين
                 </h5>

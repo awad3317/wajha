@@ -1,4 +1,4 @@
-<div class="container-fluid" dir="rtl">
+<div class="container-fluid" >
 
     {{-- البطاقات الإحصائية المحسنة --}}
     <div class="row m-4">
@@ -68,10 +68,8 @@
                         <i class="fas fa-search text-secondary"></i>
                     </span>
                 </div>
-                <input type="text" class="form-control border-0 text-right" placeholder="ابحث باسم المنشاة"
+                <input type="text" class="form-control border-0 " placeholder="ابحث باسم المنشاة"
                     wire:model.debounce.300ms.live="search">
-
-
             </div>
         </div>
         <div class="col-md-6 mb-2">
@@ -82,7 +80,7 @@
                         <i class="fas fa-check-circle text-success"></i>
                     </span>
                 </div>
-                <select wire:model.live="statusFilter" class="form-control text-right border-0">
+                <select wire:model.live="statusFilter" class="form-control  border-0">
                     <option value="">كل الحالات</option>
                     <option value="pending">قيد الانتظار</option>
                     <option value="waiting_payment">بانتظار الدفع</option>

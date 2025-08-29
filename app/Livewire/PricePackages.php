@@ -21,7 +21,8 @@ class PricePackages extends Component
     public $pricePackageId;
     public $isEdit = false;
     public $showForm = false;
-
+    public $deleteId = null;
+    public $deleteName = null;
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
@@ -58,11 +59,10 @@ class PricePackages extends Component
         ]);
 
         $this->resetForm();
-            $this->dispatch('show-toast', [
+        $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل الباقة بنجاح'
         ]);
-    
     }
 
     public function edit($id)
@@ -98,11 +98,10 @@ class PricePackages extends Component
         ]);
 
         $this->resetForm();
-            $this->dispatch('show-toast', [
+        $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل الباقة بنجاح'
         ]);
-    
     }
 
     public function delete($id)
@@ -110,21 +109,49 @@ class PricePackages extends Component
         $package = PricePackage::findOrFail($id);
         $package->delete();
 
-            $this->dispatch('show-toast', [
-            'type' => 'success',
-            'message' => 'تم تعديل الباقة بنجاح'
-        ]);
-    
+      $this->resetDelete();
     }
+    public function deletePackage()
+    {
 
+        $package = PricePackage::findOrFail($this->deleteId);
+        
+        $package->delete();
+        
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'تمت حذف البنك بنجاح'
+        ]);
+        $this->resetDelete();
+    }
     public function resetForm()
     {
         $this->reset([
-            'name', 'description', 'price', 'features', 'featuresInput', 'is_active',
-            'icon_id', 'establishment_id', 'showForm', 'isEdit', 'pricePackageId'
+            'name',
+            'description',
+            'price',
+            'features',
+            'featuresInput',
+            'is_active',
+            'icon_id',
+            'establishment_id',
+            'showForm',
+            'isEdit',
+            'pricePackageId'
         ]);
     }
-
+  public function confirmDelete($id)
+    {
+        $Package = PricePackage::findOrFail($id);
+        $this->deleteId = $Package->id;
+        $this->deleteName = $Package->name;
+       
+    }
+       public function resetDelete()
+    {
+        $this->deleteId = null;
+        $this->deleteName = null;
+    }
     public function render()
     {
         $packages = PricePackage::latest()

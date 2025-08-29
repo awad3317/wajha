@@ -2,45 +2,46 @@
     <div class="row mb-4">
         <div class="col-md-12 mb-2">
             <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                <input type="text" class="form-control border-0 text-right" placeholder="...ابحث باسم المنشأة"
-                    wire:model.debounce.300ms.live="search">
-
-                <div class="input-group-append">
+                  <div class="input-group-append">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-search text-secondary"></i>
                     </span>
                 </div>
+                <input type="text" class="form-control border-0 " placeholder="...ابحث باسم المنشأة"
+                    wire:model.debounce.300ms.live="search">
             </div>
         </div>
 
         <div class="col-md-6 mb-2">
             <div class="input-group shadow-sm rounded-pill overflow-hidden">
-                <select wire:model.live="selectedType" class="form-control text-right border-0">
+                  <div class="input-group-append">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-building text-primary"></i>
+                    </span>
+                </div>
+                <select wire:model.live="selectedType" class="form-control  border-0">
                     <option value="">كل الأنواع</option>
                     @foreach ($types as $type)
                         <option value="{{ $type->id }}">{{ $type->name }}</option>
                     @endforeach
                 </select>
-                <div class="input-group-append">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fas fa-building text-primary"></i>
-                    </span>
-                </div>
+              
             </div>
         </div>
 
         <div class="col-md-6 mb-2">
             <div class="input-group shadow-sm rounded-pill overflow-hidden">
-                <select wire:model.live="selectedStatus" class="form-control text-right border-0">
-                    <option value="">كل الحالات</option>
-                    <option value="1">موثقة</option>
-                    <option value="0">غير موثقة</option>
-                </select>
-                <div class="input-group-append">
+                  <div class="input-group-append">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-check-circle text-success"></i>
                     </span>
                 </div>
+                <select wire:model.live="selectedStatus" class="form-control  border-0">
+                    <option value="">كل الحالات</option>
+                    <option value="1">موثقة</option>
+                    <option value="0">غير موثقة</option>
+                </select>
+              
             </div>
         </div>
     </div>
@@ -58,9 +59,9 @@
                                 style="object-fit: cover;" alt="{{ $establishment->name }}">
                         </div>
 
-                        <div class="package-body d-flex flex-column">
+                        <div class="package-body d-flex ">
                             <div class="row mb-2">
-                                <div class="col-6 d-flex justify-content-end align-items-center">
+                                <div class="col-6 d-flex justify-content-start align-items-center">
 
                                     <h5 class="mb-0 text-primary text-truncate "
                                         style="width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"

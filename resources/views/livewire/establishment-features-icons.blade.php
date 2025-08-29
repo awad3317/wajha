@@ -1,21 +1,23 @@
 <div>
     @if (session()->has('success'))
-        <div class="alert alert-success text-right">{{ session('success') }}</div>
+        <div class="alert alert-success ">{{ session('success') }}</div>
     @endif
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center my-2">
-       
-            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">إدارة ايقونات المميزات</h3>
-                 @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary add-btn text-left">إضافة الأيقونة     <i class="fas fa-plus ms-1"></i></button>
+            @if (!$showForm && !$isEdit)
+                <button wire:click="create" class="btn btn-primary add-btn text-left"> <i
+                        class="fas fa-plus mr-1"></i>إضافة الأيقونة </button>
             @endif
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">إدارة ايقونات
+                المميزات</h3>
+
         </div>
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-lg rounded-3">
                 <div class="card-header bg-primary text-white py-3 rounded-top-3">
                     <h5 class="mb-0 text-center">
-                        <i class="fas fa-plus ms-1"></i>
-                         {{ $isEdit ? 'تعديل الأيقونة' : 'إضافة أيقونة جديدة' }}
+                        <i class="fas fa-plus mr-1"></i>
+                        {{ $isEdit ? 'تعديل الأيقونة' : 'إضافة أيقونة جديدة' }}
                     </h5>
                 </div>
 
@@ -25,7 +27,7 @@
                             <!-- Icon Upload Field -->
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-label text-primary fw-bold d-block text-right mb-3">
+                                    <label class="form-label text-primary fw-bold d-block  mb-3">
                                         <i class="fas fa-upload me-2"></i>
                                         رفع الأيقونة
                                         <span class="text-danger">*</span>
@@ -37,7 +39,7 @@
                                             <i class="fas fa-cloud-upload-alt me-2"></i> اختر ملف
                                             <input type="file" wire:model="iconFile" class="d-none" accept="image/*">
                                         </label>
-                                        <span class="form-control text-right bg-light py-3">
+                                        <span class="form-control  bg-light py-3">
                                             @if ($iconFile)
                                                 {{ $iconFile->getClientOriginalName() }}
                                             @elseif($icon)
@@ -49,7 +51,7 @@
                                     </div>
 
                                     @error('iconFile')
-                                        <div class="text-danger small text-right mt-3">
+                                        <div class="text-danger small  mt-3">
                                             <i class="fas fa-exclamation-circle me-1"></i>{{ $message }}
                                         </div>
                                     @enderror
@@ -79,15 +81,15 @@
                                     <div class="col-md-6">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
-                                            إلغاء<i class="fas fa-times ml-2"></i>
+                                            <i class="fas fa-times mr-2"></i>إلغاء
                                         </button>
                                     </div>
                                     <div class="col-md-6">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
 
-                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
-                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
+                                         <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>   {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
+                                            
                                         </button>
                                     </div>
                                 </div>
@@ -100,8 +102,8 @@
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
             <!-- Card Header -->
             <div class="card-header bg-primary text-white py-3">
-                <h5 class="mb-0 text-right">
-                    قائمة الباقات<i class="fas fa-boxes ml-2"></i>
+                <h5 class="mb-0 ">
+                 <i class="fas fa-boxes mr-2"></i>   قائمة الباقات
                 </h5>
             </div>
 
@@ -174,7 +176,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         @if ($deleteId)
-            <div class="modal fade show d-block text-right" tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
+            <div class="modal fade show d-block " tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
@@ -184,7 +186,7 @@
                         <div class="modal-body">
                             هل أنت متأكد من حذف الايقونة: <strong class="text-danger">{{ $deleteId }}</strong> ؟
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer justify-content-start">
                             <button type="button" class="btn btn-secondary" wire:click="resetDelete">إلغاء</button>
                             <button type="button" class="btn btn-danger" wire:click="deletepackage">نعم،
                                 حذف</button>

@@ -2,26 +2,26 @@
     <div class="container py-4">
         <div
             class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
-            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start">إدارة كوبونات الخصم</h3>
 
             @if (!$showForm && !$isEdit)
                 <button wire:click="create" class="btn btn-primary rounded-pill add-btn px-4 py-2">
-                    إضافة كوبون جديد
-                    <i class="fas fa-plus-circle ms-2"></i>
+                    <i class="fas fa-plus-circle mr-2"></i> إضافة كوبون جديد
                 </button>
             @endif
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start">إدارة كوبونات الخصم</h3>
+
         </div>
 
         {{-- Form Section --}}
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0  shadow-lg">
                 <div class="card-header  bg-primary text-white py-3">
-                    <h5 class="mb-0 text-right">
+                    <h5 class="mb-0 ">
                         {{ $isEdit ? 'تعديل كود خصم ' : 'إضافة كود خصم جديد' }}
-                        <i class="fas fa-edit ml-2"></i>
+                        <i class="fas fa-edit mr-2"></i>
                     </h5>
                 </div>
-                <div class="card-body text-right">
+                <div class="card-body ">
 
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}" enctype="multipart/form-data">
                         <!-- المعلومات الأساسية -->
@@ -43,7 +43,7 @@
                                 <label for="discount_type">نوع الخصم <span class="text-danger"><span
                                             class="text-danger">*</span></span></label>
                                 <select wire:model.live="discount_type"
-                                    class="form-control text-right @error('discount_type') is-invalid @enderror "
+                                    class="form-control  @error('discount_type') is-invalid @enderror "
                                     id="discount_type">
                                     <option value="percentage">نسبة مئوية %</option>
                                     <option value="fixed_amount">مبلغ ثابت</option>
@@ -58,7 +58,7 @@
                                 <label for="code ">كود الكوبون <span class="text-danger"><span
                                             class="text-danger">*</span></span></label>
                                 <input type="text" wire:model="code"
-                                    class="form-control text-right @error('code') is-invalid @enderror  " id="code"
+                                    class="form-control  @error('code') is-invalid @enderror  " id="code"
                                     placeholder="مثال: SUMMER20">
                                 @error('code')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -69,7 +69,7 @@
                                 <label for="discount_value">قيمة الخصم <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <input type="number" wire:model="discount_value"
-                                        class="form-control text-right @error('discount_value') is-invalid @enderror  "
+                                        class="form-control  @error('discount_value') is-invalid @enderror  "
                                         id="discount_value" placeholder="0">
 
                                     <div class="input-group-append">
@@ -93,8 +93,8 @@
 
                             <div class="form-group col-md-12">
                                 <label for="description">وصف الكوبون</label>
-                                <textarea class="form-control text-right @error('description') is-invalid @enderror" wire:model="description"
-                                    id="description" rows="2" placeholder="...وصف مختصر عن الكوبون"></textarea>
+                                <textarea class="form-control  @error('description') is-invalid @enderror" wire:model="description" id="description"
+                                    rows="2" placeholder="...وصف مختصر عن الكوبون"></textarea>
                                 @error('description')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
@@ -110,8 +110,7 @@
                             <div class="form-group col-md-6">
                                 <label for="end_date">تاريخ النهاية <span class="text-danger">*</span></label>
                                 <input type="datetime-local" wire:model="end_date"
-                                    class="form-control text-right @error('end_date') is-invalid @enderror "
-                                    id="end_date">
+                                    class="form-control  @error('end_date') is-invalid @enderror " id="end_date">
                                 @error('end_date')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
@@ -123,8 +122,7 @@
                             <div class="form-group col-md-6">
                                 <label for="start_date">تاريخ البداية <span class="text-danger">*</span></label>
                                 <input type="datetime-local" wire:model="start_date"
-                                    class="form-control text-right @error('start_date') is-invalid @enderror "
-                                    id="start_date">
+                                    class="form-control   @error('start_date') is-invalid @enderror " id="start_date">
                                 @error('start_date')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
@@ -137,8 +135,7 @@
                             <div class="form-group col-md-12">
                                 <label for="max_uses">الحد الأقصى للاستخدام <span class="text-danger">*</span></label>
                                 <input type="number" wire:model="max_uses"
-                                    class="form-control text-right @error('max_uses') is-invalid @enderror "
-                                    id="max_uses">
+                                    class="form-control  @error('max_uses') is-invalid @enderror " id="max_uses">
                                 @error('max_uses')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
@@ -149,14 +146,14 @@
                         <h5 class="border-bottom pb-2 mb-3 mt-4">تطبيق الكوبون على</h5>
                         <div class="form-group">
                             <select wire:model.live="applies_to"
-                                class="form-control text-right @error('applies_to') is-invalid @enderror ">
+                                class="form-control  @error('applies_to') is-invalid @enderror ">
                                 <option value="all_establishments">جميع المنشآت</option>
                                 <option value="specific_establishments">منشآت محددة</option>
                                 <option value="specific_types">أنواع محددة من المنشآت</option>
                             </select>
-                             @error('applies_to')
-                                    <div class="text-danger small">{{ $message }}</div>
-                                @enderror
+                            @error('applies_to')
+                                <div class="text-danger small">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- منشآت محددة -->
@@ -205,8 +202,7 @@
                             <div class="col-md-6 mt-4">
                                 <button type="button" wire:click="cancel"
                                     class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    إلغاء <i class="fas fa-times ml-2"></i>
-
+                                    <i class="fas fa-times mr-2"></i>إلغاء
                                 </button>
                             </div>
 
@@ -215,8 +211,9 @@
                             <div class="col-md-6 mt-4">
                                 <button type="submit"
                                     class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
                                     {{ $isEdit ? 'حفظ التعديلات' : 'إضافة كود خصم' }}
-                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} ml-2"></i>
+
                                 </button>
                             </div>
                         </div>
@@ -228,25 +225,26 @@
         <div class="row g-3 mb-4">
             <div class="col-md-8">
                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-
-                    <input type="text" wire:model.debounce.300ms.live="search"
-                        class="form-control  border-0 text-right py-2" placeholder="..ابحث باسم الكوبون">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-search text-primary"></i>
                     </span>
+                    <input type="text" wire:model.debounce.300ms.live="search"
+                        class="form-control  border-0  py-2" placeholder="..ابحث باسم الكوبون">
+
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                    <select wire:model.live="selectedStatu" class="form-control  border-0 text-right py-2">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-filter text-primary"></i>
+                    </span>
+                    <select wire:model.live="selectedStatu" class="form-control  border-0  py-2">
                         <option value="">كل الحالات</option>
                         <option value="1">المفعلة</option>
                         <option value="0">غير المفعلة</option>
                     </select>
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fas fa-filter text-primary"></i>
-                    </span>
+
                 </div>
             </div>
         </div>
@@ -255,7 +253,7 @@
         <div class="row">
             @forelse ($coupons as $coupon)
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-stretch ">
-                    <div class="card shadow-sm w-100 text-right position-relative border-0">
+                    <div class="card shadow-sm w-100  position-relative border-0">
                         <div class="card-header p-0"
                             style="height: 160px; overflow: hidden; background: linear-gradient(135deg, #3b82f6, #0d47a1);">
                             <div class="d-flex align-items-center justify-content-center h-100">
@@ -265,7 +263,7 @@
 
                         <div class="card-body d-flex flex-column">
                             <div class="row mb-2">
-                                <div class="col-12 d-flex justify-content-end align-items-center">
+                                <div class="col-12 d-flex justify-content-start align-items-center">
                                     <h5 class="mb-0 text-primary">
                                         {{ $coupon->code }}
                                     </h5>
@@ -283,11 +281,11 @@
 
                             <div class="row mt-3 g-2">
                                 <div class="col-6">
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <div class="text-end me-2">
+                                    <div class="d-flex align-items-center justify-content-start">
+                                        <div class="text-start me-2">
                                             <div class="fw-semibold small text-dark">
-                                                نوع الخصم
-                                                <i class="fas fa-percent text-success ms-2"></i>
+                                                <i class="fas fa-percent text-success mr-2"></i> نوع الخصم
+
                                             </div>
                                             <div class="text-muted extra-small">
                                                 {{ $coupon->discount_type == 'percentage' ? 'نسبة مئوية' : 'مبلغ ثابت' }}
@@ -297,11 +295,11 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <div class="text-end me-2">
+                                    <div class="d-flex align-items-center justify-content-start">
+                                        <div class="text-start me-2">
                                             <div class="fw-semibold small text-dark">
-                                                قيمة الخصم
-                                                <i class="fas fa-tag text-primary ms-2"></i>
+                                                <i class="fas fa-tag text-primary mr-2"></i> قيمة الخصم
+
                                             </div>
                                             <div class="text-muted extra-small">
                                                 {{ $coupon->discount_value }}
@@ -312,11 +310,11 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <div class="text-end me-2">
+                                    <div class="d-flex align-items-center justify-content-start">
+                                        <div class="text-start me-2">
                                             <div class="fw-semibold small text-dark">
-                                                الاستخدام
-                                                <i class="fas fa-sync-alt text-warning ms-2"></i>
+                                                <i class="fas fa-sync-alt text-warning mr-2"></i> الاستخدام
+
                                             </div>
                                             <div class="text-muted extra-small">
                                                 {{ $coupon->current_uses }} / {{ $coupon->max_uses }}
@@ -326,14 +324,14 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <div class="text-end me-2">
+                                    <div class="d-flex align-items-center justify-content-start">
+                                        <div class="text-start me-2">
                                             <div class="fw-semibold small text-dark">
-                                                الصلاحية
-                                                <i class="fas fa-calendar-alt text-info ms-2"></i>
+                                                <i class="fas fa-calendar-alt text-info mr-2"></i> الصلاحية
+
                                             </div>
                                             <div class="text-muted extra-small">
-                                                {{ \Carbon\Carbon::parse($coupon->start_date)->format('Y-m-d') }} -
+                                                {{ \Carbon\Carbon::parse($coupon->start_date)->format('Y-m-d') }} ←
                                                 {{ \Carbon\Carbon::parse($coupon->end_date)->format('Y-m-d') }}
                                             </div>
                                         </div>
@@ -358,8 +356,9 @@
                                     class="btn btn-outline-danger rounded-pill flex-grow-1 d-flex align-items-center justify-content-center mx-1"
                                     wire:click.prevent="confirmDelete({{ $coupon->id }})" data-bs-toggle="tooltip"
                                     title="حذف الكوبون">
-                                    <span class="d-none d-sm-inline-block">حذف</span>
-                                    <i class="fas fa-trash-alt ml-2"></i>
+                                    <i class="fas fa-trash-alt mr-2"></i> <span
+                                        class="d-none d-sm-inline-block">حذف</span>
+
                                 </button>
 
                                 <!-- زر التعديل -->
@@ -367,8 +366,9 @@
                                     class="btn btn-outline-primary btn-sm rounded-pill flex-grow-1 py-2 d-flex align-items-center justify-content-center"
                                     wire:click.prevent="edit({{ $coupon->id }})" data-bs-toggle="tooltip"
                                     title="تعديل الكوبون">
-                                    <span class="d-none d-sm-inline-block">تعديل</span>
-                                    <i class="fas fa-edit ml-2"></i>
+                                    <i class="fas fa-edit mr-2"></i> <span
+                                        class="d-none d-sm-inline-block">تعديل</span>
+
                                 </button>
                             </div>
                         </div>
@@ -388,16 +388,17 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content shadow">
                         <div class="modal-header bg-danger text-white">
-                            <button type="button" wire:click="$set('deleteId', null)"
-                                class="btn-close btn-close-white"></button>
                             <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i> تأكيد الحذف</h5>
 
+                            <button type="button" wire:click="$set('deleteId', null)"
+                                class="btn-close btn-close-white">X</button>
+
                         </div>
-                        <div class="modal-body text-right">
+                        <div class="modal-body ">
                             <p>هل أنت متأكد أنك تريد حذف الكوبون التالي؟</p>
                             <p class="fw-bold text-danger">"{{ $deleteTitle }}"</p>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer justify-content-start">
                             <button wire:click="$set('deleteId', null)"
                                 class="btn btn-secondary rounded-pill px-4">إلغاء</button>
                             <button wire:click="deleteCoupon" class="btn btn-danger rounded-pill px-4">نعم،

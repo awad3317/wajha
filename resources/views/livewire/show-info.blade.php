@@ -148,9 +148,9 @@
 
 
     {{-- البيانات الأساسية --}}
-    <div class="card shadow-sm border-0 mb-5 text-right">
+    <div class="card shadow-sm border-0 mb-5 ">
         <div class="card-header bg-primary text-white fw-bold">
-            البيانات الأساسية <i class="fas fa-info-circle ml-2"></i>
+            <i class="fas fa-info-circle mr-2"></i>البيانات الأساسية
         </div>
         <div class="card-body">
             <div class="row g-4">
@@ -217,24 +217,63 @@
     </div>
 
 
-<div class="row g-4">
-    {{-- معرض الصور --}}
-    <div class="col-md-6">
-        <div class="card shadow-sm border-0 text-right h-100">
-            <div class="card-header bg-secondary text-white fw-bold">
-                معرض الصور <i class="fas fa-images ml-2"></i>
+    <div class="row g-4">
+        {{-- معرض الصور --}}
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0  h-100">
+                <div class="card-header bg-secondary text-white fw-bold">
+                    <i class="fas fa-images mr-2"></i> معرض الصور
+                </div>
+                <div class="card-body p-0">
+                    <div class="overflow-auto p-3" style="max-height: 300px;">
+                        <div class="row g-3">
+                            @forelse ($images as $image)
+                                <div class="col-6 col-md-4">
+                                    <img src="{{ url($image->image) }}" alt="صورة"
+                                        class="img-fluid rounded shadow-sm border"
+                                        style="object-fit: cover; width: 100%; height: 120px;">
+                                </div>
+                            @empty
+                                <div class="col-12 text-center text-muted">لا توجد صور.</div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body p-0">
-                <div class="overflow-auto p-3" style="max-height: 300px;">
-                    <div class="row g-3">
-                        @forelse ($images as $image)
-                            <div class="col-6 col-md-4">
-                                <img src="{{ url($image->image) }}" alt="صورة"
-                                    class="img-fluid rounded shadow-sm border"
-                                    style="object-fit: cover; width: 100%; height: 120px;">
+        </div>
+
+        {{-- المميزات --}}
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0  h-100">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="fas fa-star mr-2"></i> المميزات
+                </div>
+                <div class="card-body p-3 overflow-auto" style="max-height: 300px;">
+                    <div class="features-list">
+                        @forelse ($features as $feature)
+                            <div class="feature-item">
+                                <div class="feature-icon-wrapper">
+                                    @if ($feature->icon)
+                                        <div class="feature-icon-img">
+                                            <img src="{{ url($feature->icon) }}" alt="{{ $feature->name }}"
+                                                class="img-fluid">
+                                        </div>
+                                    @else
+                                        <div class="feature-icon-default">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="feature-content">
+                                    <h5 class="feature-title">{{ $feature->name }}</h5>
+                                    <p class="feature-desc">{{ $feature->description }}</p>
+                                </div>
                             </div>
                         @empty
-                            <div class="col-12 text-center text-muted">لا توجد صور.</div>
+                            <div class="no-features">
+                                <i class="far fa-folder-open"></i>
+                                <p>لا توجد مميزات متاحة حالياً</p>
+                            </div>
                         @endforelse
                     </div>
                 </div>
@@ -242,96 +281,59 @@
         </div>
     </div>
 
-    {{-- المميزات --}}
-    <div class="col-md-6">
-        <div class="card shadow-sm border-0 text-right h-100">
-            <div class="card-header bg-success text-white fw-bold">
-                المميزات <i class="fas fa-star ml-2"></i>
-            </div>
-            <div class="card-body p-3 overflow-auto" style="max-height: 300px;">
-                <div class="features-list">
-                    @forelse ($features as $feature)
-                        <div class="feature-item">
-                            <div class="feature-icon-wrapper">
-                                @if ($feature->icon)
-                                    <div class="feature-icon-img">
-                                        <img src="{{ url($feature->icon) }}" alt="{{ $feature->name }}" class="img-fluid">
-                                    </div>
-                                @else
-                                    <div class="feature-icon-default">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="feature-content">
-                                <h5 class="feature-title">{{ $feature->name }}</h5>
-                                <p class="feature-desc">{{ $feature->description }}</p>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="no-features">
-                            <i class="far fa-folder-open"></i>
-                            <p>لا توجد مميزات متاحة حالياً</p>
-                        </div>
-                    @endforelse
+    <div class="row g-4 mt-4">
+        {{-- المواصفات --}}
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0  h-100">
+                <div class="card-header bg-warning text-white fw-bold">
+                    <i class="fas fa-cogs mr-2"></i> المواصفات
+                </div>
+                <div class="card-body p-0">
+                    <div class="overflow-auto" style="max-height: 300px;">
+                        <ul class="list-group list-group-flush">
+                            @forelse ($specifications as $spec)
+                                <li class="list-group-item d-flex align-items-center justify-content-end">
+                                    <span class="mr-2">
+                                        @if ($spec->icon)
+                                            <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة"
+                                                class="img-fluid" style="max-width: 20px; max-height: 20px;">
+                                        @else
+                                            <i class="fas fa-info-circle text-secondary"></i>
+                                        @endif
+                                    </span>
+                                    {{ $spec->name }}
+                                </li>
+                            @empty
+                                <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
+                            @endforelse
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="row g-4 mt-4">
-    {{-- المواصفات --}}
-    <div class="col-md-6">
-        <div class="card shadow-sm border-0 text-right h-100">
-            <div class="card-header bg-warning text-white fw-bold">
-                المواصفات <i class="fas fa-cogs ml-2"></i>
-            </div>
-            <div class="card-body p-0">
-                <div class="overflow-auto" style="max-height: 300px;">
-                    <ul class="list-group list-group-flush">
-                        @forelse ($specifications as $spec)
-                            <li class="list-group-item d-flex align-items-center justify-content-end">
-                                <span class="ml-2">
-                                    @if ($spec->icon)
-                                        <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة" class="img-fluid" style="max-width: 20px; max-height: 20px;">
-                                    @else
-                                        <i class="fas fa-info-circle text-secondary"></i>
-                                    @endif
-                                </span>
-                                {{ $spec->name }}
-                            </li>
-                        @empty
-                            <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
-                        @endforelse
-                    </ul>
+        {{-- القواعد --}}
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0  h-100">
+                <div class="card-header bg-info text-white fw-bold">
+                    <i class="fas fa-list-ol mr-2"></i>القواعد
+                </div>
+                <div class="card-body p-0">
+                    <div class="overflow-auto p-3" style="max-height: 300px;">
+                        @if ($rules->count())
+                            <ol class="list-group list-group-numbered list-unstyled ps-3 pe-0">
+                                @foreach ($rules as $rule)
+                                    <li class="mb-2">{{ $rule->rule }}</li>
+                                @endforeach
+                            </ol>
+                        @else
+                            <div class="text-center text-muted">لا توجد قواعد.</div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- القواعد --}}
-    <div class="col-md-6">
-        <div class="card shadow-sm border-0 text-right h-100">
-            <div class="card-header bg-info text-white fw-bold">
-                القواعد <i class="fas fa-list-ol ml-2"></i>
-            </div>
-            <div class="card-body p-0">
-                <div class="overflow-auto p-3" style="max-height: 300px;">
-                    @if ($rules->count())
-                        <ol class="list-group list-group-numbered list-unstyled ps-3 pe-0">
-                            @foreach ($rules as $rule)
-                                <li class="mb-2">{{ $rule->rule }}</li>
-                            @endforeach
-                        </ol>
-                    @else
-                        <div class="text-center text-muted">لا توجد قواعد.</div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
