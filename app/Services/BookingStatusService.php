@@ -119,7 +119,7 @@ class BookingStatusService
             'from_status' => $fromStatus,
             'to_status' => $toStatus,
             'action' => $action,
-            'notes' => $notes,
+            'notes' => is_array($notes) ? json_encode($notes) : $notes,
             'ip_address' => Request::ip(),
         ]);
     }
