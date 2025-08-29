@@ -305,7 +305,7 @@ public function cancelledBooking(Request $request)
         $booking = $this->bookingStatusService->cancelledBooking($booking, $fields['cancellation_reason'] ?? null);
 
         if($user->id == $booking->user_id){
-            $establishmentOwner = $establishment->user;
+            $establishmentOwner = $establishment->owner;
             $establishmentOwner->notify(new NewBookingNotification(
             $booking, 
             'تم إلغاء الحجز', 
