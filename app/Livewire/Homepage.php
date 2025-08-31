@@ -46,10 +46,12 @@ class Homepage extends Component
             ->orderBy('date')
             ->get();
 
-        $typesChart = Establishment::selectRaw('name, COUNT(*) as total')
-        
-            ->groupBy('name')
+        $typesChart = Establishment::selectRaw('establishment_types.name as type_name, COUNT(establishments.id) as total')
+            ->join('establishment_types', 'establishments.type_id', '=', 'establishment_types.id')
+            ->groupBy('establishment_types.name')
             ->get();
+
+
 
         $usersChart = User::selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')
