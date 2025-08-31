@@ -36,9 +36,7 @@ class BookingController extends Controller
         try {
             $user = auth('sanctum')->user();
             if($user->user_type == 'owner'){
-                $bookings = Booking::whereHas('establishment', function($query) use ($user) {
-                $query->where('owner_id', $user->id);
-            })->get();
+                $bookings = $user->bookings;
                 return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
             }
             $bookings = $this->bookingRepository->index($user->id);
