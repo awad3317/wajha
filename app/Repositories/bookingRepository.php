@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Repositories;
-use App\Interfaces\RepositoriesInterface;
 use App\Models\booking;
+use App\Models\Establishment;
+use App\Interfaces\RepositoriesInterface;
 
 class bookingRepository implements RepositoriesInterface
 {
@@ -12,6 +13,13 @@ class bookingRepository implements RepositoriesInterface
     public function __construct()
     {
         //
+    }
+
+    public function indexForOwner($user)
+    {
+        $establishmentIds = Establishment::where('owner_id', $user->id)->pluck('id');
+        $bookings = Booking::whereIn('establishment_id', $establishmentIds)->get();
+        return $bookings;
     }
 
     public function index($user_id)
