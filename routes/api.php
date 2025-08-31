@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use App\Services\FirebaseService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BankController;
-use App\Http\Controllers\api\FileController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\RegionController;
 use App\Http\Controllers\API\ReviewController;
@@ -51,10 +50,6 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::post('/booking/confirmBooking', [BookingController::class, 'confirmBooking']);
     Route::post('/booking/cancelledBooking', [BookingController::class, 'cancelledBooking']);
     Route::post('/booking/revertBookingStatus', [BookingController::class, 'revertBookingStatus']);
-    
-    
-    Route::get('/downloadReceipt/{filename}', [FileController::class, 'downloadReceipt']);
-    Route::get('/viewReceipt/{filename}', [FileController::class, 'viewReceipt']);
     
     
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
