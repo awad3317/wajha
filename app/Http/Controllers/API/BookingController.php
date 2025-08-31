@@ -31,7 +31,14 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $user = auth('sanctum')->user();
+            $bookings = $this->bookingRepository->index($user->id);
+            return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('حدث خطأ في جلب بيانات الحجوزات: ' . $e->getMessage());
+        }
+      
     }
 
     /**
@@ -101,10 +108,8 @@ class BookingController extends Controller
         }
             $owner = $establishment->owner;
 
-            // send database notification to the owner
             $owner->notify(new NewBookingNotification($booking,'حجز جديد','حجز جديد في منشأتك: ' . $booking->establishment->name,'owner'));
 
-            // send to FCM notification to the owner
             $title = "حجز جديد في منشأتك";
             $body = "تم حجز {$establishment->name} من قبل عميل جديد. تاريخ الحجز: " . $booking->booking_date;
             $data = [
