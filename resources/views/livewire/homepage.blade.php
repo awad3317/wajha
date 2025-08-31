@@ -362,7 +362,7 @@
         new Chart(document.getElementById('typesChart'), {
             type: 'bar',
             data: {
-                labels: @json($typesChart->pluck('type_id')),
+                labels: @json($typesChart->pluck('name')),
                 datasets: [{
                     label: 'عدد المنشآت',
                     data: @json($typesChart->pluck('total')),
