@@ -26,6 +26,14 @@ class booking extends Model
         'discount_amount' => 'decimal:2'
     ];
 
+    public function getPaymentReceiptImageAttribute($value)
+    {
+        // if (request()->is('api/*')) {
+        return 'storage/' . $value;
+        // }
+        // return $value;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

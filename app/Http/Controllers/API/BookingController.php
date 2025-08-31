@@ -4,7 +4,10 @@ namespace App\Http\Controllers\API;
 
 
 use Exception;
+use App\Livewire\Booking;
 use Illuminate\Http\Request;
+use App\Models\Establishment;
+use App\Services\ImageService;
 use App\Services\CouponService;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
@@ -21,7 +24,7 @@ class BookingController extends Controller
      /**
      * Create a new class instance.
      */
-    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService,private CouponService $couponService,private EstablishmentRepository $EstablishmentRepository,private BookingStatusService $bookingStatusService)
+    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService,private CouponService $couponService,private EstablishmentRepository $EstablishmentRepository,private BookingStatusService $bookingStatusService,private ImageService $ImageService)
     {
         //
     }
@@ -33,6 +36,11 @@ class BookingController extends Controller
     {
         try {
             $user = auth('sanctum')->user();
+            if($user->user_type == 'owner'){
+                $establishmentIds = Establishment::where('owner_id', $user->id)->pluck('id');
+                $bookings = Booking::whereIn('establishment_id', $establishmentIds)->get();
+                return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
+            }
             $bookings = $this->bookingRepository->index($user->id);
             return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
         } catch (Exception $e) {
@@ -173,14 +181,9 @@ class BookingController extends Controller
         $currentReceiptImage = $booking->receipt_image;
         
         if ($request->hasFile('receipt_image')) {
-            if ($currentReceiptImage && Storage::disk('private')->exists($currentReceiptImage)) {
-                Storage::disk('private')->delete($currentReceiptImage);
-            }
-            $receiptImage = $request->file('receipt_image')->storeAs(
-                'payment-receipts', 
-                'receipt_' . time() . '_' . uniqid() . '.' . $request->file('receipt_image')->extension(),
-                'private'
-            );
+            $image = $request->file('receipt_image');
+            $imagePath = $this->ImageService->saveImage($image, 'booking-receipts');
+            $receiptImage = $imagePath;
         } else {
             return ApiResponseClass::sendError('صورة الإيصال مطلوبة', [], 400);
         }
