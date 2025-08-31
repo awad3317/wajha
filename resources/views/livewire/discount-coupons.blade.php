@@ -4,7 +4,7 @@
             class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
 
             @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary rounded-pill add-btn px-4 py-2">
+                <button wire:click="create" class="btn btn-primary  add-btn px-4 py-2">
                     <i class="fas fa-plus-circle mr-2"></i> إضافة كوبون جديد
                 </button>
             @endif
@@ -106,7 +106,14 @@
                         <!-- الفترة الزمنية -->
                         <h5 class="border-bottom pb-2 mb-3 mt-4">الفترة الزمنية</h5>
                         <div class="form-row">
-
+                            <div class="form-group col-md-6">
+                                <label for="start_date">تاريخ البداية <span class="text-danger">*</span></label>
+                                <input type="datetime-local" wire:model="start_date"
+                                    class="form-control   @error('start_date') is-invalid @enderror " id="start_date">
+                                @error('start_date')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="form-group col-md-6">
                                 <label for="end_date">تاريخ النهاية <span class="text-danger">*</span></label>
                                 <input type="datetime-local" wire:model="end_date"
@@ -119,14 +126,7 @@
                                 <div class="text-danger small">{{ $message }}</div>
                             @enderror
 
-                            <div class="form-group col-md-6">
-                                <label for="start_date">تاريخ البداية <span class="text-danger">*</span></label>
-                                <input type="datetime-local" wire:model="start_date"
-                                    class="form-control   @error('start_date') is-invalid @enderror " id="start_date">
-                                @error('start_date')
-                                    <div class="text-danger small">{{ $message }}</div>
-                                @enderror
-                            </div>
+
                         </div>
 
                         <!-- الاستخدام -->
