@@ -68,7 +68,7 @@
                         <i class="fas fa-search text-secondary"></i>
                     </span>
                 </div>
-                <input type="text" class="form-control border-0 " placeholder="ابحث باسم المنشاة"
+                <input type="text" class="form-control border-0 " placeholder="ابحث باسم اسم الحجز"
                     wire:model.debounce.300ms.live="search">
             </div>
         </div>

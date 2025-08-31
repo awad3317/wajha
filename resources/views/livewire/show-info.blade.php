@@ -228,6 +228,7 @@
                     <div class="overflow-auto p-3" style="max-height: 300px;">
                         <div class="row g-3">
                             @forelse ($images as $image)
+                                {{ $image->id }} :
                                 <div class="col-6 col-md-4">
                                     <img src="{{ url($image->image) }}" alt="صورة"
                                         class="img-fluid rounded shadow-sm border"
@@ -252,8 +253,10 @@
                     <div class="features-list">
                         @forelse ($features as $feature)
                             <div class="feature-item">
+                                {{ $feature->id }}
                                 <div class="feature-icon-wrapper">
                                     @if ($feature->icon)
+                            
                                         <div class="feature-icon-img">
                                             <img src="{{ url($feature->icon) }}" alt="{{ $feature->name }}"
                                                 class="img-fluid">
@@ -265,8 +268,8 @@
                                     @endif
                                 </div>
                                 <div class="feature-content">
-                                    <h5 class="feature-title">{{ $feature->name }}</h5>
-                                    <p class="feature-desc">{{ $feature->description }}</p>
+                                    <h5 class="feature-title">  {{ $feature->name }}</h5>
+                                    <p class="feature-desc">  {{ $feature->description }}</p>
                                 </div>
                             </div>
                         @empty
@@ -295,13 +298,14 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-end">
                                     <span class="mr-2">
                                         @if ($spec->icon)
-                                            <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة"
+                                            <img src="{{ url('storage/' . $spec->icon) }}" alt="أيقونة"
                                                 class="img-fluid" style="max-width: 20px; max-height: 20px;">
                                         @else
                                             <i class="fas fa-info-circle text-secondary"></i>
                                         @endif
                                     </span>
-                                    {{ $spec->name }}
+                                    {{ $spec->id}} : {{ $spec->name }}
+
                                 </li>
                             @empty
                                 <li class="list-group-item text-center text-muted">لا توجد مواصفات.</li>
@@ -323,7 +327,8 @@
                         @if ($rules->count())
                             <ol class="list-group list-group-numbered list-unstyled ps-3 pe-0">
                                 @foreach ($rules as $rule)
-                                    <li class="mb-2">{{ $rule->rule }}</li>
+                                    <li class="mb-2">
+                                        {{ $rule->id}} : {{ $rule->rule }}</li>
                                 @endforeach
                             </ol>
                         @else

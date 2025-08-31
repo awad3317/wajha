@@ -167,7 +167,7 @@
                 <span class="input-group-text bg-white border-0">
                     <i class="fas fa-search text-secondary"></i>
                 </span>
-                <input type="text" class="form-control border-0 " placeholder="ابحث باسم الاعلان"
+                <input type="text" class="form-control border-0 " placeholder="ابحث باسم الباقة"
                     wire:model.debounce.300ms.live="search">
                 <div class="input-group-append">
 
