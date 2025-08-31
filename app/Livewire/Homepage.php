@@ -9,7 +9,7 @@ use App\Models\booking;
 use App\Models\DiscountCoupon;
 use App\Models\Advertisement;
 use App\Models\Review;
-use App\Models\PricePackage;
+
 class Homepage extends Component
 {
     public $usersCount, $ownersCount, $adminsCount;
@@ -46,11 +46,10 @@ class Homepage extends Component
             ->orderBy('date')
             ->get();
 
-        $typesChart = Establishment::with('type') // علاقة type في موديل Establishment
-            ->select('type_id', \DB::raw('COUNT(*) as total'))
-            ->groupBy('type_id')
+        $typesChart = Establishment::selectRaw('name, COUNT(*) as total')
+        
+            ->groupBy('name')
             ->get();
-
 
         $usersChart = User::selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')

@@ -87,7 +87,6 @@
                 </div>
             </div>
 
-            <!-- ✅ الكروت الفرعية -->
             <div class="row">
                 <div class="col-lg-4 col-6">
                     <div class="small-box bg-primary text-white">
@@ -117,8 +116,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- ✅ الرسوم البيانية -->
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-outline card-primary">
@@ -142,7 +139,6 @@
                 </div>
             </div>
 
-            <!-- ✅ الجداول -->
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-outline card-primary">
@@ -183,7 +179,7 @@
                                 <tbody>
                                     @foreach ($typesChart as $row)
                                         <tr>
-                                            <td><i class="fas fa-store text-success"></i> {{ $row->type_id }}</td>
+                                            <td><i class="fas fa-store text-success"></i> {{ $row->name }}</td>
                                             <td>{{ $row->total }}</td>
                                         </tr>
                                     @endforeach
@@ -194,7 +190,6 @@
                 </div>
             </div>
 
-            <!-- ✅ توزيع المستخدمين -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-outline card-info">
@@ -208,7 +203,6 @@
                 </div>
             </div>
 
-            <!-- ✅ آخر البيانات -->
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card card-outline card-primary">
@@ -234,7 +228,6 @@
                                                 'cancelled' => 'ملغي',
                                             ];
 
-                                            // اختيار لون للبادج حسب الحالة
                                             $statusColors = [
                                                 'pending' => 'warning',
                                                 'paid' => 'primary',
