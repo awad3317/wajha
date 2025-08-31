@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 
 use Exception;
+use App\Livewire\Booking;
 use Illuminate\Http\Request;
 use App\Services\ImageService;
 use App\Services\CouponService;
@@ -34,6 +35,12 @@ class BookingController extends Controller
     {
         try {
             $user = auth('sanctum')->user();
+            if($user->user_type == 'owner'){
+                $bookings = Booking::whereHas('establishment', function($query) use ($user) {
+                $query->where('owner_id', $user->id);
+            })->get();
+                return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
+            }
             $bookings = $this->bookingRepository->index($user->id);
             return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
         } catch (Exception $e) {

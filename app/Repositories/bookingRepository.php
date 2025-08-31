@@ -16,7 +16,7 @@ class bookingRepository implements RepositoriesInterface
 
     public function index($user_id)
     {
-        return booking::where('user_id', $user_id)->paginate(10);
+        return booking::where('user_id', $user_id)->get();
     }
 
     /**
