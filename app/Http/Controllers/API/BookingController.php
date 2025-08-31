@@ -196,7 +196,7 @@ class BookingController extends Controller
             'customer'
         ));
 
-        $establishmentOwner = $establishment->user;
+        $establishmentOwner = $establishment->owner;
         $establishmentOwner->notify(new NewBookingNotification(
             $booking, 
             'تم دفع حجز جديد', 
