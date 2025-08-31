@@ -48,8 +48,8 @@ class Homepage extends Component
             ->get();
 
         $typesChart = EstablishmentType::selectRaw('name, COUNT(*) as total')
-        
             ->groupBy('name')
+            ->orderBy('total', 'desc')
             ->get();
 
         $usersChart = User::selectRaw('user_type, COUNT(*) as total')
