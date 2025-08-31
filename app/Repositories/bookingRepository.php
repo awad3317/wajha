@@ -24,7 +24,7 @@ class bookingRepository implements RepositoriesInterface
      */
     public function getById($id): booking
     {
-        return booking::with(['user','establishment.owner','pricePackage.currency','pricePackages.icon','coupon'])->findOrFail($id);
+        return booking::with(['user','establishment.owner','pricePackage.currency','pricePackage.icon','coupon'])->findOrFail($id);
     }
 
     /**
