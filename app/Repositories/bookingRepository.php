@@ -18,8 +18,9 @@ class bookingRepository implements RepositoriesInterface
     public function indexForOwner($user)
     {
         $establishmentIds = Establishment::where('owner_id', $user->id)->pluck('id');
-        $bookings = Booking::whereIn('establishment_id', $establishmentIds)->get();
-        return $bookings;
+        return $establishmentIds;
+        // $bookings = Booking::whereIn('establishment_id', $establishmentIds)->get();
+        // return $bookings;
     }
 
     public function index($user_id)
