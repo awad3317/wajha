@@ -14,9 +14,9 @@ class bookingRepository implements RepositoriesInterface
         //
     }
 
-    public function index()
+    public function index($user_id)
     {
-        return booking::paginate(10);
+        return booking::where('user_id', $user_id)->paginate(10);
     }
 
     /**
@@ -24,7 +24,7 @@ class bookingRepository implements RepositoriesInterface
      */
     public function getById($id): booking
     {
-        return booking::with(['user','establishment.owner','pricePackage','coupon'])->findOrFail($id);
+        return booking::with(['user','establishment.owner','pricePackage.currency','pricePackage.icon','coupon'])->findOrFail($id);
     }
 
     /**

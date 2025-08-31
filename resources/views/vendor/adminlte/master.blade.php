@@ -44,7 +44,8 @@
                 <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
                 {{-- <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}"> --}}
                  @if (app()->getLocale() == 'ar')
-                    @vite(['resources/css/adminlte-rtl.css'])
+                    {{-- @vite(['resources/css/adminlte-rtl.css'])  --}}
+                    @vite(['resources/css/adminlte-rtl.css', 'resources/js/app.js'])
                     @else
                     @vite(['resources/css/adminlte.css'])
                 @endif
