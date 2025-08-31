@@ -398,7 +398,7 @@
         new Chart(document.getElementById('usersChart'), {
             type: 'pie',
             data: {
-                labels: @json($usersChart->pluck('name')),
+                labels: @json($usersChart->pluck('user_type')),
                 datasets: [{
                     data: @json($usersChart->pluck('total')),
                     backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545']
