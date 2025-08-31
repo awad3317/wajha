@@ -123,6 +123,11 @@
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
                  <div class="card-header-custom bg-light py-2 py-md-3">
                 <div class="row align-items-center">
+                       <div class="col-12 col-md-6 d-none d-md-block">
+                       <h5 class="mb-0 text-white ">
+                         <i class="fas fa-map-marked-alt mr-2"></i>   قائمة البنوك 
+                        </h5>
+                    </div>
                     <div class="col-12 col-md-6 mb-2  mb-md-0">
                             <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
                                   <span class="input-group-text bg-white border-0 rounded-0">
@@ -133,11 +138,7 @@
                        
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 d-none d-md-block">
-                       <h5 class="mb-0 text-white ">
-                         <i class="fas fa-map-marked-alt mr-2"></i>   قائمة البنوك 
-                        </h5>
-                    </div>
+                 
                 </div>
             </div>
             

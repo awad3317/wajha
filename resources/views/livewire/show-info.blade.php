@@ -295,7 +295,7 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-end">
                                     <span class="mr-2">
                                         @if ($spec->icon)
-                                            <img src="{{ asset('storage/' . $spec->icon) }}" alt="أيقونة"
+                                            <img src="{{ url('storage/' . $spec->icon) }}" alt="أيقونة"
                                                 class="img-fluid" style="max-width: 20px; max-height: 20px;">
                                         @else
                                             <i class="fas fa-info-circle text-secondary"></i>
@@ -323,7 +323,8 @@
                         @if ($rules->count())
                             <ol class="list-group list-group-numbered list-unstyled ps-3 pe-0">
                                 @foreach ($rules as $rule)
-                                    <li class="mb-2">{{ $rule->rule }}</li>
+                                    <li class="mb-2">
+                                         {{ $loop->iteration }} : {{ $rule->rule }}</li>
                                 @endforeach
                             </ol>
                         @else

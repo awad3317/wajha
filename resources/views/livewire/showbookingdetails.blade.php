@@ -158,9 +158,9 @@
 
                         <div class="timeline-content">
 
-                        
+
                             {{-- وقت وتاريخ الإجراء --}}
-                            <h6 >
+                            <h6>
                                 <span class="badge bg-secondary">
                                     {{ \Carbon\Carbon::parse($log->created_at)->format('h:i A') }}
                                 </span>
@@ -170,21 +170,21 @@
 
                             {{-- البادجات --}}
                             <p class="d-flex align-items-center gap-2">
-                                 الحالة: <span class="text-primary mr-2">
-                                     <span class="badge-status {{ $toClass }}" style="padding:0.5rem 1rem;">
+                                الحالة: <span class="text-primary mr-2">
+                                    <span class="badge-status {{ $toClass }}" style="padding:0.5rem 1rem;">
                                         من
-                                    {{ $toLabel }}
-                            
-                                </span>
-                               
-                                <span style="font-weight: bold; font-size: 1.2rem; color: #555;"> ←</span>
-                                <span class="badge-status {{ $fromClass }}" style="padding:0.5rem 1rem;">
-                                    الى
-                                    {{ $fromLabel }}
-                                </span>
+                                        {{ $toLabel }}
+
+                                    </span>
+
+                                    <span style="font-weight: bold; font-size: 1.2rem; color: #555;"> ←</span>
+                                    <span class="badge-status {{ $fromClass }}" style="padding:0.5rem 1rem;">
+                                        الى
+                                        {{ $fromLabel }}
+                                    </span>
                             </p>
 
-{{-- 
+                            {{-- 
                             <p><strong>الإجراء:</strong> {{ $log->action }}</p>
                             @if ($log->notes)
                                 <p class="text-secondary"><strong>ملاحظة:</strong> {{ $log->notes }}</p>

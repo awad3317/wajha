@@ -106,7 +106,8 @@
                             {{-- Description Field --}}
                             <div class="col-12">
                                 <label class="form-label text-primary fw-bold d-block  mb-2">
-                                    <span class="text-danger">*</span> <i class="fas fa-align-left mr-2"></i> وصف الإعلان
+                                    <span class="text-danger">*</span> <i class="fas fa-align-left mr-2"></i> وصف
+                                    الإعلان
                                 </label>
                                 <textarea wire:model.defer="description" rows="5"
                                     class="form-control form-control-lg  py-3 rounded-3 @error('description') is-invalid @enderror"
@@ -118,7 +119,24 @@
                             </div>
 
                             {{-- Dates Section --}}
-
+                            <div class="col-md-6">
+                                <label class="form-label text-primary fw-bold d-block  mb-2">
+                                    <span class="text-danger">*</span>
+                                    <i class="fas fa-calendar-plus mr-2"></i> تاريخ البدء
+                                </label>
+                                <div class="input-group input-group-lg shadow-sm rounded-3">
+                                    <span class="input-group-text bg-white border-0">
+                                        <i class="fas fa-calendar-alt text-primary"></i>
+                                    </span>
+                                    <input type="datetime-local" wire:model.defer="start_date"
+                                        class="form-control border-0  py-3 @error('start_date') is-invalid @enderror">
+                                </div>
+                                @error('start_date')
+                                    <div class="invalid-feedback  d-block mt-2">
+                                        {{ $message }}<i class="fas fa-exclamation-circle mr-1"></i>
+                                    </div>
+                                @enderror
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label text-primary fw-bold d-block  mb-2">
                                     <span class="text-danger">*</span>
@@ -138,24 +156,7 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label text-primary fw-bold d-block  mb-2">
-                                    <span class="text-danger">*</span>
-                                    <i class="fas fa-calendar-plus mr-2"></i> تاريخ البدء
-                                </label>
-                                <div class="input-group input-group-lg shadow-sm rounded-3">
-                                    <span class="input-group-text bg-white border-0">
-                                        <i class="fas fa-calendar-alt text-primary"></i>
-                                    </span>
-                                    <input type="datetime-local" wire:model.defer="start_date"
-                                        class="form-control border-0  py-3 @error('start_date') is-invalid @enderror">
-                                </div>
-                                @error('start_date')
-                                    <div class="invalid-feedback  d-block mt-2">
-                                        {{ $message }}<i class="fas fa-exclamation-circle mr-1"></i>
-                                    </div>
-                                @enderror
-                            </div>
+
 
 
                             {{-- Action Buttons --}}
@@ -228,7 +229,7 @@
 
                             <div class="card-body d-flex flex-column">
                                 <div class="row mb-2">
-                                    <div class="col-12 d-flex justify-content-end align-items-center">
+                                    <div class="col-12 d-flex justify-content-start align-items-center">
                                         <h5 class="mb-0 text-primary">
                                             {{ $ad->title }} </i>
                                         </h5>
@@ -246,13 +247,13 @@
 
                                 <div class="row mt-3 g-2">
                                     <div class="col-6">
-                                        <div class="d-flex align-items-center justify-content-end">
-                                            <div class="text-end me-2">
+                                        <div class="d-flex align-items-center justify-content-start">
+                                            <div class="text-start me-2">
                                                 <div class="fw-semibold small text-dark">
+                                                    <i class="fas fa-calendar-check text-success mr-1"></i>
                                                     تاريخ النهاية
-                                                    <i class="fas fa-calendar-check text-success ms-2"></i>
                                                 </div>
-                                                <div class="text-muted extra-small">
+                                                <div class="text-muted extra-small ">
                                                     {{ $ad->end_date ? \Carbon\Carbon::parse($ad->end_date)->format('Y-m-d') : 'لا نهاية' }}
 
                                                 </div>
@@ -260,11 +261,11 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="d-flex align-items-center justify-content-end">
-                                            <div class="text-end me-2">
+                                        <div class="d-flex align-items-center justify-content-start">
+                                            <div class="text-start me-2">
                                                 <div class="fw-semibold small text-dark">
-                                                    تاريخ البداية
-                                                    <i class="fas fa-calendar-day text-primary ms-2"></i>
+                                                    <i class="fas fa-calendar-day text-primary mr-1"></i> تاريخ البداية
+
 
                                                 </div>
                                                 <div class="text-muted extra-small">
@@ -296,17 +297,17 @@
                                     class="btn btn-outline-danger  rounded-pill flex-grow-1  d-flex align-items-center justify-content-center mx-1"
                                     wire:click.prevent="confirmDelete({{ $ad->id }})" data-bs-toggle="tooltip"
                                     title="حذف الإعلان">
-                                    <span class="d-none d-sm-inline-block">حذف</span>
                                     <i class="fas fa-trash-alt mr-2"></i>
+                                    <span class="d-none d-sm-inline-block">حذف</span>
                                 </button>
                                 <!-- زر التعديل مع تحسينات -->
                                 <button
                                     class="btn btn-outline-primary btn-sm rounded-pill flex-grow-1 py-2 d-flex align-items-center justify-content-center"
                                     wire:click.prevent="edit({{ $ad->id }})" data-bs-toggle="tooltip"
                                     title="تعديل الإعلان">
-
-                                    <span class="d-none d-sm-inline-block">تعديل</span>
                                     <i class="fas fa-edit mr-2"></i>
+                                    <span class="d-none d-sm-inline-block">تعديل</span>
+
                                 </button>
                             </div>
                         </div>

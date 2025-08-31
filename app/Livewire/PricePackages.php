@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\PricePackage;
 use App\Models\pricePackageIcon;
 use App\Models\Establishment;
+use App\Models\Currency;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,6 +25,8 @@ class PricePackages extends Component
     public $deleteId = null;
     public $deleteName = null;
     protected $paginationTheme = 'bootstrap';
+    public $currency_id;
+
 
     protected $rules = [
         'name' => 'required|string|max:100',
@@ -34,6 +37,8 @@ class PricePackages extends Component
         'is_active' => 'boolean',
         'icon_id' => 'nullable|exists:price_package_icons,id',
         'establishment_id' => 'required|exists:establishments,id',
+        'currency_id' => 'required|exists:currencies,id',
+
     ];
 
     public function create()
@@ -56,6 +61,7 @@ class PricePackages extends Component
             'is_active' => $this->is_active,
             'icon_id' => $this->icon_id,
             'establishment_id' => $this->establishment_id,
+            'currency_id' => $this->currency_id,
         ]);
 
         $this->resetForm();
@@ -95,6 +101,7 @@ class PricePackages extends Component
             'is_active' => $this->is_active,
             'icon_id' => $this->icon_id,
             'establishment_id' => $this->establishment_id,
+            'currency_id' => $this->currency_id,
         ]);
 
         $this->resetForm();
@@ -109,15 +116,15 @@ class PricePackages extends Component
         $package = PricePackage::findOrFail($id);
         $package->delete();
 
-      $this->resetDelete();
+        $this->resetDelete();
     }
     public function deletePackage()
     {
 
         $package = PricePackage::findOrFail($this->deleteId);
-        
+
         $package->delete();
-        
+
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تمت حذف البنك بنجاح'
@@ -137,17 +144,17 @@ class PricePackages extends Component
             'establishment_id',
             'showForm',
             'isEdit',
-            'pricePackageId'
+            'pricePackageId',
+            'currency_id'
         ]);
     }
-  public function confirmDelete($id)
+    public function confirmDelete($id)
     {
         $Package = PricePackage::findOrFail($id);
         $this->deleteId = $Package->id;
         $this->deleteName = $Package->name;
-       
     }
-       public function resetDelete()
+    public function resetDelete()
     {
         $this->deleteId = null;
         $this->deleteName = null;
@@ -162,6 +169,7 @@ class PricePackages extends Component
             'packages' => $packages,
             'icons' => pricePackageIcon::all(),
             'establishments' => Establishment::all(),
+            'currencies' => Currency::all(),
         ]);
     }
 }

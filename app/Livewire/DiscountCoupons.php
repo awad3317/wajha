@@ -170,7 +170,7 @@ class DiscountCoupons extends Component
             $rules['selectedTypes'] = 'required|array|min:1';
         }
 
-        $this->validate();
+        // $this->validate();
 
         $coupon->update([
             'code' => strtoupper($this->code),

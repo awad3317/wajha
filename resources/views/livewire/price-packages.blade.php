@@ -1,22 +1,12 @@
 <div>
 
-
-
-
-    <div class="container mt-4">
-
-        @if (session()->has('success'))
-            <div class="alert alert-success  rounded-pill px-4 py-2 mb-3">
-                {{ session('success') }}
-            </div>
-        @endif
-
+    <div class="container pt-4">
 
         <div
-            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2">
+            class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
 
             @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary add-btn d-flex align-items-center">
+                <button wire:click="create" class="btn btn-primary rounded-pill add-btn px-4 py-2">
                     <i class="fas fa-plus-circle mr-2"></i> <span>إضافة باقة جديدة</span>
 
                 </button>
@@ -35,19 +25,6 @@
                 <div class="card-body">
                     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'store' }}">
                         <div class="row g-4 ">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">السعر <span class="text-danger">*</span></label>
-                                <div class="input-group input-group-lg rounded-pill shadow-sm">
-                                    <input type="number" step="0.01" min="0" class="form-control border-0 "
-                                        wire:model.defer="price" placeholder="0.00">
-                                    <span class="input-group-text bg-white border-0 rounded-0">
-                                        <i class="fas fa-dollar-sign text-primary fs-5"></i>
-                                    </span>
-                                </div>
-                                @error('price')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
                             <div class="col-md-6 ">
                                 <label class="form-label fw-semibold ">اسم الباقة <span
                                         class="text-danger">*</span></label>
@@ -57,7 +34,22 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-12 my-2">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">السعر <span class="text-danger">*</span></label>
+                                <div class="input-group input-group-lg rounded-pill shadow-sm">
+                                    <span class="input-group-text bg-white border-0 rounded-0">
+                                        <i class="fas fa-dollar-sign text-primary fs-5"></i>
+                                    </span>
+                                    <input type="number" step="0.01" min="0" class="form-control border-0 "
+                                        wire:model.defer="price" placeholder="0.00">
+
+                                </div>
+                                @error('price')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 my-2">
                                 <label class="form-label fw-semibold">الوصف</label>
                                 <textarea class="form-control rounded-3 " wire:model.defer="description" rows="3"
                                     placeholder="وصف الباقة (اختياري)"></textarea>
@@ -66,10 +58,32 @@
                                 @enderror
                             </div>
 
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">العملة <span class="text-danger">*</span></label>
+                                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
+                                    <span class="input-group-text bg-white border-0 rounded-0">
+                                        <i class="fas fa-dollar-sign text-primary fs-5"></i>
+                                    </span>
+                                    <select wire:model.defer="currency_id" class="form-control  border-0">
+                                        <option value="">-- اختر العملة --</option>
+                                        @foreach ($currencies as $currency)
+                                            <option value="{{ $currency->id }}">{{ $currency->name }}
+                                                </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                @error('currency_id')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">المؤسسة <span class="text-danger">*</span></label>
                                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                                        <span class="input-group-text bg-white border-0 rounded-0">
+                                    <span class="input-group-text bg-white border-0 rounded-0">
                                         <i class="fas fa-building text-primary fs-5"></i>
                                     </span>
                                     <select wire:model.defer="establishment_id" class="form-control  border-0">
@@ -78,7 +92,7 @@
                                             <option value="{{ $est->id }}">{{ $est->name }}</option>
                                         @endforeach
                                     </select>
-                                
+
                                 </div>
                                 @error('establishment_id')
                                     <small class="text-danger">{{ $message }}</small>
@@ -89,7 +103,7 @@
                                 <label class="form-label fw-semibold">أيقونة الباقة<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                                     <span class="input-group-text bg-white border-0 rounded-0">
+                                    <span class="input-group-text bg-white border-0 rounded-0">
                                         <i class="fas fa-icons text-primary fs-5"></i>
                                     </span>
                                     <select wire:model.defer="icon_id" class="form-control  border-0">
@@ -99,7 +113,7 @@
                                                 {{ $icon->name ?? 'أيقونة #' . $icon->id }}</option>
                                         @endforeach
                                     </select>
-                                   
+
                                 </div>
                                 @error('icon_id')
                                     <small class="text-danger">{{ $message }}</small>
@@ -118,7 +132,7 @@
                                         <option value="1">نشط</option>
                                         <option value="0">غير نشط</option>
                                     </select>
-                                    
+
                                 </div>
                                 @error('is_active')
                                     <small class="text-danger">{{ $message }}</small>
@@ -150,12 +164,13 @@
         {{-- Search --}}
         <div class="col-md-12 mb-1">
             <div class="input-group input-group-xl shadow-sm rounded-pill overflow-hidden">
-                <input type="text" class="form-control border-0 " placeholder="...ابحث باسم الاعلان"
+                <span class="input-group-text bg-white border-0">
+                    <i class="fas fa-search text-secondary"></i>
+                </span>
+                <input type="text" class="form-control border-0 " placeholder="ابحث باسم الباقة"
                     wire:model.debounce.300ms.live="search">
                 <div class="input-group-append">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fas fa-search text-secondary"></i>
-                    </span>
+
                 </div>
             </div>
         </div>
@@ -166,35 +181,45 @@
                 @forelse ($packages as $package)
                     <div class="col-12 col-md-6 col-lg-4  mb-2">
                         <div class="card package-card h-100 border-0">
-                            <div class="package-header">
-                                <span class="price-badge">
-                                    {{ number_format($package->price, 2) }} <span style="font-size:0.85em;">$</span>
-                                </span>
-                                <i class="fas fa-gift package-icon"></i>
-                                <h5 class="card-title fw-bold mb-0">{{ $package->name }}</h5>
+                            <div class="package-header d-flex justify-content-between">
+                                <div>
+                                    <span class="price-badge">
+                                        {{ number_format($package->price, 2) }} <span
+                                            style="font-size:0.85em;">{{ $package->currency->code }}</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <i class="fas fa-gift package-icon"></i>
+                                    <h5 class="card-title fw-bold mb-0">{{ $package->name }}sd</h5>
+                                </div>
+
                             </div>
 
                             <div class="package-body ">
-                                <p class="text-muted mb-2 text-truncate" style="min-height: 48px;">
-                                    {{ $package->description ?? 'لا يوجد وصف' }}
-                                </p>
 
                                 <p class="mb-1">
                                     <strong>المؤسسة:</strong>
                                     {{ $package->establishment->name ?? '-' }}
                                 </p>
 
+                                <p class="text-muted mb-2 text-truncate" style="min-height: 48px;">
+                                    {{ $package->description ?? 'لا يوجد وصف' }}
+                                </p>
+
+
                                 <p class="mb-3">
+                                    <strong> الحالة:</strong>
                                     <span class="badge bg-{{ $package->is_active ? 'success' : 'danger' }} ">
                                         <i
                                             class="fas fa-{{ $package->is_active ? 'check-circle' : 'times-circle' }}"></i>
                                         {{ $package->is_active ? 'نشطة' : 'غير نشطة' }}
                                     </span>
-                                    <strong>:الحالة</strong>
+
                                 </p>
 
                                 <div class="mb-3 flex-grow-1 overflow-auto" style="max-height: 70px;">
-                                    <strong>:المميزات</strong>
+                                    <strong>المميزات:</strong>
                                     <div class="mt-2">
                                         @forelse ($package->features ?? [] as $feature)
                                             <span class="feature-badge">{{ $feature }}</span>
@@ -206,7 +231,7 @@
 
                                 <div class="mt-auto d-flex justify-content-between">
                                     <button wire:click="edit({{ $package->id }})"
-                                        class="btn btn-outline-primary btn-sm btn-pill">
+                                        class="btn btn-outline-primary btn-sm btn-pill rounded-pill">
                                         <i class="fas fa-edit"></i> تعديل
                                     </button>
                                     {{-- <button wire:click="delete({{ $package->id }})"
@@ -214,11 +239,11 @@
                                         class="btn btn-outline-danger btn-sm btn-pill">
                                         <i class="fas fa-trash"></i> حذف
                                     </button> --}}
-                                      <button class="btn btn-outline-danger btn-sm btn-pill"
-                                                wire:click="confirmDelete({{ $package->id }})"
-                                                data-bs-toggle="tooltip" title="حذف">
-                                             <i class="fas fa-trash"></i>  حذف 
-                                            </button>
+                                    <button class="btn btn-outline-danger btn-sm btn-pill rounded-pill"
+                                        wire:click="confirmDelete({{ $package->id }})" data-bs-toggle="tooltip"
+                                        title="حذف">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +255,7 @@
                 @endforelse
             </div>
         </div>
-       @if ($deleteId)
+        @if ($deleteId)
             <div class="modal fade show d-block " tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -244,7 +269,8 @@
                         <div class="modal-footer justify-content-start">
 
                             <button type="button" class="btn btn-secondary" wire:click="resetDelete">إلغاء</button>
-                            <button type="button" class="btn btn-danger" wire:click="deletePackage">نعم، حذف</button>
+                            <button type="button" class="btn btn-danger" wire:click="deletePackage">نعم،
+                                حذف</button>
                         </div>
                     </div>
                 </div>

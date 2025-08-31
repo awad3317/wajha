@@ -58,13 +58,13 @@
                                     </label>
 
                                     <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                          <span class="input-group-text bg-white border-0">
+                                        <span class="input-group-text bg-white border-0">
                                             <i class="fas fa-map-marker-alt text-primary"></i>
                                         </span>
                                         <input type="text" wire:model.defer="name"
                                             class="form-control border-0  py-2 py-md-3 @error('name') is-invalid @enderror"
                                             placeholder="أدخل اسم المنطقة">
-                                      
+
                                     </div>
 
                                     @error('name')
@@ -82,7 +82,7 @@
                                     <div class="flex-grow-1">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm ">
-                                           <i class="fas fa-times mr-2"></i> إلغاء 
+                                            <i class="fas fa-times mr-2"></i> إلغاء
 
                                         </button>
                                     </div>
@@ -91,8 +91,9 @@
                                     <div class="flex-grow-1">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm ">
-                                          <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>   {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
-                                           
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
+
                                         </button>
                                     </div>
                                 </div>
@@ -106,25 +107,26 @@
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
             <div class="card-header-custom bg-light py-2 py-md-3">
                 <div class="row align-items-center">
+                    <div class="col-12 col-md-6 d-none d-md-block">
+                        <h5 class="mb-0 text-white ">
+                            <i class="fas fa-map-marked-alt ml-2"></i> قائمة المناطق
+                        </h5>
+                    </div>
                     <div class="col-12 col-md-6 mb-2  mb-md-0">
                         <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
-                              <span class="input-group-text bg-white border-0 rounded-0">
+                            <span class="input-group-text bg-white border-0 rounded-0">
                                 <i class="fas fa-search text-primary"></i>
                             </span>
                             <input type="text" class="form-control border-0  py-2 "
                                 placeholder="ابحث باسم المنطقه..." wire:model.debounce.300ms.live="search">
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 d-none d-md-block">
-                        <h5 class="mb-0 text-white ">
-                        <i class="fas fa-map-marked-alt ml-2"></i>    قائمة المناطق 
-                        </h5>
-                    </div>
+
                 </div>
             </div>
 
             <!-- جدول البيانات -->
-            <div class="card-body p-0" >
+            <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="bg-light-primary">
@@ -195,10 +197,10 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-danger text-white">
-                         <h5 class="modal-title">تأكيد الحذف</h5>
+                        <h5 class="modal-title">تأكيد الحذف</h5>
                         <button type="button" class="btn-close btn-light rounded-circle"
                             wire:click="$set('deleteId', false)" aria-label="Close">X</button>
-                       
+
 
                     </div>
                     <div class="modal-body">

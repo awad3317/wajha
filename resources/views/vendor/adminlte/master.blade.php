@@ -43,6 +43,8 @@
                 <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
                 {{-- <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}"> --}}
+                    <link href="{{ asset('css/badge.css') }}" rel="stylesheet"> 
+
                  @if (app()->getLocale() == 'ar')
                     {{-- @vite(['resources/css/adminlte-rtl.css'])  --}}
                     @vite(['resources/css/adminlte-rtl.css', 'resources/js/app.js'])
