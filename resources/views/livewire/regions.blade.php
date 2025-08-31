@@ -191,24 +191,25 @@
 
     {{-- مودال الحذف Livewire فقط --}}
     @if ($deleteId)
-        <div class="modal fade show d-block text-right" tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
+        <div class="modal fade show d-block " tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-danger text-white">
+                         <h5 class="modal-title">تأكيد الحذف</h5>
                         <button type="button" class="btn-close btn-light rounded-circle"
                             wire:click="$set('deleteId', false)" aria-label="Close">X</button>
-                        <h5 class="modal-title">تأكيد الحذف</h5>
+                       
 
                     </div>
                     <div class="modal-body">
                         <p>:هل أنت متأكد أنك تريد حذف المنطقة</p>
                         <div>
                             <p class="text-danger fw-bold">"{{ $deleteName }}"</p>
-                            <p>.لايمكن التراجع بعد الحذف</p>
+                            <p>لايمكن التراجع بعد الحذف</p>
                         </div>
 
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer justify-content-start">
                         <button type="button" class="btn btn-secondary btn-sm"
                             wire:click="$set('deleteId', false)">إلغاء</button>
                         <button type="button" class="btn btn-danger btn-sm" wire:click="deleteRegion">نعم،
