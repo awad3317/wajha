@@ -6,7 +6,6 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class FileController extends Controller
 {
@@ -19,7 +18,8 @@ class FileController extends Controller
                 return response()->json(['error' => 'غير مصرح بالوصول'], 403);
             }
             
-            $booking = Booking::find($bookingId);
+            // البحث باستخدام معرّف الحجز
+            $booking = Booking::with('establishment')->find($bookingId);
             
             if (!$booking) {
                 return response()->json(['error' => 'الحجز غير موجود'], 404);
@@ -31,25 +31,19 @@ class FileController extends Controller
                 return response()->json(['error' => 'لا يوجد إيصال دفع لهذا الحجز'], 404);
             }
             
+            // التحقق من صلاحية المستخدم
             if ($user->user_type === 'admin') {
-                return Storage::disk('private')->download($filePath);
+                return $this->downloadFile($filePath);
             }
            
             $isEstablishmentOwner = $booking->establishment->owner_id === $user->id;
-            
             $isBooker = $booking->user_id === $user->id;
             
             if (!$isEstablishmentOwner && !$isBooker) {
                 return response()->json(['error' => 'غير مصرح بالوصول'], 403);
             }
             
-            if (!Storage::disk('private')->exists($filePath)) {
-                return response()->json(['error' => 'الملف غير موجود'], 404);
-            }
-            
-            $filename = basename($filePath);
-            
-            return Storage::disk('private')->download($filePath, $filename);
+            return $this->downloadFile($filePath);
             
         } catch (\Exception $e) {
             return response()->json([
@@ -68,7 +62,8 @@ class FileController extends Controller
                 return response()->json(['error' => 'غير مصرح بالوصول'], 403);
             }
         
-            $booking = Booking::find($bookingId);
+            // البحث باستخدام معرّف الحجز
+            $booking = Booking::with('establishment')->find($bookingId);
             
             if (!$booking) {
                 return response()->json(['error' => 'الحجز غير موجود'], 404);
@@ -80,35 +75,19 @@ class FileController extends Controller
                 return response()->json(['error' => 'لا يوجد إيصال دفع لهذا الحجز'], 404);
             }
             
-            if (!Storage::disk('private')->exists($filePath)) {
-                return response()->json(['error' => 'الملف غير موجود'], 404);
-            }
-            
+            // التحقق من صلاحية المستخدم
             if ($user->user_type === 'admin') {
-                $file = Storage::disk('private')->get($filePath);
-                $mimeType = Storage::disk('private')->mimeType($filePath);
-                $filename = basename($filePath);
-                
-                return response($file, 200)
-                    ->header('Content-Type', $mimeType)
-                    ->header('Content-Disposition', 'inline; filename="' . $filename . '"');
+                return $this->viewFile($filePath);
             }
             
             $isEstablishmentOwner = $booking->establishment->owner_id === $user->id;
-            
             $isBooker = $booking->user_id === $user->id;
         
             if (!$isEstablishmentOwner && !$isBooker) {
                 return response()->json(['error' => 'غير مصرح بالوصول'], 403);
             }
             
-            $file = Storage::disk('private')->get($filePath);
-            $mimeType = Storage::disk('private')->mimeType($filePath);
-            $filename = basename($filePath);
-            
-            return response($file, 200)
-                ->header('Content-Type', $mimeType)
-                ->header('Content-Disposition', 'inline; filename="' . $filename . '"');
+            return $this->viewFile($filePath);
                 
         } catch (\Exception $e) {
             return response()->json([
@@ -116,5 +95,37 @@ class FileController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * تحميل الملف من التخزين الخاص
+     */
+    private function downloadFile($filePath)
+    {
+        if (!Storage::disk('private')->exists($filePath)) {
+            return response()->json(['error' => 'الملف غير موجود'], 404);
+        }
+        
+        $filename = basename($filePath);
+        
+        return Storage::disk('private')->download($filePath, $filename);
+    }
+
+    /**
+     * عرض الملف مباشرة في المتصفح
+     */
+    private function viewFile($filePath)
+    {
+        if (!Storage::disk('private')->exists($filePath)) {
+            return response()->json(['error' => 'الملف غير موجود'], 404);
+        }
+        
+        $file = Storage::disk('private')->get($filePath);
+        $mimeType = Storage::disk('private')->mimeType($filePath);
+        $filename = basename($filePath);
+        
+        return response($file, 200)
+            ->header('Content-Type', $mimeType)
+            ->header('Content-Disposition', 'inline; filename="' . $filename . '"');
     }
 }
