@@ -45,7 +45,7 @@
     </style>
 
     <section class="content">
-        <div class="container-fluid mt-1">
+        <div class="container-fluid pt-4">
 
             <!-- ✅ الكروت الرئيسية -->
             <div class="row">
@@ -362,7 +362,7 @@
         new Chart(document.getElementById('typesChart'), {
             type: 'bar',
             data: {
-                labels: @json($typesChart->pluck('type_id')),
+                labels: @json($typesChart->pluck('name')),
                 datasets: [{
                     label: 'عدد المنشآت',
                     data: @json($typesChart->pluck('total')),
@@ -398,7 +398,7 @@
         new Chart(document.getElementById('usersChart'), {
             type: 'pie',
             data: {
-                labels: @json($usersChart->pluck('user_type')),
+                labels: @json($usersChart->pluck('name')),
                 datasets: [{
                     data: @json($usersChart->pluck('total')),
                     backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545']

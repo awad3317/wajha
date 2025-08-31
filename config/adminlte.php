@@ -359,29 +359,36 @@ return [
             'icon' => 'fas fa-coins',
         ],
 
-        // [
-        //     'text' => 'الايقونات',
-        //     'url' => '/packages',
-        //     'icon' => 'fas fa-icons',
-        // ],
-        [
-            'text' => 'الايقونات',
-            'icon' => 'fas fa-icons',
-            'submenu' => [
-                [
+    
+           [
                     'text' => 'الباقات',
                     'url' => '/packages',
-                    'icon' => 'fas fa-icons',
+                    'icon' => 'fas fa-gift',
                 ],
+                    
                 [
                     'text' => 'مييزات المنشئة',
                     'url' => '/establishment_features_icons',
-                    'icon' => 'fas fa-icons',
+                    'icon' => 'fas fa-star',
                 ],
+        // [
+        //     'text' => 'الايقونات',
+        //     'icon' => 'fas fa-icons',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'الباقات',
+        //             'url' => '/packages',
+        //             'icon' => 'fas fa-icons',
+        //         ],
+        //         [
+        //             'text' => 'مييزات المنشئة',
+        //             'url' => '/establishment_features_icons',
+        //             'icon' => 'fas fa-icons',
+        //         ],
              
 
-            ],
-        ],
+        //     ],
+        // ],
     ],
 
     /*
