@@ -9,7 +9,7 @@ use App\Models\booking;
 use App\Models\DiscountCoupon;
 use App\Models\Advertisement;
 use App\Models\Review;
-
+use App\Models\PricePackage;
 class Homepage extends Component
 {
     public $usersCount, $ownersCount, $adminsCount;
