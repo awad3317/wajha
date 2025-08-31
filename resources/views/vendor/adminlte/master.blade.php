@@ -47,9 +47,9 @@
 
                  @if (app()->getLocale() == 'ar')
                     {{-- @vite(['resources/css/adminlte-rtl.css'])  --}}
-                    @vite(['resources/css/adminlte-rtl.css', 'resources/js/app.js','resources/css/badge.css'])
+                    @vite(['resources/css/adminlte-rtl.css', 'resources/js/app.js'])
                     @else
-                    @vite(['resources/css/adminlte.css','resources/css/badge.css'])
+                    @vite(['resources/css/adminlte.css'])
                 @endif
 
                 @if(config('adminlte.google_fonts.allowed', true))

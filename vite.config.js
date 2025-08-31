@@ -7,7 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                "resources/css/adminlte.css",
-               'resources/css/badge.css',
+               
                 "resources/css/adminlte-rtl.css",
                 'resources/js/app.js',
             ],
