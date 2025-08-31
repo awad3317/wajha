@@ -51,8 +51,8 @@ class Homepage extends Component
             ->groupBy('name')
             ->get();
 
-        $usersChart = User::selectRaw('name, COUNT(*) as total')
-            ->groupBy('name')
+        $usersChart = User::selectRaw('user_type, COUNT(*) as total')
+            ->groupBy('user_type')
             ->get();
 
         return view('livewire.homepage', compact(
