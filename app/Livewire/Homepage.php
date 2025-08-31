@@ -8,6 +8,7 @@ use App\Models\Establishment;
 use App\Models\booking;
 use App\Models\DiscountCoupon;
 use App\Models\Advertisement;
+use App\Models\EstablishmentType;
 use App\Models\Review;
 
 class Homepage extends Component
@@ -46,12 +47,10 @@ class Homepage extends Component
             ->orderBy('date')
             ->get();
 
-        $typesChart = Establishment::selectRaw('establishment_types.name as type_name, COUNT(establishments.id) as total')
-            ->join('establishment_types', 'establishments.type_id', '=', 'establishment_types.id')
-            ->groupBy('establishment_types.name')
+        $typesChart = EstablishmentType::selectRaw('name, COUNT(*) as total')
+        
+            ->groupBy('name')
             ->get();
-
-
 
         $usersChart = User::selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')
