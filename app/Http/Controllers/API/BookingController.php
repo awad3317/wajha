@@ -36,9 +36,16 @@ class BookingController extends Controller
         try {
             $user = auth('sanctum')->user();
             if($user->user_type == 'owner'){
-                $establishments = $user->establishments()->pluck('id');
-                $bookings = Booking::with(['user', 'establishment', 'pricePackage', 'coupon'])
-        ->whereIn('establishment_id', $establishments)
+               $bookings = Booking::with([
+            'user', 
+            'establishment', 
+            'establishment.owner', 
+            'pricePackage', 
+            'coupon'
+        ])
+        ->whereHas('establishment', function($query) use ($user) {
+            $query->where('owner_id', $user->id);
+        })
         ->orderBy('created_at', 'desc')
         ->get();
                 return ApiResponseClass::sendResponse($bookings, 'تم جلب البيانات بنجاح');
