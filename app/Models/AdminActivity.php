@@ -11,12 +11,8 @@ class AdminActivity extends Model
         'action',
         'model_type',
         'description',
-        'old_data',
-        'new_data',
     ];
     protected $casts = [
-        'old_data' => 'array',
-        'new_data' => 'array',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s'
     ];
