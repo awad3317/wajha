@@ -398,7 +398,7 @@ public function cancelledBooking(Request $request)
             return ApiResponseClass::sendError('غير مصرح لك بالتراجع عن حالة هذا الحجز', [], 403);
         }
 
-        $booking = $this->bookingStatusService->revertBookingStatus($booking, $fields['target_status']);
+        $booking = $this->bookingStatusService->revertBookingStatus( $booking, $fields['target_status']);
 
         $customer = $booking->user;
 
