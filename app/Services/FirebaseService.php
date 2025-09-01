@@ -27,9 +27,9 @@ class FirebaseService
           
 
             if (!file_exists($credentialsPath)) {
-                return $credentialsPath;
                 throw new \RuntimeException('ملف اعتماد Firebase غير موجود في: ' . $credentialsPath);
             }
+            return "Awad";
 
             $factory = (new Factory)
                 ->withServiceAccount($credentialsPath);
