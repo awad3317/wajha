@@ -62,7 +62,7 @@ class UserAuthController extends Controller
             if($user->is_banned){
                 return ApiResponseClass::sendError('الحساب محظور', null, 401);
             }
-
+            $user->tokens()->delete();
             $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
             return ApiResponseClass::sendResponse([
                 'user' => $user,
