@@ -145,8 +145,8 @@ class BookingController extends Controller
             $booking= $this->bookingRepository->getById($fields['booking_id']);
             $booking = $this->bookingStatusService->markAsWaitingPayment($booking);
             $user = $booking->user;
-            return $user;
             $establishment = $booking->establishment;
+            return $establishment;
 
             $user->notify(new NewBookingNotification($booking,'بانتظار الدفع',"حجزك في {$booking->establishment->name} بانتظار الدفع",'customer'));
 
