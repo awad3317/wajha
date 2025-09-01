@@ -183,7 +183,7 @@ class BookingController extends Controller
             return ApiResponseClass::sendError('الحجز غير موجود', [], 404);
         }
 
-        // حفظ الصورة
+        
         if ($request->hasFile('receipt_image')) {
             $image = $request->file('receipt_image');
             $imagePath = $this->ImageService->saveImage($image, 'booking-receipts');
@@ -192,14 +192,12 @@ class BookingController extends Controller
             return ApiResponseClass::sendError('صورة الإيصال مطلوبة', [], 400);
         }
 
-        // تحديث حالة الدفع
         $updatedBooking = $this->bookingStatusService->markAsPaid($booking, $receiptImage);
         
         if (!$updatedBooking) {
             return ApiResponseClass::sendError('فشل في تحديث حالة الدفع', [], 500);
         }
 
-        // إرسال الإشعارات
         $user = $booking->user;
         $establishment = $booking->establishment;
 
@@ -238,13 +236,14 @@ class BookingController extends Controller
     try {
         $booking = $this->bookingRepository->getById($fields['booking_id']);
         
-        $booking = $this->bookingStatusService->confirmBooking($booking);
+        
         $user = $booking->user;
         $establishment = $booking->establishment;
 
         if (auth('sanctum')->id() != $establishment->owner_id) {
             return ApiResponseClass::sendError('غير مصرح لك بتأكيد هذا الحجز', [], 403);
         }
+        $booking = $this->bookingStatusService->confirmBooking($booking);
         $user->notify(new NewBookingNotification(
             $booking, 
             'تم تأكيد الحجز', 

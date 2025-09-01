@@ -51,7 +51,7 @@ class BookingStatusService
             if ($booking->status === 'cancelled') {
                 throw new \Exception('لا يمكن تعديل الحجز الملغي');
             }
-            if ($booking->status !== 'paid') {
+            if ($booking->status != 'paid') {
                 throw new \Exception('يمكن تأكيد الحجز فقط من الحالة المدفوعة');
             }
             $oldStatus = $booking->status;
