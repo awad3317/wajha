@@ -38,11 +38,11 @@ class FirebaseService
         if (empty($deviceToken) || !is_string($deviceToken)) {
             throw new \InvalidArgumentException('Device token غير صالح');
         }
-        return "awad";
-
+        
         $message = CloudMessage::withTarget('token', $deviceToken)
             ->withNotification(Notification::create($title, $body))
             ->withData($data);
+        return "awad";
 
         return $this->messaging->send($message);
         
