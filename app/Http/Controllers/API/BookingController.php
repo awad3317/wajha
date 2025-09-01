@@ -229,9 +229,6 @@ class BookingController extends Controller
         return ApiResponseClass::sendResponse($booking, 'تم تحديث حالة الحجز إلى "تم الدفع" بنجاح');
 
     } catch (Exception $e) {
-        if (isset($receiptImage) && Storage::disk('private')->exists($receiptImage)) {
-            Storage::disk('private')->delete($receiptImage);
-        }
         return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الدفع: ' . $e->getMessage(), [], 500);
     }
 }
