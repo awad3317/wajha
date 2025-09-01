@@ -146,7 +146,7 @@ class BookingController extends Controller
             $booking = $this->bookingStatusService->markAsWaitingPayment($booking);
             $user = $booking->user;
             $establishment = $booking->establishment;
-            return $establishment;
+            
 
             $user->notify(new NewBookingNotification($booking,'بانتظار الدفع',"حجزك في {$booking->establishment->name} بانتظار الدفع",'customer'));
 
@@ -159,7 +159,7 @@ class BookingController extends Controller
                 'establishment_id' => $establishment->id,
                 'user_id' => $user->id,
             ];
-        
+            return "Awad";
             if ($user->device_token) {
                 $this->firebaseService->sendNotification($user->device_token, $title, $body, $data);
             }
