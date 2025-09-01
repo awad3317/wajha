@@ -371,6 +371,11 @@ return [
                     'url' => '/establishment_features_icons',
                     'icon' => 'fas fa-star',
                 ],
+                     [
+                    'text' => 'تتبع حركة النظام',
+                    'url' => '/adminlog',
+                    'icon' => 'fas fa-history',
+                ],
         // [
         //     'text' => 'الايقونات',
         //     'icon' => 'fas fa-icons',

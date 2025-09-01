@@ -8,14 +8,15 @@ use App\Models\Establishment;
 use App\Models\Currency;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Services\AdminLoggerService;
 
 class PricePackages extends Component
 {
     use WithPagination;
 
     public $name, $description, $price;
-    public $featuresInput;  // هنا الخاصية للنص (مميزات مفصولة بفواصل)
-    public $features = [];  // مصفوفة فعليه بعد التحويل
+    public $featuresInput;  
+    public $features = [];  
     public $is_active = true;
     public $establishment_id, $icon_id;
     public $search = '';
@@ -63,11 +64,13 @@ class PricePackages extends Component
             'establishment_id' => $this->establishment_id,
             'currency_id' => $this->currency_id,
         ]);
-
+        AdminLoggerService::log('اضافة باقة', 'PricePackage', "إضافة باقة جديدة: {$this->name}");
         $this->resetForm();
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => 'تم تعديل الباقة بنجاح'
+            'message' => 'تم إضافة الباقة بنجاح',
+            'title' => 'نجاح',
+            'icon' => 'success',
         ]);
     }
 
@@ -83,6 +86,7 @@ class PricePackages extends Component
         $this->is_active = $package->is_active;
         $this->icon_id = $package->icon_id;
         $this->establishment_id = $package->establishment_id;
+        $this->currency_id = $package->currency_id;
         $this->isEdit = true;
         $this->showForm = true;
     }
@@ -103,7 +107,7 @@ class PricePackages extends Component
             'establishment_id' => $this->establishment_id,
             'currency_id' => $this->currency_id,
         ]);
-
+        AdminLoggerService::log('تعديل باقة', 'PricePackage', "تعديل باقة جديدة: {$this->name}");
         $this->resetForm();
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -115,22 +119,27 @@ class PricePackages extends Component
     {
         $package = PricePackage::findOrFail($id);
         $package->delete();
-
         $this->resetDelete();
     }
-    public function deletePackage()
-    {
+ public function deletePackage()
+{
+    $package = PricePackage::findOrFail($this->deleteId);
+    $name = $package->name; 
 
-        $package = PricePackage::findOrFail($this->deleteId);
+    $package->delete();
 
-        $package->delete();
+    AdminLoggerService::log('delete', 'PricePackage', "تم حذف الباقة: {$name}");
 
-        $this->dispatch('show-toast', [
-            'type' => 'success',
-            'message' => 'تمت حذف البنك بنجاح'
-        ]);
-        $this->resetDelete();
-    }
+    $this->dispatch('show-toast', [
+        'type' => 'success',
+        'message' => "تم حذف الباقة ({$name}) بنجاح",
+        'title' => 'نجاح',
+        'icon' => 'success',
+    ]);
+
+    $this->resetDelete();
+}
+
     public function resetForm()
     {
         $this->reset([

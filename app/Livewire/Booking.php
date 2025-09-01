@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Booking as BookingModel;
 
+
 class Booking extends Component
 {
     use WithPagination;

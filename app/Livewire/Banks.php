@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Bank;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
+use App\Services\AdminLoggerService;
 
 class Banks extends Component
 {
@@ -43,7 +44,7 @@ class Banks extends Component
     {
         $this->validate([
             'name' => 'required|string|max:100|unique:banks,name',
-           'iconFile' => 'required|mimes:jpg,jpeg,png,gif,svg,ico|max:2048',
+            'iconFile' => 'required|mimes:jpg,jpeg,png,gif,svg,ico|max:2048',
 
         ]);
         $imageService = new ImageService();
@@ -51,10 +52,14 @@ class Banks extends Component
         if ($this->iconFile) {
             $iconPath = $imageService->saveImage($this->iconFile, 'bank_icons');
         }
+
+
+
         Bank::create([
             'name' => $this->name,
             'icon' => $iconPath,
         ]);
+        AdminLoggerService::log('اضافة بنك', 'Bank', "إضافة بنك جديد: {$this->name}");
 
         $this->resetForm();
         $this->loadBanks();
@@ -102,7 +107,7 @@ class Banks extends Component
 
         $bank->name = $this->name;
         $bank->save();
-
+        AdminLoggerService::log('تعديل بنك', 'Bank', "تعديل البنك: {$this->name}");
         $this->resetForm();
         $this->loadBanks();
         $this->dispatch('show-toast', [
@@ -120,6 +125,7 @@ class Banks extends Component
             $imageService->deleteImage($bank->icon);
         }
         $bank->delete();
+        AdminLoggerService::log('حذف بنك', 'Bank', "حذف البنك: {$bank->name}");
         $this->loadBanks();
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -132,6 +138,7 @@ class Banks extends Component
         $bank = Bank::findOrFail($id);
         $this->deleteId = $bank->id;
         $this->deleteName = $bank->name;
+        AdminLoggerService::log('حذف بنك', 'Bank', "حذف البنك: {$bank->name}");
     }
 
     public function resetForm()

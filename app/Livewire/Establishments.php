@@ -6,6 +6,8 @@ use App\Models\Establishment;
 use App\Models\EstablishmentType;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Services\AdminLoggerService;
+
 
 class Establishments extends Component
 {
@@ -30,6 +32,12 @@ class Establishments extends Component
         if ($establishment) {
             $establishment->is_verified = !$establishment->is_verified;
             $establishment->save();
+           $statusText = $establishment->is_verified ? 'توثيق' : 'إلغاء توثيق';
+        AdminLoggerService::log(
+            'تعديل التوثيق',
+            'Establishment',
+            "{$statusText} المنشأة: {$establishment->name}"
+        );
         }
     }
 

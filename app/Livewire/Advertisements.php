@@ -6,6 +6,7 @@ use App\Models\Advertisement;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
+use App\Services\AdminLoggerService;
 
 class Advertisements extends Component
 {
@@ -110,7 +111,7 @@ class Advertisements extends Component
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
         ]);
-
+        AdminLoggerService::log('اضافة اعلان', 'Advertisement', "إضافة إعلان جديد: {$this->title}");
         $this->resetForm();
         $this->loadAdvertisements();
         $this->dispatch('show-toast', [
@@ -156,7 +157,7 @@ class Advertisements extends Component
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
         ]);
-
+        AdminLoggerService::log('تعديل اعلان', 'Advertisement', "تعديل الإعلان: {$this->title}");
         $this->resetForm();
         $this->loadAdvertisements();
         $this->dispatch('show-toast', [
@@ -180,7 +181,7 @@ class Advertisements extends Component
             $imageService->deleteImage($ad->image);
         }
         $ad->delete();
-
+        AdminLoggerService::log('حذف اعلان', 'Advertisement', "حذف الإعلان: {$this->deleteTitle}");
         $this->loadAdvertisements();
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -193,12 +194,13 @@ class Advertisements extends Component
     }
     public function toggleVerification($id)
     {
-       $ad = Advertisement::findOrFail($id);
+        $ad = Advertisement::findOrFail($id);
         $ad->update([
             'is_active' => !$ad->is_active
         ]);
+        AdminLoggerService::log('تعديل حالة اعلان', 'Advertisement', "تعديل حالة الإعلان: {$this->deleteTitle}");
 
-        $this->loadAdvertisements(); 
+        $this->loadAdvertisements();
 
         $this->dispatch('show-toast', [
             'type' => 'success',

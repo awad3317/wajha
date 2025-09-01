@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Region;
 use Livewire\Component;
+use App\Services\AdminLoggerService;
 
 class Regions extends Component
 {
@@ -44,7 +45,7 @@ class Regions extends Component
             'name' => $this->name,
             'parent_id' => $this->parent_id,
         ]);
-
+        AdminLoggerService::log('اضافة منطقة', 'Region', "إضافة منطقه جديد: {$this->name}");
         $this->resetForm();
         $this->loadRegions();
         $this->dispatch('show-toast', [
@@ -75,7 +76,7 @@ class Regions extends Component
             'name' => $this->name,
             'parent_id' => $this->parent_id,
         ]);
-
+        AdminLoggerService::log('تعديل منطقة', 'Region', "تعديل منطقه: {$this->name}");
         $this->resetForm();
         $this->loadRegions();
         $this->dispatch('show-toast', [
@@ -92,6 +93,7 @@ class Regions extends Component
     public function deleteRegion()
     {
         Region::findOrFail($this->deleteId)->delete();
+        AdminLoggerService::log('حذف منطقة', 'Region', "حذف منطقه: {$this->deleteName}");
         $this->loadRegions();
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -108,10 +110,10 @@ class Regions extends Component
         $this->showForm = true;
     }
 
-public function cancel()
-{
-    $this->resetForm();
-}
+    public function cancel()
+    {
+        $this->resetForm();
+    }
 
     public function resetForm()
     {

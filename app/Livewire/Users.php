@@ -7,7 +7,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Services\AdminLoggerService;
 
-
 class Users extends Component
 {
     use WithPagination;
@@ -26,14 +25,13 @@ class Users extends Component
             if ($user->is_banned) {
                 $user->tokens()->delete();
                 AdminLoggerService::log(
-                    'ban_user',
+                    'تم حضر المستخدم',
                     $user,
                     'تم حظر المستخدم',
                 );
-            }
-            else{
+            } else {
                 AdminLoggerService::log(
-                    'unban_user',
+                    'تم فك حضر المستخدم',
                     $user,
                     'تم فك حظر المستخدم',
                 );
@@ -58,20 +56,19 @@ class Users extends Component
             $this->editingUserId = $user->id;
             $this->editType = $user->user_type;
         }
-         
-        
     }
 
     public function updateUser()
     {
         $user = User::find($this->editingUserId);
         if ($user) {
-    
+
             $user->user_type = $this->editType;
             $user->save();
+            AdminLoggerService::log('تعديل المستخدم', 'User', "تعديل المستخدم: {$user->name}");
 
             $this->editingUserId = null;
-                $this->dispatch('show-toast', [
+            $this->dispatch('show-toast', [
                 'type' => 'success',
                 'message' => 'تم تعديل المستخدم بنجاح'
             ]);

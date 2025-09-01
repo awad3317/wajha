@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
 use App\Models\establishmentFeaturesIcon;
+use App\Services\AdminLoggerService;
 
 class EstablishmentFeaturesIcons extends Component
 {
@@ -52,6 +53,7 @@ class EstablishmentFeaturesIcons extends Component
         establishmentFeaturesIcon::create([
             'icon' => $iconPath,
         ]);
+    AdminLoggerService::log('اضافة ايقونة', 'EstablishmentFeaturesIcon', "إضافة الأيقونة: {$this->icon}");
 
         $this->resetForm();
         $this->loadPackages();
@@ -68,6 +70,7 @@ public function cancel()
     public function edit($id)
     {
         $package = establishmentFeaturesIcon::findOrFail($id);
+        
         $this->package_id = $package->id;
         $this->icon = $package->icon;
         $this->isEdit = true;
@@ -91,6 +94,7 @@ public function cancel()
         }
 
         $package->save();
+    AdminLoggerService::log('تعديل ايقونة', 'EstablishmentFeaturesIcon', "تعديل الأيقونة: {$this->icon}");
 
         $this->resetForm();
         $this->loadPackages();
@@ -113,6 +117,7 @@ public function cancel()
             $imageService->deleteImage($package->icon);
         }
         $package->delete();
+    AdminLoggerService::log('حذف ايقونة', 'EstablishmentFeaturesIcon', "حذف الأيقونة: {$this->icon}");
 
         $this->loadPackages();
         $this->dispatch('show-toast', [

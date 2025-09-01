@@ -6,6 +6,7 @@ use App\Models\pricePackageIcon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
+use App\Services\AdminLoggerService;
 
 class PricePackageIcons extends Component
 {
@@ -52,7 +53,7 @@ class PricePackageIcons extends Component
         pricePackageIcon::create([
             'icon' => $iconPath,
         ]);
-
+        AdminLoggerService::log('اضافة ايقونه', 'PricePackageIcon', "إضافة الأيقونة: {$this->icon}");
         $this->resetForm();
         $this->loadPackages();
         $this->dispatch('show-toast', [
@@ -60,10 +61,10 @@ class PricePackageIcons extends Component
             'message' => 'تمت إضافة الأيقونة بنجاح'
         ]);
     }
-public function cancel()
-{
-    $this->resetForm();
-}
+    public function cancel()
+    {
+        $this->resetForm();
+    }
 
     public function edit($id)
     {
@@ -91,7 +92,7 @@ public function cancel()
         }
 
         $package->save();
-
+        AdminLoggerService::log('تعديل ايقونه', 'PricePackageIcon', "تعديل الأيقونة: {$this->icon}");
         $this->resetForm();
         $this->loadPackages();
         $this->dispatch('show-toast', [
@@ -113,7 +114,7 @@ public function cancel()
             $imageService->deleteImage($package->icon);
         }
         $package->delete();
-
+        AdminLoggerService::log('حذف ايقونه', 'PricePackageIcon', "حذف الأيقونة: {$this->icon}");   
         $this->loadPackages();
         $this->dispatch('show-toast', [
             'type' => 'success',

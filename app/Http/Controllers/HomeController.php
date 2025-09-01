@@ -29,5 +29,9 @@ class HomeController extends Controller
     {
         return view('homepage.index');
     }
+
+    public function adminlog(){
+        return view('adminlogs.index');
+    }
     
 }

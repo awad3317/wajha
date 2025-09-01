@@ -43,6 +43,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+Route::get('adminlog', [HomeController::class, 'adminlog']);
 Route::get('homepage', [HomeController::class, 'homepage']);
 Route::get('region', [RegionController::class, 'index']);
 Route::get('bank', [BanksController::class, 'index']);

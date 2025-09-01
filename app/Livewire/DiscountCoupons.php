@@ -8,6 +8,7 @@ use App\Models\Establishment;
 use App\Models\EstablishmentType;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AdminLoggerService;
 
 class DiscountCoupons extends Component
 {
@@ -127,6 +128,8 @@ class DiscountCoupons extends Component
 
         $this->search = '';
         $this->selectedStatu = null;
+        AdminLoggerService::log('اضافة كوبون', 'DiscountCoupon', "إضافة كوبون جديد: {$this->code}");
+
         $this->resetForm();
         $this->loadCoupons();
         $this->dispatch('show-toast', [
@@ -170,7 +173,6 @@ class DiscountCoupons extends Component
             $rules['selectedTypes'] = 'required|array|min:1';
         }
 
-        // $this->validate();
 
         $coupon->update([
             'code' => strtoupper($this->code),
@@ -195,6 +197,7 @@ class DiscountCoupons extends Component
         } else {
             $coupon->establishmentTypes()->detach();
         }
+        AdminLoggerService::log('تعديل كوبون', 'DiscountCoupon', "تعديل كوبون: {$this->code}");
 
         $this->resetForm();
         $this->loadCoupons();
@@ -207,14 +210,16 @@ class DiscountCoupons extends Component
     public function confirmDelete($id)
     {
         $coupon = DiscountCoupon::findOrFail($id);
-        $this->deleteId = $id;
         $this->deleteTitle = $coupon->code;
+        $this->deleteId = $id;
+        AdminLoggerService::log('تاكيد حذف كوبون', 'DiscountCoupon', "تاكيد حذف  كوبون: {$this->deleteTitle}");
     }
 
     public function deleteCoupon()
     {
         DiscountCoupon::destroy($this->deleteId);
         $this->deleteId = null;
+        AdminLoggerService::log('حذف كوبون', 'DiscountCoupon', "حذف كوبون: {$this->deleteTitle}");
         $this->loadCoupons();
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -226,9 +231,14 @@ class DiscountCoupons extends Component
 
         $coupon = DiscountCoupon::find($id);
         $coupon->update([
-            'is_active' => !$coupon->is_active
+            'is_active' => !$coupon->is_active,
         ]);
-
+        $statusText = $coupon->is_active ? 'تفعيل' : 'إلغاء تفعيل';
+        AdminLoggerService::log(
+            'تعديل تفعيل كوبون',
+            'DiscountCoupon',
+            "{$statusText} الكوبون: {$coupon->code}"
+        );
         $this->loadCoupons();
 
         $this->dispatch('show-toast', [

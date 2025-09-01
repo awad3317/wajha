@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Currency;
 use App\Services\ImageService;
+use App\Services\AdminLoggerService;
 
 class Currencies extends Component
 {
@@ -55,7 +56,7 @@ class Currencies extends Component
             'symbol' => $this->symbol,
             'icon' => $iconPath,
         ]);
-
+        AdminLoggerService::log('اضافة عملة', 'Currency', "إضافة عملة جديد: {$this->name}");
         $this->resetForm();
         $this->loadCurrencies();
         $this->dispatch('show-toast', [
@@ -110,7 +111,7 @@ class Currencies extends Component
         $currency->code = $this->code;
         $currency->symbol = $this->symbol;
         $currency->save();
-
+        AdminLoggerService::log('تعديل عملة', 'Currency', "تعديل العملة: {$this->name}");
         $this->resetForm();
         $this->loadCurrencies();
         $this->dispatch('show-toast', [
@@ -128,7 +129,7 @@ class Currencies extends Component
             $imageService->deleteImage($currency->icon);
         }
         $currency->delete();
-
+        AdminLoggerService::log('حذف عملة', 'Currency', "حذف العملة: {$currency->name}");
         $this->loadCurrencies();
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -140,6 +141,7 @@ class Currencies extends Component
     public function confirmDelete($id)
     {
         $currency = Currency::findOrFail($id);
+        AdminLoggerService::log('حذف عملة', 'Currency', "حذف العملة: {$currency->name}");
         $this->deleteId = $currency->id;
         $this->deleteName = $currency->name;
     }
