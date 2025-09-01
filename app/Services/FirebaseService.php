@@ -42,9 +42,8 @@ class FirebaseService
         $message = CloudMessage::withTarget('token', $deviceToken)
             ->withNotification(Notification::create($title, $body))
             ->withData($data);
-        return "awad";
-
         return $this->messaging->send($message);
+        return "Awad";
         
     } catch (\Kreait\Firebase\Exception\MessagingException $e) {
         \Log::error('FCM Messaging Error: ' . $e->getMessage(), [
