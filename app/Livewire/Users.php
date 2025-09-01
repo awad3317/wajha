@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Services\AdminLoggerService;
 
 
 class Users extends Component
@@ -24,6 +25,22 @@ class Users extends Component
             $user->save();
             if ($user->is_banned) {
                 $user->tokens()->delete();
+                AdminLoggerService::log(
+                    'ban_user',
+                    $user,
+                    'تم حظر المستخدم',
+                    ['is_banned' => !$user->is_banned],
+                    ['is_banned' => $user->is_banned]
+                );
+            }
+            else{
+                AdminLoggerService::log(
+                    'unban_user',
+                    $user,
+                    'تم فك حظر المستخدم',
+                    ['is_banned' => !$user->is_banned],
+                    ['is_banned' => $user->is_banned]
+                );
             }
             $this->dispatch('show-toast', [
                 'type' => 'success',
