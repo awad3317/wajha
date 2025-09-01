@@ -29,14 +29,13 @@ class FirebaseService
             if (!file_exists($credentialsPath)) {
                 throw new \RuntimeException('ملف اعتماد Firebase غير موجود في: ' . $credentialsPath);
             }
-            return "Awad";
 
             $factory = (new Factory)
                 ->withServiceAccount($credentialsPath);
 
             $this->messaging = $factory->createMessaging();
         }
-
+            return "Awad";
         if (empty($deviceToken) || !is_string($deviceToken)) {
             throw new \InvalidArgumentException('Device token غير صالح');
         }
