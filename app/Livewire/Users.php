@@ -29,8 +29,6 @@ class Users extends Component
                     'ban_user',
                     $user,
                     'تم حظر المستخدم',
-                    ['is_banned' => !$user->is_banned],
-                    ['is_banned' => $user->is_banned]
                 );
             }
             else{
@@ -38,8 +36,6 @@ class Users extends Component
                     'unban_user',
                     $user,
                     'تم فك حظر المستخدم',
-                    ['is_banned' => !$user->is_banned],
-                    ['is_banned' => $user->is_banned]
                 );
             }
             $this->dispatch('show-toast', [

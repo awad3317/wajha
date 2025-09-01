@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('action');
             $table->string('model_type');
             $table->text('description')->nullable();
-            $table->json('old_data')->nullable(); 
-            $table->json('new_data')->nullable();
             $table->timestamps();
             $table->index(['admin_id', 'created_at']);
         });
