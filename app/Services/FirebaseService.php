@@ -20,7 +20,7 @@ class FirebaseService
     try {
         if (!$this->messaging) {
             $credentialsPath = config('firebase.projects.app.credentials') ?? env('FIREBASE_CREDENTIALS');
-            
+            return "Awad";
             if (empty($credentialsPath)) {
                 throw new \RuntimeException('مسار ملف اعتماد Firebase غير محدد');
             }
