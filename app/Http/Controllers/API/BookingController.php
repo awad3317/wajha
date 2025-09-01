@@ -394,7 +394,7 @@ public function cancelledBooking(Request $request)
         $user = auth('sanctum')->user();
         $establishment = $booking->establishment;
 
-        if ($user->id !== $establishment->owner_id) {
+        if ($user->id != $establishment->owner_id) {
             return ApiResponseClass::sendError('غير مصرح لك بالتراجع عن حالة هذا الحجز', [], 403);
         }
 
