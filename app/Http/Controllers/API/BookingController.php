@@ -159,10 +159,11 @@ class BookingController extends Controller
                 'establishment_id' => $establishment->id,
                 'user_id' => $user->id,
             ];
-            return "Awad";
+            
             if ($user->device_token) {
                 $this->firebaseService->sendNotification($user->device_token, $title, $body, $data);
             }
+            return "Awad";
             return ApiResponseClass::sendResponse($booking,'تم تحديث حالة الحجز إلى "بانتظار الدفع" بنجاح');
         } catch (Exception $e) {
             return ApiResponseClass::sendError('حدث خطأ أثناء تحديث حالة الحجز: ' . $e->getMessage(), [], 500);
