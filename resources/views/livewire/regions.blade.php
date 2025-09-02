@@ -78,7 +78,14 @@
                             {{-- زر الإرسال والإلغاء --}}
                             <div class="col-12 m-2 mt-md-4">
                                 <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 mx-1">
-                                    {{-- زر الإلغاء --}}
+                                    <div class="flex-grow-1">
+                                        <button type="submit"
+                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm ">
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة منطقة' }}
+
+                                        </button>
+                                    </div>
                                     <div class="flex-grow-1">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm ">
@@ -87,15 +94,7 @@
                                         </button>
                                     </div>
 
-                                    {{-- زر الحفظ/الإضافة --}}
-                                    <div class="flex-grow-1">
-                                        <button type="submit"
-                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm ">
-                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
-                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
-
-                                        </button>
-                                    </div>
+                                
                                 </div>
                             </div>
                         </div>

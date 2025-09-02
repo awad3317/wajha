@@ -10,6 +10,7 @@ use App\Models\DiscountCoupon;
 use App\Models\Advertisement;
 use App\Models\EstablishmentType;
 use App\Models\Review;
+use Illuminate\Support\Facades\DB;
 
 class Homepage extends Component
 {
@@ -35,7 +36,20 @@ class Homepage extends Component
 
     public function render()
     {
-        $latestBookings = booking::with('user', 'establishment')->latest()->take(5)->get();
+        $latestBookings = booking::select(
+            'establishment_id',
+            DB::raw('COUNT(*) as total'),
+            DB::raw('MAX(booking_date) as last_booking_date')
+        )
+            ->with('establishment')
+            ->groupBy('establishment_id')
+            ->orderBy('total', 'desc')
+            ->get()
+            ->map(function ($item) {
+                $item->last_booking_date = \Carbon\Carbon::parse($item->last_booking_date);
+                return $item;
+            });
+
         $latestEstablishments = Establishment::latest()->take(5)->get();
         $latestAds = Advertisement::latest()->take(5)->get();
         $latestReviews = Review::with('user', 'establishment')->latest()->take(5)->get();
@@ -47,8 +61,10 @@ class Homepage extends Component
             ->orderBy('date')
             ->get();
 
-        $typesChart = EstablishmentType::selectRaw('name, COUNT(*) as total')
-            ->groupBy('name')
+        $typesChart = DB::table('establishments')
+            ->join('establishment_types', 'establishments.type_id', '=', 'establishment_types.id')
+            ->select('establishment_types.name', DB::raw('COUNT(establishments.id) as total'))
+            ->groupBy('establishment_types.name')
             ->orderBy('total', 'desc')
             ->get();
 

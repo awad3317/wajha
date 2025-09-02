@@ -154,7 +154,7 @@
                             </td>
                             <td>
                                 @if ($booking->payment_receipt_image)
-                                    <img src="{{ asset('storage/' . $booking->payment_receipt_image) }}" width="50"
+                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $booking->payment_receipt_image }}" width="50"
                                         class="rounded cursor-pointer" data-bs-toggle="modal"
                                         data-bs-target="#receiptModal{{ $booking->id }}">
                                     {{-- مودال الإيصال --}}
@@ -168,7 +168,7 @@
                                                         data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body text-center">
-                                                    <img src="{{ asset('storage/' . $booking->payment_receipt_image) }}"
+                                                    <img src="{{ config('app.url') }}/storage/establishment-image/ . $booking->payment_receipt_image) }}"
                                                         class="img-fluid rounded">
                                                 </div>
                                             </div>
@@ -180,9 +180,9 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ url('show_booking/' . $booking->id) }}" class="btn btn-sm btn-success">
-                                        عرض التفاصيل
-                                    </a>
+                                        <a href="{{ url('show_booking/' . $booking->id) }}" class="btn btn-sm btn-success">
+                                            عرض التفاصيل
+                                        </a>
 
 
                                 </div>

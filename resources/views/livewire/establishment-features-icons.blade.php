@@ -78,13 +78,7 @@
                             <!-- Action Buttons -->
                             <div class="col-12 mt-3">
                                 <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <button type="button" wire:click="cancel"
-                                            class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
-                                            <i class="fas fa-times mr-2"></i>إلغاء
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6">
+                                      <div class="col-md-6">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
 
@@ -92,6 +86,13 @@
                                             
                                         </button>
                                     </div>
+                                    <div class="col-md-6">
+                                        <button type="button" wire:click="cancel"
+                                            class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
+                                            <i class="fas fa-times mr-2"></i>إلغاء
+                                        </button>
+                                    </div>
+                                  
                                 </div>
                             </div>
                         </div>

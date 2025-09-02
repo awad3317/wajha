@@ -93,7 +93,7 @@
                                         </div>
                                     @elseif ($imagePreview)
                                         <div class="position-relative d-inline-block">
-                                            <img src="{{ asset('storage/' . $imagePreview) }}"
+                                            <img src="{{ asset('storage/establishment-image/' . $imagePreview) }}"
                                                 class="rounded-3 shadow  border-3 border-secondary"
                                                 style="max-height: 200px; max-width: 100%; object-fit: contain;">
                                             <span class="badge bg-secondary position-absolute top-0 start-0 m-2">الصورة
@@ -156,24 +156,20 @@
                                     </div>
                                 @enderror
                             </div>
+                            <div class="col-md-6 mt-4">
+                                <button type="submit"
+                                    class="btn btn-{{ $isEdit ? 'primary' : 'warning' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                    {{ $isEdit ? 'تحديث الإعلان' : 'إضافة إعلان جديد' }}
 
-
+                                </button>
+                            </div>
 
                             {{-- Action Buttons --}}
                             <div class="col-md-6 mt-4">
                                 <button type="button" wire:click="cancel"
                                     class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
                                     <i class="fas fa-times mr-2"></i> إلغاء
-                                </button>
-                            </div>
-
-                            <div class="col-md-6 mt-4">
-
-
-                                <button type="submit"
-                                    class="btn btn-{{ $isEdit ? 'warning' : 'primary ' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
-                                    {{ $isEdit ? 'حفظ التعديلات' : 'إضافةاعلان جديد' }}
                                 </button>
                             </div>
                         </div>
@@ -218,7 +214,7 @@
                         <div class="text-decoration-none text-dark">
                             <div class="card-header p-0" style="height: 180px; overflow: hidden;">
                                 @if ($ad->image)
-                                    <img src="{{ asset('storage/' . $ad->image) }}"
+                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $ad->image }}" alt="ad image"
                                         class="object-fit-cover w-100 h-100" alt="{{ $ad->title }}">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center h-100">

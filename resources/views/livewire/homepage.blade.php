@@ -62,7 +62,7 @@
                     <div class="small-box bg-success text-white">
                         <div class="inner">
                             <h3>{{ $ownersCount }}</h3>
-                            <p>المالكين</p>
+                            <p>المالكين المنشئات</p>
                         </div>
                         <div class="icon"><i class="fas fa-user-tie"></i></div>
                     </div>
@@ -147,16 +147,18 @@
                             <table class="table table-bordered table-striped table-hover table-sm">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>التاريخ</th>
+                                        <th>المنشأة</th>
                                         <th>عدد الحجوزات</th>
+                                        <th>آخر تاريخ حجز</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($bookingsChart as $row)
-                                        <tr>
-                                            <td><i class="fas fa-calendar-day text-primary"></i> {{ $row->date }}
-                                            </td>
-                                            <td>{{ $row->total }}</td>
+                                    @foreach ($latestBookings as $booking)
+                                        <tr onclick="window.location='{{ url('show_booking/' . $booking->establishment_id) }}'"
+                                            style="cursor: pointer;">
+                                            <td>{{ $booking->establishment->name ?? 'غير معروف' }}</td>
+                                            <td>{{ $booking->total }}</td>
+                                            <td>{{ $booking->last_booking_date?->format('Y-m-d') ?? 'غير معروف' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -366,8 +368,9 @@
                 datasets: [{
                     label: 'عدد المنشآت',
                     data: @json($typesChart->pluck('total')),
-                    backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1',
-                        '#e83e8c', '#fd7e14'
+                    backgroundColor: [
+                        '#28a745', '#ffc107', '#dc3545',
+                        '#17a2b8', '#ffc107', '#e83e8c', '#fd7e14'
                     ]
                 }]
             },
@@ -393,6 +396,7 @@
                 }
             }
         });
+
 
         // Chart: Users
         new Chart(document.getElementById('usersChart'), {
