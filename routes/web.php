@@ -38,7 +38,7 @@ Route::post('/github/deploy', function (Request $request) {
     return response()->json(['status' => 'Deployed']);
 });
 
-Auth::routes();
+Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
