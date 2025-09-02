@@ -9,7 +9,33 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>وجهة | تطبيق حجز فنادق، صالات أفراح، شاليهات ومسابح</title>
+    <link rel="canonical" href="{{ url()->current() }}" />
+    <meta name="robots" content="index, follow">
 
+   
+    
+    <!-- مكتبة intl-tel-input لأرقام الهواتف -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+     <!-- وصف SEO -->
+    <meta name="description" content="وجهة - تطبيق حجز فنادق، صالات أفراح، شاليهات ومسابح بسهولة وسرعة. اكتشف أفضل العروض واحجز مكانك الآن!">
+    <meta name="keywords" content="حجز فنادق، صالات أفراح، شاليهات، مسابح، تطبيق حجز، وجهة، عروض فنادق، أماكن إقامة">
+    <meta name="author" content="Tiyar Solutions">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="وجهة | تطبيق حجز فنادق، صالات أفراح، شاليهات ومسابح">
+    <meta property="og:description" content="احجز فنادق، صالات أفراح، شاليهات ومسابح بسهولة عبر تطبيق وجهة. أفضل الأماكن وأفضل العروض في مكان واحد.">
+    <meta property="og:image" content="{{ asset('img/wjahh.jpg') }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="وجهة | تطبيق حجز فنادق، صالات أفراح، شاليهات ومسابح">
+    <meta name="twitter:description" content="احجز فنادق، صالات أفراح، شاليهات ومسابح بسهولة عبر تطبيق وجهة. أفضل الأماكن وأفضل العروض في مكان واحد.">
+    <meta name="twitter:image" content="{{ asset('img/wjahh.jpg') }}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
