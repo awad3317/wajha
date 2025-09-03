@@ -214,7 +214,7 @@
                         <div class="text-decoration-none text-dark">
                             <div class="card-header p-0" style="height: 180px; overflow: hidden;">
                                 @if ($ad->image)
-                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $ad->image }}" alt="ad image"
+                                    <img src="{{url($ad->image)}}" alt="ad image"
                                         class="object-fit-cover w-100 h-100" alt="{{ $ad->title }}">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center h-100">
