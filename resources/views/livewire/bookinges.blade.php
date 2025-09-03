@@ -1,6 +1,4 @@
 <div class="container-fluid">
-
-    {{-- البطاقات الإحصائية المحسنة --}}
     <div class="row m-4">
         @php
             $cards = [
