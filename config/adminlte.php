@@ -360,22 +360,22 @@ return [
         ],
 
     
-           [
-                    'text' => 'الباقات',
-                    'url' => '/packages',
-                    'icon' => 'fas fa-gift',
-                ],
+        [
+            'text' => 'إدارة ايقونات الباقات',
+            'url' => '/packages',
+            'icon' => 'fas fa-gift',
+        ],
                     
-                [
-                    'text' => 'مييزات المنشئة',
-                    'url' => '/establishment_features_icons',
-                    'icon' => 'fas fa-star',
-                ],
-                     [
-                    'text' => 'تتبع حركة النظام',
-                    'url' => '/adminlog',
-                    'icon' => 'fas fa-history',
-                ],
+        [
+            'text' => 'إدارة ايقونات المميزات',
+            'url' => '/establishment_features_icons',
+            'icon' => 'fas fa-star',
+        ],
+        [
+            'text' => 'تتبع حركة النظام',
+            'url' => '/adminlog',
+            'icon' => 'fas fa-history',
+        ],
         // [
         //     'text' => 'الايقونات',
         //     'icon' => 'fas fa-icons',
