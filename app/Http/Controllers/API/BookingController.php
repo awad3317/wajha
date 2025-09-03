@@ -182,7 +182,7 @@ class BookingController extends Controller
 {
     $fields = $request->validate([
         'booking_id' => ['required', Rule::exists('bookings', 'id')],
-        'receipt_image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
+        'receipt_image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5000']
     ]);
 
     try {
