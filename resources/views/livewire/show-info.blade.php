@@ -255,7 +255,7 @@
                                 <div class="feature-icon-wrapper">
                                     @if ($feature->icon)
                                         <div class="feature-icon-img">
-                                            <img src="{{ url('storage'.$feature->icon->icon) }}" alt="{{ $feature->name }}"
+                                            <img src="{{ url($feature->icon->icon) }}" alt="{{ $feature->name }}"
                                                 class="img-fluid">
                                         </div>
                                     @else
