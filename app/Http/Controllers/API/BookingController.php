@@ -58,11 +58,18 @@ class BookingController extends Controller
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'price_package_id' => ['required',
                     Rule::exists('price_packages', 'id')->where(function ($query) use ($request) {
-                    $query->where('establishment_id', $request->establishment_id);
-                })
-            ],
+                    $query->where('establishment_id', $request->establishment_id);})],
             'booking_date' =>['required','date','after_or_equal:now'],
             'coupon_code' => ['nullable','string'],
+        ],[
+            'establishment_id.required' => 'حقل المعرف الخاص بالمنشأة مطلوب.',
+            'establishment_id.exists' => 'معرف المنشأة المحدد غير صالح.',
+            'price_package_id.required' => 'حقل المعرف الخاص بباقة السعر مطلوب.',
+            'price_package_id.exists' => 'معرف باقة السعر المحدد غير صالح.',
+            'booking_date.required' => 'حقل تاريخ الحجز مطلوب.',
+            'booking_date.date' => 'تاريخ الحجز غير صالح.',
+            'booking_date.after_or_equal' => 'يجب أن يكون تاريخ الحجز في الوقت الحالي أو بعده.',
+            'coupon_code.string' => 'يجب أن يكون رمز الكوبون نصًا.',
         ]);
 
         try {

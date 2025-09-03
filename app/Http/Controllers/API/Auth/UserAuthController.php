@@ -38,9 +38,15 @@ class UserAuthController extends Controller
 
     public function login(Request $request)
     {
+
         $fields=$request->validate([
             'phone'=>['required','string'],
             'password' => ['required','string'],
+        ],[
+            'phone.required' => 'حقل رقم الهاتف مطلوب.',
+            'phone.string'   => 'يجب أن يكون رقم الهاتف نصًا صالحًا.',
+            'password.required' => 'حقل كلمة المرور مطلوب.',
+            'password.string'   => 'يجب أن تكون كلمة المرور نصًا صالحًا.',
         ]);
         $user=$this->UserRepository->findByPhone($fields['phone']);
 
