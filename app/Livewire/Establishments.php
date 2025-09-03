@@ -35,18 +35,29 @@ class Establishments extends Component
         if ($establishment) {
             $establishment->is_verified = !$establishment->is_verified;
             $establishment->save();
+            
            $statusText = $establishment->is_verified ? 'توثيق' : 'إلغاء توثيق';
         AdminLoggerService::log(
             'تعديل التوثيق',
             'Establishment',
             "{$statusText} المنشأة: {$establishment->name}"
         );
-        if ($establishment->is_verified && $establishment->owner){
+        if ($establishment->owner){
             $owner = $establishment->owner;
-            $title = "تهانينا! تم توثيق منشأتك";
-            $body = "لقد تم توثيق منشأتك '{$establishment->name}' بنجاح في منصتنا.";
+            $title = '';
+            $body = '';
+            $notificationType = '';
+            if ($establishment->is_verified) {
+                $title = "تهانينا! تم توثيق منشأتك";
+                $body = "لقد تم توثيق منشأتك '{$establishment->name}' بنجاح في منصتنا.";
+                $notificationType = 'establishment_verified';
+            } else {
+                $title = "إشعار بإلغاء توثيق المنشأة";
+                $body = "نأسف لإبلاغك، تم إلغاء توثيق منشأتك '{$establishment->name}'. لمزيد من التفاصيل، يرجى مراجعة الدعم الفني.";
+                $notificationType = 'establishment_unverified';
+            }
             $data = [
-                'type' => 'establishment_verified',
+                'type' => $notificationType,
                 'establishment_id' => (string)$establishment->id,
                 'user_id' => (string)$owner->id,
             ];
@@ -56,8 +67,8 @@ class Establishments extends Component
                     } catch (\Exception $e) {
                         \Log::error("Failed to send verification notification to user: {$owner->id}", ['error' => $e->getMessage()]);
                     }
-                }
             }
+        }
 
         }
 
