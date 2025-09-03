@@ -65,6 +65,7 @@ class Users extends Component
 
             $user->user_type = $this->editType;
             $user->save();
+            $user->tokens()->delete();
             AdminLoggerService::log('تعديل المستخدم', 'User', "تعديل المستخدم: {$user->name}");
 
             $this->editingUserId = null;
