@@ -2,12 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Models\Establishment;
-use App\Models\EstablishmentType;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Establishment;
+use App\Models\EstablishmentType;
 use App\Services\FirebaseService;
 use App\Services\AdminLoggerService;
+use App\Notifications\EstablishmentVerificationNotification;
 
 
 class Establishments extends Component
@@ -65,6 +66,7 @@ class Establishments extends Component
                 'establishment_id' => (string)$establishment->id,
                 'user_id' => (string)$owner->id,
             ];
+             $owner->notify(new EstablishmentVerificationNotification($establishment, $establishment->is_verified));
             if ($owner->device_token){
                 try {
                         $this->firebaseService->sendNotification($owner->device_token, $title, $body, $data);
