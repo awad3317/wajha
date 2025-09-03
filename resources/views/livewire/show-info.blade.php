@@ -229,7 +229,7 @@
                         <div class="row g-3">
                             @forelse ($images as $image)
                                 <div class="col-6 col-md-4 my-1">
-                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $image->image }}"
+                                    <img src="{{ config('app.url') }}/{{ $image->image }}"
                                         alt="صورة" class="img-fluid rounded shadow-sm border"
                                         style="object-fit: cover; width: 100%; height: 120px;">
                                 </div>
