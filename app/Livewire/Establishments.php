@@ -6,6 +6,7 @@ use App\Models\Establishment;
 use App\Models\EstablishmentType;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Services\FirebaseService;
 use App\Services\AdminLoggerService;
 
 
@@ -13,7 +14,9 @@ class Establishments extends Component
 {
    use WithPagination;
 
-    public $search = '';
+   private $firebaseService = new FirebaseService();
+
+   public $search = '';
     public $selectedType = '';
     public $selectedStatus = '';
 
@@ -38,7 +41,26 @@ class Establishments extends Component
             'Establishment',
             "{$statusText} المنشأة: {$establishment->name}"
         );
+        if ($establishment->is_verified && $establishment->owner){
+            $owner = $establishment->owner;
+            $title = "تهانينا! تم توثيق منشأتك";
+            $body = "لقد تم توثيق منشأتك '{$establishment->name}' بنجاح في منصتنا.";
+            $data = [
+                'type' => 'establishment_verified',
+                'establishment_id' => (string)$establishment->id,
+                'user_id' => (string)$owner->id,
+            ];
+            if ($owner->device_token){
+                try {
+                        $this->firebaseService->sendNotification($owner->device_token, $title, $body, $data);
+                    } catch (\Exception $e) {
+                        \Log::error("Failed to send verification notification to user: {$owner->id}", ['error' => $e->getMessage()]);
+                    }
+                }
+            }
+
         }
+
     }
 
     public function render()
