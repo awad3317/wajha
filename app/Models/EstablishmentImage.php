@@ -26,6 +26,6 @@ class EstablishmentImage extends Model
          if (request()->is('api/*')) {
             return 'storage/'.$value;
         }
-        return $value;
+        return 'storage/'.$value;
     }
 }
