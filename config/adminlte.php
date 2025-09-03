@@ -326,7 +326,7 @@ return [
             'icon' => 'fas fa-map-marker-alt',
 
         ],
-             [
+        [
             'text' => 'الحجوزات',
             'url' => '/booking',
             'icon' => 'fas fa-calendar-check',
