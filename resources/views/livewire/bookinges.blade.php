@@ -1,4 +1,4 @@
-<div class="container-fluid" >
+<div class="container-fluid">
 
     {{-- البطاقات الإحصائية المحسنة --}}
     <div class="row m-4">
@@ -154,8 +154,8 @@
                             </td>
                             <td>
                                 @if ($booking->payment_receipt_image)
-                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $booking->payment_receipt_image }}" width="50"
-                                        class="rounded cursor-pointer" data-bs-toggle="modal"
+                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $booking->payment_receipt_image }}"
+                                        width="50" class="rounded cursor-pointer" data-bs-toggle="modal"
                                         data-bs-target="#receiptModal{{ $booking->id }}">
                                     {{-- مودال الإيصال --}}
                                     <div class="modal fade" id="receiptModal{{ $booking->id }}" tabindex="-1"
@@ -180,9 +180,9 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                        <a href="{{ url('show_booking/' . $booking->id) }}" class="btn btn-sm btn-success">
-                                            عرض التفاصيل
-                                        </a>
+                                    <a href="{{ url('show_booking/' . $booking->id) }}" class="btn btn-sm btn-success">
+                                        عرض التفاصيل
+                                    </a>
 
 
                                 </div>
@@ -199,7 +199,7 @@
 
 
         {{-- Pagination --}}
-        <div class="mt-3">
+        <div class="mt-3" style="margin: 0 auto;">
             {{ $bookings->links() }}
         </div>
     </div>

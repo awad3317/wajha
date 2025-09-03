@@ -10,12 +10,12 @@ class BookingController extends Controller
 {
      public function index() {
 
-        $booking = booking::latest()->paginate(5);
+        $booking = Booking::latest()->paginate(5);
         return view('booking.index',compact('booking'));
         
     }
     public function show($id) {
-        $booking = booking::find($id);
+        $booking = Booking::find($id);
         return view('booking.show',compact('booking'));
     }
 }

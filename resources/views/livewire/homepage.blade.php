@@ -287,34 +287,7 @@
                 </div>
             </div>
 
-            <!-- ✅ آخر التقييمات -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-outline card-danger">
-                        <div class="card-header"><i class="fas fa-star"></i> آخر التقييمات</div>
-                        <div class="card-body table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>المستخدم</th>
-                                        <th>المنشأة</th>
-                                        <th>التقييم</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($latestReviews as $r)
-                                        <tr>
-                                            <td>{{ $r->user->name ?? '-' }}</td>
-                                            <td>{{ $r->establishment->name ?? '-' }}</td>
-                                            <td><span class="badge bg-success">{{ $r->rating }}</span></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
     </section>
 </div>

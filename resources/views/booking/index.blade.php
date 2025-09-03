@@ -10,7 +10,7 @@
 @stop
 
 @section('content')
-@livewire('booking')
+@livewire('bookinges')
 
 <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
 <script>
