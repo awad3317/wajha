@@ -372,7 +372,7 @@ return [
             'icon' => 'fas fa-star',
         ],
         [
-            'text' => 'تتبع حركة النظام',
+            'text' => 'تتبع حركة لوحة التحكم',
             'url' => '/adminlog',
             'icon' => 'fas fa-history',
         ],
