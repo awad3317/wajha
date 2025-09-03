@@ -38,7 +38,7 @@ class Regions extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:regions,name',
         ]);
 
         Region::create([
