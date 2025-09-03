@@ -14,7 +14,7 @@ class Establishments extends Component
 {
    use WithPagination;
 
-   private $firebaseService = new FirebaseService();
+//    private $firebaseService = new FirebaseService();
 
    public $search = '';
     public $selectedType = '';
@@ -42,33 +42,33 @@ class Establishments extends Component
             'Establishment',
             "{$statusText} المنشأة: {$establishment->name}"
         );
-        if ($establishment->owner){
-            $owner = $establishment->owner;
-            $title = '';
-            $body = '';
-            $notificationType = '';
-            if ($establishment->is_verified) {
-                $title = "تهانينا! تم توثيق منشأتك";
-                $body = "لقد تم توثيق منشأتك '{$establishment->name}' بنجاح في منصتنا.";
-                $notificationType = 'establishment_verified';
-            } else {
-                $title = "إشعار بإلغاء توثيق المنشأة";
-                $body = "نأسف لإبلاغك، تم إلغاء توثيق منشأتك '{$establishment->name}'. لمزيد من التفاصيل، يرجى مراجعة الدعم الفني.";
-                $notificationType = 'establishment_unverified';
-            }
-            $data = [
-                'type' => $notificationType,
-                'establishment_id' => (string)$establishment->id,
-                'user_id' => (string)$owner->id,
-            ];
-            if ($owner->device_token){
-                try {
-                        $this->firebaseService->sendNotification($owner->device_token, $title, $body, $data);
-                    } catch (\Exception $e) {
-                        \Log::error("Failed to send verification notification to user: {$owner->id}", ['error' => $e->getMessage()]);
-                    }
-            }
-        }
+        // if ($establishment->owner){
+        //     $owner = $establishment->owner;
+        //     $title = '';
+        //     $body = '';
+        //     $notificationType = '';
+        //     if ($establishment->is_verified) {
+        //         $title = "تهانينا! تم توثيق منشأتك";
+        //         $body = "لقد تم توثيق منشأتك '{$establishment->name}' بنجاح في منصتنا.";
+        //         $notificationType = 'establishment_verified';
+        //     } else {
+        //         $title = "إشعار بإلغاء توثيق المنشأة";
+        //         $body = "نأسف لإبلاغك، تم إلغاء توثيق منشأتك '{$establishment->name}'. لمزيد من التفاصيل، يرجى مراجعة الدعم الفني.";
+        //         $notificationType = 'establishment_unverified';
+        //     }
+        //     $data = [
+        //         'type' => $notificationType,
+        //         'establishment_id' => (string)$establishment->id,
+        //         'user_id' => (string)$owner->id,
+        //     ];
+        //     if ($owner->device_token){
+        //         try {
+        //                 $this->firebaseService->sendNotification($owner->device_token, $title, $body, $data);
+        //             } catch (\Exception $e) {
+        //                 \Log::error("Failed to send verification notification to user: {$owner->id}", ['error' => $e->getMessage()]);
+        //             }
+        //     }
+        // }
 
         }
 
