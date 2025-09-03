@@ -253,7 +253,7 @@
                         @forelse ($features as $feature)
                             <div class="feature-item">
                                 <div class="feature-icon-wrapper">
-                                    <h1>{{$feature->icon}}</h1>
+                                    <h1>{{$feature->icon->icon}}</h1>
                                     @if ($feature->icon)
                                         <div class="feature-icon-img">
                                             <img src="{{ url('storage'.$feature->icon) }}" alt="{{ $feature->name }}"
