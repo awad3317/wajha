@@ -255,7 +255,7 @@
                                 <div class="feature-icon-wrapper">
                                     @if ($feature->icon)
                                         <div class="feature-icon-img">
-                                            <img src="{{ url($feature->icon) }}" alt="{{ $feature->name }}"
+                                            <img src="{{ url('storage/'.$feature->icon) }}" alt="{{ $feature->name }}"
                                                 class="img-fluid">
                                         </div>
                                     @else
@@ -295,7 +295,7 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-end">
                                     <span class="mr-2">
                                         @if ($spec->icon)
-                                            <img src="{{ url('storage/' . $spec->icon) }}" alt="أيقونة"
+                                            <img src="{{ url('storage/'.$spec->icon) }}" alt="أيقونة"
                                                 class="img-fluid" style="max-width: 20px; max-height: 20px;">
                                         @else
                                             <i class="fas fa-info-circle text-secondary"></i>
