@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="card shadow-lg p-4 rounded-3">
-        <h3 class="mb-4 text-center">إضافة الاشعارات</h3>
+        <h3 class="mb-4 text-center">إرسال الاشعارات</h3>
         @if (session()->has('success'))
         <div class="alert alert-success text-right">{{ session('success') }}</div>
     @endif
