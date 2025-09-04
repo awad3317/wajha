@@ -376,6 +376,11 @@ return [
             'url' => '/adminlog',
             'icon' => 'fas fa-history',
         ],
+        [
+            'text' => 'إشعارات',
+            'url' => '/notification',
+            'icon' => 'fas fa-bell',
+        ],
         // [
         //     'text' => 'الايقونات',
         //     'icon' => 'fas fa-icons',

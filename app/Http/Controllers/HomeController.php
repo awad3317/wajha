@@ -33,5 +33,7 @@ class HomeController extends Controller
     public function adminlog(){
         return view('adminlogs.index');
     }
-    
+    public function notification(){
+        return view('notifications.index');
+    }
 }

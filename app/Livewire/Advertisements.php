@@ -69,7 +69,7 @@ class Advertisements extends Component
                 : 'required|mimes:jpg,jpeg,png,gif,svg,ico|max:2048',
             'is_active' => 'boolean',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ];
     }
     public function messages()
@@ -83,6 +83,7 @@ class Advertisements extends Component
             'image.image' => 'يجب أن يكون الملف صورة',
             'image.max' => 'يجب ألا تتجاوز الصورة 2 ميجابايت',
             'start_date.required' => 'حقل تاريخ البدء مطلوب',
+            'end_date.required' => 'حقل تاريخ الانتهاء مطلوب',
             'start_date.date' => 'يجب أن يكون تاريخ البدء صالحاً',
             'end_date.date' => 'يجب أن يكون تاريخ الانتهاء صالحاً',
             'end_date.after_or_equal' => 'يجب أن يكون تاريخ الانتهاء لاحقاً أو مساوياً لتاريخ البدء',
@@ -217,7 +218,7 @@ class Advertisements extends Component
         $this->imagePreview = null;
         $this->is_active = true;
         $this->start_date = '';
-        $this->end_date = null;
+        $this->end_date = '';
         $this->advertisement_id = null;
         $this->isEdit = false;
         $this->showForm = false;

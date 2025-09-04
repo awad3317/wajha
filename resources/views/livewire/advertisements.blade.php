@@ -52,20 +52,21 @@
                                 @enderror
                             </div>
 
-                            {{-- Image Field --}}
                             <div class="col-12">
-                                <label class="form-label text-primary fw-bold d-block  mb-2">
-                                    <span class="text-danger">{{ $isEdit = '*' }}</span> <i
-                                        class="fas fa-image mr-2"></i>
-                                    صورة الإعلان
+                                <label class="form-label text-primary fw-bold d-block mb-2">
+                                    @unless ($isEdit)
+                                        <span class="text-danger">*</span>
+                                    @endunless
+                                    <i class="fas fa-image mr-2"></i> صورة الإعلان
                                 </label>
+
                                 <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
                                     <label class="input-group-text btn btn-primary text-white border-0"
                                         style="cursor: pointer;">
                                         <i class="fas fa-cloud-upload-alt ml-2"></i> اختر صورة
                                         <input type="file" wire:model="image" accept="image/*" class="d-none">
                                     </label>
-                                    <span class="form-control  bg-light text-truncate">
+                                    <span class="form-control bg-light text-truncate">
                                         @if ($image)
                                             {{ $image->getClientOriginalName() }}
                                         @elseif($imagePreview)
@@ -75,8 +76,9 @@
                                         @endif
                                     </span>
                                 </div>
+
                                 @error('image')
-                                    <div class="text-danger small  mt-2">
+                                    <div class="text-danger small mt-2">
                                         <i class="fas fa-exclamation-circle ml-1"></i>{{ $message }}
                                     </div>
                                 @enderror
@@ -86,7 +88,7 @@
                                     @if ($image)
                                         <div class="position-relative d-inline-block">
                                             <img src="{{ $image->temporaryUrl() }}"
-                                                class="rounded-3 shadow  border-3 border-primary"
+                                                class="rounded-3 shadow border-3 border-primary"
                                                 style="max-height: 200px; max-width: 100%; object-fit: contain;">
                                             <span
                                                 class="badge bg-primary position-absolute top-0 start-0 m-2">معاينة</span>
@@ -94,7 +96,7 @@
                                     @elseif ($imagePreview)
                                         <div class="position-relative d-inline-block">
                                             <img src="{{ asset('storage/establishment-image/' . $imagePreview) }}"
-                                                class="rounded-3 shadow  border-3 border-secondary"
+                                                class="rounded-3 shadow border-3 border-secondary"
                                                 style="max-height: 200px; max-width: 100%; object-fit: contain;">
                                             <span class="badge bg-secondary position-absolute top-0 start-0 m-2">الصورة
                                                 الحالية</span>
@@ -156,24 +158,31 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="col-md-6 mt-4">
-                                <button type="submit"
-                                    class="btn btn-{{ $isEdit ? 'primary' : 'warning' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
-                                    {{ $isEdit ? 'تحديث الإعلان' : 'إضافة إعلان جديد' }}
 
-                                </button>
+
+                            <div class="col-12 mt-4">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <button type="button" wire:click="cancel"
+                                            class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
+                                            <i class="fas fa-times mr-2"></i> إلغاء
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <button type="submit"
+                                            class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة عملة' }}
+
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
-                            {{-- Action Buttons --}}
-                            <div class="col-md-6 mt-4">
-                                <button type="button" wire:click="cancel"
-                                    class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3">
-                                    <i class="fas fa-times mr-2"></i> إلغاء
-                                </button>
-                            </div>
+
                         </div>
                     </form>
+
                 </div>
             </div>
         @endif
@@ -214,7 +223,7 @@
                         <div class="text-decoration-none text-dark">
                             <div class="card-header p-0" style="height: 180px; overflow: hidden;">
                                 @if ($ad->image)
-                                    <img src="{{url($ad->image)}}" alt="ad image"
+                                    <img src="{{ url($ad->image) }}" alt="ad image"
                                         class="object-fit-cover w-100 h-100" alt="{{ $ad->title }}">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center h-100">

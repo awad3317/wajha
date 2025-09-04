@@ -45,6 +45,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('adminlog', [HomeController::class, 'adminlog']);
 Route::get('homepage', [HomeController::class, 'homepage']);
+Route::get('notification', [HomeController::class, 'notification']);
 Route::get('region', [RegionController::class, 'index']);
 Route::get('bank', [BanksController::class, 'index']);
 Route::get('advertisement', [AdvertisementsController::class, 'index']);
