@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use App\Notifications\GeneralNotification;
 use App\Services\FirebaseService;
 
 class Notifications extends Component
@@ -49,6 +50,8 @@ class Notifications extends Component
                 } catch (\Exception $e) {
                     \Log::error("Failed to send notification to user: {$user->id}. Error: {$e->getMessage()}");
                 }
+
+                $user->notify(new GeneralNotification($this->title, $this->description));
             }
 
             session()->flash('success', 'تم إرسال الإشعار بنجاح!');
