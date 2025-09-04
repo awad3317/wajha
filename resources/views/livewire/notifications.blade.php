@@ -25,7 +25,7 @@
                     <i class="fas fa-user text-primary fs-5"></i>
                 </span>
                 <select wire:model.defer="user_type" class="form-control border-0">
-                    <option value="" selected disabled>اختر اليوزر</option>
+                    <option value="All" selected>جميع المستخدمين</option>
                     <option value="owner">مالكي المنشئات</option>
                     <option value="user">المستخدمين</option>
                 </select>

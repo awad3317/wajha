@@ -23,7 +23,7 @@ class Notifications extends Component
         $this->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_type' => 'required|in:owner,user',
+            'user_type' => 'required|in:owner,user,All',
         ]);
 
         try {
@@ -31,6 +31,8 @@ class Notifications extends Component
                 $usersToSend = User::where('user_type', 'owner')->whereNotNull('device_token')->get();
             } elseif ($this->user_type == 'user') {
                 $usersToSend = User::where('user_type', 'user')->whereNotNull('device_token')->get();
+            } elseif ($this->user_type == 'All') {
+                $usersToSend = User::whereNotNull('device_token')->get();
             } else {
                 session()->flash('error', 'Invalid user type selected.');
                 return;
