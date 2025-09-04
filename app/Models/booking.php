@@ -28,10 +28,7 @@ class booking extends Model
 
     public function getPaymentReceiptImageAttribute($value)
     {
-        // if (request()->is('api/*')) {
         return 'storage/' . $value;
-        // }
-        // return $value;
     }
 
     public function user()

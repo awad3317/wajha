@@ -83,6 +83,14 @@ class User extends Authenticatable
         return $this->hasMany(DiscountCoupon::class, 'created_by');
     }
 
+    /**
+        * Get the owner accounts associated with the user.
+    */
+    public function ownerAccounts()
+    {
+        return $this->hasMany(OwnerAccount::class, 'owner_id');
+    }
+
     public function couponUses()
     {
         return $this->hasMany(CouponUse::class);
