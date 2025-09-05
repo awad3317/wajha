@@ -82,10 +82,10 @@
                             <span class="badge {{ $booking->status == 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">
                                 {{ $booking->status == 'paid' ? 'مدفوع' : 'بانتظار الدفع' }}
                             </span>
-                        </p>booking-receipts
+                        </p>
                         @if ($booking->payment_receipt_image)
                             <p><strong>إيصال الدفع:</strong></p>
-                            <img src="{{ asset('storage/booking-receipts/' . $booking->payment_receipt_image) }}" 
+                            <img src="{{ url($booking->payment_receipt_image) }}" 
                                  alt="إيصال الدفع" class="img-thumbnail" style="max-width:150px;">
                         @endif
                     </div>
