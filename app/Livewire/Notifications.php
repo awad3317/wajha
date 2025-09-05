@@ -13,19 +13,27 @@ class Notifications extends Component
     public $description;
     public $user_type;
     private $firebaseService;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->firebaseService = new FirebaseService();
     }
 
     public function sendNotification()
     {
-        
+
         $this->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'user_type' => 'required|in:owner,user,All',
-        ]);
+        ],[
+            'title.required' => 'العنوان مطلوب',
+            'description.required' => 'الوصف مطلوب',
+            'user_type.required' => 'نوع المستخدم مطلوب',
+            'user_type.in' => 'نوع المستخدم غير صالح',
+        ]
+    
+    );
 
         try {
             if ($this->user_type == 'owner') {
@@ -35,7 +43,11 @@ class Notifications extends Component
             } elseif ($this->user_type == 'All') {
                 $usersToSend = User::whereNotNull('device_token')->get();
             } else {
-                session()->flash('error', 'Invalid user type selected.');
+                $this->dispatch('show-toast', [
+                    'type' => 'success',
+                    'message' => 'تمت إرسال الإشعار بنجاح'
+                ]);
+                $this->reset(['title', 'description', 'user_type']);
                 return;
             }
 
@@ -54,14 +66,19 @@ class Notifications extends Component
                 $user->notify(new GeneralNotification($this->title, $this->description));
             }
 
-            session()->flash('success', 'تم إرسال الإشعار بنجاح!');
+            $this->dispatch('show-toast', [
+                'type' => 'success',
+                'message' => 'تمت إرسال الإشعار بنجاح'
+            ]);
             $this->reset(['title', 'description', 'user_type']);
-
         } catch (\Exception $e) {
-            session()->flash('error', 'حدث خطأ غير متوقع: ' . $e->getMessage());
+            $this->dispatch('show-toast', [
+                'type' => 'error',
+                'message' => 'حدث خطأ غير متوقع: ' . $e->getMessage()
+            ]);
         }
     }
-    
+
     public function render()
     {
         return view('livewire.notifications');

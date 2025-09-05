@@ -1,15 +1,13 @@
 <div class="container mt-5">
     <div class="card shadow-lg p-4 rounded-3">
         <h3 class="mb-4 text-center">إرسال الاشعارات</h3>
-        @if (session()->has('success'))
-        <div class="alert alert-success text-right">{{ session('success') }}</div>
-    @endif
+  
         <form wire:submit.prevent="sendNotification()">
             @csrf
 
             <div class="mb-3">
                 <label class="form-label">العنوان</label>
-                <input type="text" wire:model.defer="title" class="form-control" placeholder="أدخل العنوان" required>
+                <input type="text" wire:model.defer="title" class="form-control" placeholder="أدخل العنوان" >
                 @error('title') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
@@ -25,13 +23,13 @@
                     <i class="fas fa-user text-primary fs-5"></i>
                 </span>
                 <select wire:model.defer="user_type" class="form-control border-0">
-                    <option disabled>اختر اليوزر</option>
+                    <option value="">اختر اليوزر</option>
                     <option value="All">جميع المستخدمين</option>
                     <option value="owner">مالكي المنشئات</option>
                     <option value="user">المستخدمين</option>
                 </select>
-                @error('user_type') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
+                @error('user_type') <span class="text-danger">{{ $message }}</span> @enderror
 
 
             <div class="text-center mt-3">
