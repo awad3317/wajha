@@ -24,15 +24,22 @@ class ReviewController extends Controller
         $fields=$request->validate([
             'establishment_id' => ['required',Rule::exists('establishments','id')], 
             'rating' =>['required','integer','min:1','max:5'], 
+        ], [
+            'establishment_id.required' => 'يجب اختيار منشأة.',
+            'establishment_id.exists' => 'المنشأة غير موجودة.',
+            'rating.required' => 'يجب إدخال التقييم.',
+            'rating.integer' => 'يجب أن يكون التقييم رقمًا صحيحًا.',
+            'rating.min' => 'يجب أن يكون التقييم على الأقل 1.',
+            'rating.max' => 'يجب أن لا يتجاوز التقييم 5.',
         ]);
         $fields['user_id'] = auth('sanctum')->id();
         $review=$this->ReviewRepository->getByUserIdAndEstablishmentId($fields['user_id'], $fields['establishment_id']);
         if($review){
             $review=$this->ReviewRepository->update($fields, $review->id);
-            return ApiResponseClass::sendResponse($review, 'Review updated successfully.');
+            return ApiResponseClass::sendResponse($review, 'تم تحديث التقييم بنجاح.');
         }
         $review = $this->ReviewRepository->store($fields);
-        return ApiResponseClass::sendResponse($review, 'Review created successfully.');
+        return ApiResponseClass::sendResponse($review, 'تم إنشاء التقييم بنجاح.');
     }
     /**
      * Display a listing of the resource.

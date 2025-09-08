@@ -36,6 +36,11 @@ class EstablishmentUnavailabilityController extends Controller
         $fields = $request->validate([
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'unavailable_date' => ['required','date'],
+        ], [
+            'establishment_id.required' => 'يجب اختيار المنشئة.',
+            'establishment_id.exists' => 'المنشئة المحددة غير موجودة.',
+            'unavailable_date.required' => 'يجب إدخال تاريخ.',
+            'unavailable_date.date' => 'صيغة التاريخ غير صحيحة.',
         ]);
         try {
             $user = auth('sanctum')->user();

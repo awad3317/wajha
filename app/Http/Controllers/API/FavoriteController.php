@@ -40,6 +40,9 @@ class FavoriteController extends Controller
     {
        $fields=$request->validate([
             'establishment_id' => ['required',Rule::exists('establishments','id')],
+        ], [
+            'establishment_id.required' => 'يجب اختيار منشئة.',
+            'establishment_id.exists' => 'المنشئة المحددة غير موجودة.',
         ]);
         try {
             $fields['user_id'] = auth('sanctum')->user()->id; 

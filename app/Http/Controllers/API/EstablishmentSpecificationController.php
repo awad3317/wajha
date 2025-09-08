@@ -37,6 +37,15 @@ class EstablishmentSpecificationController extends Controller
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'name' => ['required','string','max:100'],
             'icon'=>['required','string','max:100']
+        ], [
+            'establishment_id.required' => 'يجب اختيار المنشئة.',
+            'establishment_id.exists' => 'المنشئة المحددة غير موجودة.',
+            'name.required' => 'يجب إدخال اسم.',
+            'name.string' => 'يجب أن يكون الاسم نصًا.',
+            'name.max' => 'لا يجب أن يتجاوز الاسم 100 حرف.',
+            'icon.required' => 'يجب إدخال اسم الأيقونة.',
+            'icon.string' => 'يجب أن يكون اسم الأيقونة نصًا.',
+            'icon.max' => 'لا يجب أن يتجاوز اسم الأيقونة 100 حرف.',
         ]);
         try {
             $user = auth('sanctum')->user();

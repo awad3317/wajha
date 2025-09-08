@@ -42,7 +42,13 @@ class OwnerAccountController extends Controller
         }
         $fields=$request->validate([
             'bank_id'=>['required',Rule::exists('banks','id')],
-            'account_number'=>['required','string','min:7','max:15'],
+            'account_number'=>['required','string','min:7','max:20'],
+        ], [
+            'bank_id.required' => 'يجب اختيار بنك.',
+            'bank_id.exists' => 'البنك المحدد غير موجود.',
+            'account_number.required' => 'يجب إدخال رقم الحساب.',
+            'account_number.min' => 'رقم الحساب يجب أن يكون 7 أحرف على الأقل.',
+            'account_number.max' => 'رقم الحساب لا يجب أن يتجاوز 20 حرفًا.',
         ]);
         try {
             $fields['owner_id'] = auth( 'sanctum')->id();
@@ -68,15 +74,19 @@ class OwnerAccountController extends Controller
     {
         $fields=$request->validate([
             'bank_id'=>['sometimes',Rule::exists('banks','id')],
-            'account_number'=>['sometimes','string','min:7','max:15'],
+            'account_number'=>['sometimes','string','min:7','max:20'],
+        ], [
+            'bank_id.exists' => 'البنك المحدد غير موجود.',
+            'account_number.min' => 'رقم الحساب يجب أن يكون 7 أحرف على الأقل.',
+            'account_number.max' => 'رقم الحساب لا يجب أن يتجاوز 20 حرفًا.',
         ]);
         try {
             $account = $this->OwnerAccountRepository->getById($id);
             if($account->owner_id != auth('sanctum')->id()) {
-                return ApiResponseClass::sendError('You are not authorized to update this account.', [], 403);
+                return ApiResponseClass::sendError('غير مصرح لك بتحديث هذا الحساب.', [], 403);
             }
             $account = $this->OwnerAccountRepository->update($fields,$id);
-            return ApiResponseClass::sendResponse($account, 'account update successfully.');
+            return ApiResponseClass::sendResponse($account, 'تم تحديث الحساب بنجاح.');
         } catch (Exception $e) {
             return ApiResponseClass::sendError('Error update account: ' . $e->getMessage());
         }
@@ -90,12 +100,12 @@ class OwnerAccountController extends Controller
         try {
             $account=$this->OwnerAccountRepository->getById($id);
             if($account->owner_id != auth('sanctum')->id()){
-                return ApiResponseClass::sendError('You are not authorized to delete this account.', [], 403);
+                return ApiResponseClass::sendError('غير مصرح لك بحذف هذا الحساب.', [], 403);
             }
             if($this->OwnerAccountRepository->delete($id)){
-                return ApiResponseClass::sendResponse($account, "{$account->id} unsaved successfully.");
+                return ApiResponseClass::sendResponse($account, "تم إلغاء حفظ الحساب رقم {$account->id} بنجاح.");
             }
-            return ApiResponseClass::sendError("Acount with ID {$id} may not be found or not deleted. Try again.");
+            return ApiResponseClass::sendError("قد لا يكون الحساب بالرقم {$id} موجودًا أو لم يتم حذفه. حاول مرة أخرى.");
         } catch (Exception $e) {
             return ApiResponseClass::sendError('Error deleting acount: ' . $e->getMessage());
         }

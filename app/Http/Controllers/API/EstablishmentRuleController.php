@@ -35,6 +35,10 @@ class EstablishmentRuleController extends Controller
         $fields = $request->validate([
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'rule' => ['required','string'],
+        ],[
+            'establishment_id.required' => 'حقل المنشئة مطلوب.',
+            'establishment_id.exists' => 'المنشئة المحددة غير صحيحة.',
+            'rule.required' => 'يجب كتابة النص الخاص بالقاعدة.',
         ]);
         try {
             $user = auth('sanctum')->user();
@@ -65,6 +69,10 @@ class EstablishmentRuleController extends Controller
         $fields = $request->validate([
             'establishment_id' => ['required',Rule::exists('establishments','id')],
             'rule' => ['required','string'],
+        ],[
+            'establishment_id.required' => 'حقل المنشئة مطلوب.',
+            'establishment_id.exists' => 'المنشئة المحددة غير صحيحة.',
+            'rule.required' => 'يجب كتابة النص الخاص بالقاعدة.',
         ]);
         try {
             $user = auth('sanctum')->user();

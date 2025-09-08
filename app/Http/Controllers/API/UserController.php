@@ -57,17 +57,26 @@ class UserController extends Controller
             'name'=>['sometimes','string','max:100'],
             'current_password' => ['sometimes', 'required_with:new_password', 'string'],
             'new_password' => ['sometimes', 'required_with:current_password', 'string', 'min:6', 'confirmed']
+        ], [
+            'name.string' => 'يجب أن يكون الاسم نصًا.',
+            'name.max' => 'لا يجب أن يتجاوز الاسم 100 حرف.',
+            'current_password.required_with' => 'حقل كلمة المرور الحالية مطلوب عند إدخال كلمة مرور جديدة.',
+            'current_password.string' => 'يجب أن تكون كلمة المرور الحالية نصًا.',
+            'new_password.required_with' => 'حقل كلمة المرور الجديدة مطلوب عند إدخال كلمة المرور الحالية.',
+            'new_password.string' => 'يجب أن تكون كلمة المرور الجديدة نصًا.',
+            'new_password.min' => 'يجب أن تكون كلمة المرور الجديدة 6 أحرف على الأقل.',
+            'new_password.confirmed' => 'تأكيد كلمة المرور الجديدة غير متطابق.',
         ]);
         try {
             if ($request->has('current_password') && $request->has('new_password')){
                 if (!Hash::check($request->current_password, auth('sanctum')->user()->password)) {
-                    return ApiResponseClass::sendError('Current password is incorrect.', [], 422);
+                    return ApiResponseClass::sendError('كلمة المرور الحالية غير صحيحة.', [], 422);
                 }
                 $fields['password'] =$request->new_password;
                 unset($fields['current_password'], $fields['new_password']);
             }
             $user=$this->UserRepository->update($fields,$id);
-            return ApiResponseClass::sendResponse($user,'User is updated successfully.');
+            return ApiResponseClass::sendResponse($user, 'تم تحديث بيانات المستخدم بنجاح.');
         } catch (Exception $e) {
             return ApiResponseClass::sendError('Error updated User: ' . $e->getMessage());
         }
