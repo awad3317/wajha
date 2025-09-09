@@ -76,7 +76,7 @@ class UserAuthController extends Controller
                 'token_type' => 'Bearer'
             ], 'User logged in successfully');
         }
-        return ApiResponseClass::sendError('غير مصرح', ['error' => 'بيانات الاعتماد غير صالحة'], 401);
+        return ApiResponseClass::sendError('البيانات المدخلة غير صحيحه', ['error' => 'بيانات الاعتماد غير صالحة'], 401);
         
     }
 
