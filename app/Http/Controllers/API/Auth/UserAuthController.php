@@ -83,6 +83,8 @@ class UserAuthController extends Controller
     public function logout(Request $request)
     {
         $user = auth('sanctum')->user();
+        $user->device_token = null;
+        $user->save();
         $user->tokens()->delete();
 
         return ApiResponseClass::sendResponse(null, 'تم تسجيل الخروج بنجاح');
