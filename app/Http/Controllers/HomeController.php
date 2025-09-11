@@ -36,4 +36,7 @@ class HomeController extends Controller
     public function notification(){
         return view('notifications.index');
     }
+    public function shearewajha(){
+        return view('sheare-wajha');
+    }
 }

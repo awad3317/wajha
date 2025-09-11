@@ -43,7 +43,16 @@ Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+
+Route::get('/download-wajha-app', function () {
+    return view('download-wajha-app');
+})->name('download-wajha-app');
+
+
+
+
 Route::get('adminlog', [HomeController::class, 'adminlog']);
+// Route::get('sheare-wajha', [HomeController::class, 'shearewajha']);
 Route::get('homepage', [HomeController::class, 'homepage']);
 Route::get('notification', [HomeController::class, 'notification']);
 Route::get('region', [RegionController::class, 'index']);
