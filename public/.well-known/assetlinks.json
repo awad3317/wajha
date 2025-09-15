@@ -4,6 +4,8 @@
     "namespace": "android_app",
     "package_name": "com.maha.wejha",
     "sha256_cert_fingerprints":
-    ["E2:0B:9B:82:9A:69:3F:37:45:19:DD:60:48:17:F7:74:85:4D:33:1C:1D:BC:3B:9C:F1:8C:A8:57:F3:BD:12:F0"]
+    [  "E2:0B:9B:82:9A:69:3F:37:45:19:DD:60:48:17:F7:74:85:4D:33:1C:1D:BC:3B:9C:F1:8C:A8:57:F3:BD:12:F0",
+        "09:EB:7B:C5:8A:41:CC:8A:D3:67:81:0C:65:6D:52:F3:EC:8D:26:8A:5F:9F:25:59:D2:C5:47:67:C6:58:AF:16"]
   }
 }]
+
