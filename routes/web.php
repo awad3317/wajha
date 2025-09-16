@@ -72,22 +72,22 @@ Route::get('price_packages', [BanksController::class, 'show_packages']);
 
 Route::get('/discount_coupons', [Discount_couponsController::class, 'index'])->name('discount-coupons.index');
 
-// Route::get('/go/establishment/{id}', function ($id) {
-//     $scheme = "wejha://establishment/$id"; // رابط التطبيق (Custom URL Scheme)
-//     $fallback = url('/download-wajha-app') . '?from=deeplink&d=' . urlencode($scheme);
+Route::get('/go/establishment/{id}', function ($id) {
+    $scheme = "wejha://establishment/$id"; // رابط التطبيق (Custom URL Scheme)
+    $fallback = url('/download-wajha-app') . '?from=deeplink&d=' . urlencode($scheme);
 
-//     return response()->view('open_in_app', [
-//         'scheme'   => $scheme,
-//         'fallback' => $fallback,
-//     ], 200)->header('Content-Type', 'text/html');
-// });
+    return response()->view('open_in_app', [
+        'scheme'   => $scheme,
+        'fallback' => $fallback,
+    ], 200)->header('Content-Type', 'text/html');
+});
 
-// Route::get('/go/booking/{id}', function ($id) {
-//     $scheme = "wejha://booking/$id"; // رابط التطبيق (Custom URL Scheme)
-//     $fallback = url('/download-wajha-app') . '?from=deeplink&d=' . urlencode($scheme);
+Route::get('/go/booking/{id}', function ($id) {
+    $scheme = "wejha://booking/$id"; // رابط التطبيق (Custom URL Scheme)
+    $fallback = url('/download-wajha-app') . '?from=deeplink&d=' . urlencode($scheme);
 
-//     return response()->view('open_in_app', [
-//         'scheme'   => $scheme,
-//         'fallback' => $fallback,
-//     ], 200)->header('Content-Type', 'text/html');
-// });
+    return response()->view('open_in_app', [
+        'scheme'   => $scheme,
+        'fallback' => $fallback,
+    ], 200)->header('Content-Type', 'text/html');
+});
