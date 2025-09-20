@@ -1,0 +1,21 @@
+{
+  "resources/css/adminlte-rtl.css": {
+    "file": "assets/adminlte-rtl-Bv0bp9Es.css",
+    "src": "resources/css/adminlte-rtl.css",
+    "isEntry": true
+  },
+  "resources/css/adminlte.css": {
+    "file": "assets/adminlte-BwaUunOJ.css",
+    "src": "resources/css/adminlte.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-CjFH8h-0.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/adminlte-rtl-Bv0bp9Es.css"
+    ]
+  }
+}
