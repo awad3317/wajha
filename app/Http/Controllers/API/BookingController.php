@@ -532,8 +532,20 @@ private function getArabicStatus($status)
         try {
             $user = auth('sanctum')->user();
             $booking = $this->bookingRepository->getById($id);
+            $allowedStatuses = ['pending', 'waiting_payment', 'paid'];
+            if (!in_array($booking->status, $allowedStatuses)) {
+                return ApiResponseClass::sendError(
+                'لا يمكن تعديل موعد الحجز في الحالة الحالية (' . $this->getStatusText($booking->status) . ')', 
+                [], 
+                400
+                );
+            }
+            
             $oldDate = $booking->booking_date;
             $newDate = $fields['booking_date'];
+            if ($oldDate == $newDate) {
+                return ApiResponseClass::sendResponse($booking, 'لم يتم تغيير تاريخ الحجز (نفس التاريخ)');
+            }
             $booking->booking_date = $newDate;
             $booking->save();
             $establishment = $booking->establishment;
