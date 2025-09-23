@@ -81,7 +81,7 @@ class BookingController extends Controller
             $existingBooking = $this->bookingRepository->findExistingBooking($user_id,$fields['establishment_id']);
 
             if ($existingBooking) {
-                return ApiResponseClass::sendError('لديك بالفعل حجز نشط في هذه المنشأة ولا يمكنك حجز مرة أخرى.', 400);
+                return ApiResponseClass::sendError(' يجب تأكيد الحجز السابق لديك بالفعل حجز نشط في هذه المنشأة ولا يمكنك حجز مرة أخرى.', 400);
             }
 
             $establishment = $this->EstablishmentRepository->getById($fields['establishment_id']);
