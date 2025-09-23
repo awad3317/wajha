@@ -18,6 +18,7 @@ class BookingModifiedNotification extends Notification
     protected $newDate;
     protected $modifierType; 
     protected $modifierName;
+    protected $color;
 
     /**
      * Create a new notification instance.
@@ -29,6 +30,7 @@ class BookingModifiedNotification extends Notification
         $this->newDate = $newDate;
         $this->modifierType = $modifierType;
         $this->modifierName = $modifierName;
+        $this->color = '#F59E0B';
     }
 
     /**
@@ -75,7 +77,7 @@ class BookingModifiedNotification extends Notification
             'modifier_type' => $this->modifierType,
             'modifier_name' => $this->modifierName,
             'type' => 'booking_modified',
-            'color' => '#F59E0B',
+            'color' => $this->color,
             'message' => $this->getMessage(),
             'target_user_type' => $this->getTargetUserType($notifiable),
         ];
