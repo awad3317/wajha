@@ -16,6 +16,7 @@ class NewBookingNotification extends Notification
     protected $type;
     protected $message;
     protected $targetUserType;
+    protected $color;
 
     /**
      * Create a new notification instance.
@@ -26,6 +27,21 @@ class NewBookingNotification extends Notification
         $this->type = $type;
         $this->targetUserType = $targetUserType;
         $this->message = $message;
+        $this->color = $this->determineColor($booking->status);
+        
+    }
+
+    protected function determineColor(string $type): string
+    {
+        return match($type) {
+            'pending' => '#3B82F6',
+            'confirmed' => '#10B981',      
+            'cancelled' => '#EF4444',     
+            'waiting_payment' => '#F59E0B',       
+            'paid' => '#8B5CF6',     
+            'completed' => '#06B6D4',     
+            default => '#6B7280'           
+        };
     }
 
     /**
@@ -59,6 +75,7 @@ class NewBookingNotification extends Notification
             'type' => $this->type,
             'target_user_type' => $this->targetUserType,
             'message' => $this->message,
+            'color' => $this->color,
         ];
     }
 
