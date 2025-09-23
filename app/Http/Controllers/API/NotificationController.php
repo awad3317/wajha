@@ -54,6 +54,40 @@ class NotificationController extends Controller
             return ApiResponseClass::sendError('حدث خطأ في تحديد الإشعارات كمقروءة: ' . $e->getMessage());
         }
     }
+
+    /**
+ * Mark a single notification as read for the authenticated user.
+ */
+    public function markAsRead($id)
+    {
+        try {
+            $user = auth('sanctum')->user();
+        
+            $notification = $user->unreadNotifications()->where('id', $id)->first();
+        
+            if (!$notification) {
+                return ApiResponseClass::sendError('الإشعار غير موجود ', [], 404);
+            }
+            $notification->markAsRead();
+        
+            return ApiResponseClass::sendResponse([
+                'notification' => [
+                    'id' => $notification->id,
+                    'type' => $notification->data['type'] ?? null,
+                    'message' => $notification->data['message'] ?? null,
+                    'read_at' => $notification->read_at,
+                ],
+                'stats' => [
+                    'total' => $user->notifications->count(),
+                    'unread' => $user->unreadNotifications->count(),
+                    'read' => $user->readNotifications->count(),
+                ]
+            ], 'تم تحديد الإشعار كمقروء بنجاح');
+        
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('حدث خطأ في تحديد الإشعار كمقروء: ' . $e->getMessage());
+        }
+    }
     
 
     /**
