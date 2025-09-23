@@ -13,6 +13,7 @@ class EstablishmentVerificationNotification extends Notification
     use Queueable;
     protected $establishment;
     protected $isVerified;
+    protected $color;
 
     /**
      * Create a new notification instance.
@@ -21,6 +22,7 @@ class EstablishmentVerificationNotification extends Notification
     {
         $this->establishment = $establishment;
         $this->isVerified = $isVerified;
+        $this->color = '#6B7280';
     }
 
 
@@ -57,11 +59,12 @@ class EstablishmentVerificationNotification extends Notification
 
         return [
             'type' => $this->isVerified ? 'establishment_verified' : 'establishment_unverified',
-            'establishment_id' => (string)$this->establishment->id,
+            'establishment_id' => $this->establishment->id,
             'establishment_name' => $this->establishment->name,
             'title' => $title,
             'message' => $body,
-            'user_id' => (string)$notifiable->id,
+            'user_id' => $notifiable->id,
+            'color' => $this->color,
         ];
     }
 

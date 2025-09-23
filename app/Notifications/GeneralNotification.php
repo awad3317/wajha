@@ -12,11 +12,13 @@ class GeneralNotification extends Notification
     
     protected $title;
     protected $message;
+    protected $color;
 
     public function __construct(string $title, string $message)
     {
         $this->title = $title;
         $this->message = $message;
+        $this->color = '#6B7280'; 
     }
 
     public function via(object $notifiable): array
@@ -31,6 +33,7 @@ class GeneralNotification extends Notification
             'message' => $this->message,
             'type' => 'general_notification',
             'target_user_type' => $notifiable->user_type,
+            'color' => $this->color,
         ];
     }
 }
