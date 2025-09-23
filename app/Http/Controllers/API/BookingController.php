@@ -295,6 +295,60 @@ class BookingController extends Controller
     }
 }
 
+    public function completeBooking(Request $request)
+    {
+        $fields = $request->validate([
+            'booking_id' => ['required', Rule::exists('bookings', 'id')],
+        ]);
+
+    try {
+        $booking = $this->bookingRepository->getById($fields['booking_id']);
+        
+        $user = $booking->user;
+        $establishment = $booking->establishment;
+
+        if (auth('sanctum')->id() != $establishment->owner_id) {
+            return ApiResponseClass::sendError('غير مصرح لك بإكمال هذا الحجز', [], 403);
+        }
+
+        $booking = $this->bookingStatusService->completeBooking($booking);
+
+        // $user->notify(new NewBookingNotification(
+        //     $booking, 
+        //     'completed', 
+        //     "تم إكمال حجزك في {$establishment->name}", 
+        //     'customer'
+        // ));
+
+        // $establishmentOwner = $establishment->owner;
+        // $establishmentOwner->notify(new NewBookingNotification(
+        //     $booking, 
+        //     'completed', 
+        //     "تم إكمال حجز في {$establishment->name} للعميل {$user->name}", 
+        //     'owner'
+        // ));
+
+        $title = "تم إكمال الحجز بنجاح";
+        $body = "شكراً لزيارتك {$establishment->name}. ساعدنا بتقييم تجربك لتحسين خدماتنا!";
+
+        $data = [
+            'type' => 'completed',
+            'booking_id' => $booking->id,
+            'establishment_id' => $establishment->id,
+            'user_id' => $user->id,
+        ];
+
+        if ($user->device_token) {
+            $this->firebaseService->sendNotification($user->device_token, $title, $body, $data);
+        }
+
+        return ApiResponseClass::sendResponse($booking, 'تم إكمال الحجز بنجاح');
+
+    } catch (Exception $e) {
+        return ApiResponseClass::sendError('حدث خطأ أثناء إكمال الحجز: ' . $e->getMessage(), [], 500);
+    }
+}
+
 public function cancelledBooking(Request $request)
 {
     $fields = $request->validate([

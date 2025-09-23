@@ -50,7 +50,7 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::post('/booking/confirmBooking', [BookingController::class, 'confirmBooking']);
     Route::post('/booking/cancelledBooking', [BookingController::class, 'cancelledBooking']);
     Route::post('/booking/revertBookingStatus', [BookingController::class, 'revertBookingStatus']);
-    
+    Route::post('/booking/completeBooking', [BookingController::class, 'completeBooking']);
     
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);

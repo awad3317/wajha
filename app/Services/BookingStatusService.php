@@ -62,6 +62,28 @@ class BookingStatusService
         });
     }
 
+    public function completeBooking(Booking $booking)
+    {
+        return DB::transaction(function () use ($booking) {
+            if ($booking->status === 'cancelled') {
+                throw new \Exception('لا يمكن إكمال الحجز الملغي');
+            }
+            if ($booking->status === 'completed') {
+                throw new \Exception('الحجز مكتمل بالفعل');
+            }
+        
+            if (!in_array($booking->status, ['confirmed', 'paid'])) {
+                throw new \Exception('يمكن إكمال الحجز فقط من الحالة المؤكدة أو المدفوعة');
+            }
+        
+            $oldStatus = $booking->status;
+            $booking->update(['status' => 'completed']);
+            $this->logStatusChange($booking, $oldStatus, 'completed', 'completeBooking');
+    
+            return $booking;
+    });
+}
+
     public function cancelledBooking(Booking $booking,$cancellationReason = null)
     {
         return DB::transaction(function () use ($booking,$cancellationReason) {
@@ -130,8 +152,5 @@ class BookingStatusService
             ->with('user')
             ->orderBy('created_at', 'desc')
             ->get();
-    }
-
-
-    
+    }   
 }
