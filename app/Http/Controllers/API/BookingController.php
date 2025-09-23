@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Services\BookingStatusService;
 use App\Repositories\bookingRepository;
+use Illuminate\Support\Carbon;
+use App\Notifications\BookingModifiedNotification;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\NewBookingNotification;
 use App\Repositories\EstablishmentRepository;
@@ -523,7 +525,54 @@ private function getArabicStatus($status)
      */
     public function update(Request $request, string $id)
     {
-        //
+        $fields = $request->validate([
+            'booking_date' =>['required','date','after_or_equal:now'],
+        ]);
+
+        try {
+            $user = auth('sanctum')->user();
+            $booking = $this->bookingRepository->getById($id);
+            $oldDate = $booking->booking_date;
+            $newDate = $fields['booking_date'];
+            $booking->booking_date = $newDate;
+            $booking->save();
+            $establishment = $booking->establishment;
+            $customer = $booking->user;
+            if ($user->id == $establishment->owner_id) {
+            $modifierType = 'owner';
+            $modifierName = $establishment->name;
+            $targetUser = $customer;
+            
+        } else {
+            $modifierType = 'customer';
+            $modifierName = $customer->name;
+            $targetUser = $establishment->owner;
+        }
+           $targetUser->notify(new BookingModifiedNotification(
+            $booking,
+            $oldDate,
+            $newDate,
+            $modifierType,
+            $modifierName
+        ));
+        $title = "تم تعديل موعد الحجز";
+        $body = $this->getFirebaseMessage($modifierType, $establishment->name, $customer->name, $oldDate, $newDate);
+        
+        $data = [
+            'type' => 'booking_modified',
+            'booking_id' => $booking->id,
+            'establishment_id' => $establishment->id,
+            'user_id' => $customer->id,
+            'action' => 'view_booking',
+        ];
+        if ($targetUser->device_token) {
+            $this->firebaseService->sendNotification($targetUser->device_token, $title, $body, $data);
+        }
+            return ApiResponseClass::sendResponse($booking, 'تم تحديث تاريخ الحجز بنجاح');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('حدث خطأ أثناء تحديث تاريخ الحجز: ' . $e->getMessage(), [], 500);
+        }
+
     }
 
     /**
