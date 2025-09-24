@@ -98,36 +98,3 @@ Route::get('/regions/{id}/children', [RegionController::class,'getChildren']);
 Route::get('/region',[RegionController::class,'index']);
 
 Route::get('/advertisement', [AdvertisementController::class,'index']);
-
-Route::get('/test',function(Request $request){
-   $firebaseService = new FirebaseService();
-        
-        // بيانات الاختبار
-        $deviceToken = $request->input('device_token', 'YOUR_TEST_DEVICE_TOKEN');
-        $title = "اختبار إشعار";
-        $body = "هذا إشعار تجريبي من Laravel !";
-        // $imageUrl = "https://example.com/logo.png"; // رابط الشعار الذي تريد إرساله
-        
-        $data = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-        ];
-        if(!$deviceToken){
-            return response()->json('يجب ارسال deviceToken');
-        }
-
-        try {
-        $result = $firebaseService->sendNotification($deviceToken, $title, $body, $data);
-        
-        return response()->json([
-            'success' => $result,
-            'message' => $result ? 'تم إرسال الإشعار بنجاح!' : 'فشل إرسال الإشعار (بدون تفاصيل خطأ).',
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'فشل إرسال الإشعار.',
-            'error' => $e->getMessage(), 
-        ], 500); 
-    }
-});
