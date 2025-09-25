@@ -126,7 +126,9 @@ class Regions extends Component
 
     public function render()
     {
-        $parents = Region::with('parent')->get();
+                $parents = Region::whereNull('parent_id')->get();
+
+        // $parents = Region::with('parent')->get();
         return view('livewire.regions', compact('parents'));
     }
 }
