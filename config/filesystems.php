@@ -38,6 +38,13 @@ return [
             'report' => false,
         ],
 
+        'custom_public' => [
+            'driver' => 'local',
+            'root' => base_path('htdocs/wajha/wajha/public/storage'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
