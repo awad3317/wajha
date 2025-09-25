@@ -7,12 +7,7 @@ use Illuminate\Http\Request;
 
 class AdminLoggerService
 {
-    public static function log(
-        $action,
-        $model = null,
-        $description = null,
-       
-    ) {
+    public static function log($action,$model = null,$description = null,) {
         $adminId =  auth('sanctum')->id();
         if (!$adminId) {
             return null;

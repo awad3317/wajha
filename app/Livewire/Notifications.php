@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use App\Notifications\GeneralNotification;
+use App\Services\AdminLoggerService;
 use App\Services\FirebaseService;
 
 class Notifications extends Component
@@ -65,6 +66,11 @@ class Notifications extends Component
 
                 $user->notify(new GeneralNotification($this->title, $this->description));
             }
+            AdminLoggerService::log(
+                'إرسال إشعار عام',
+                'Notification',
+                "تم إرسال إشعار عام بعنوان: {$this->title} إلى نوع المستخدم: {$this->user_type}"
+            );
 
             $this->dispatch('show-toast', [
                 'type' => 'success',
