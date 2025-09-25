@@ -35,43 +35,57 @@ public function deleteImage(?string $imagePath): bool
     }
 
     try {
-        // 🔧 المسار المطلق للملف بناءً على موقعك الفعلي
-        $absolutePath = base_path('htdocs/wajha/wajha/public/storage/' . str_replace('storage/', '', $imagePath));
+        // 🔧 المسار الصحيح بدون تكرار
+        $basePath = base_path(); // هذا يعطي: /home/tiyar-wejha/htdocs/wajha/wajha/
+        $correctPath = $basePath . '/public/storage/' . str_replace('storage/', '', $imagePath);
         
-        Log::info('🔍 محاولة الحذف من المسار', [
+        // بديل آخر: استخدام public_path مباشرة
+        $alternativePath = public_path('storage/' . str_replace('storage/', '', $imagePath));
+
+        Log::info('🔍 محاولة الحذف من المسار المصحح', [
             'image_path' => $imagePath,
-            'absolute_path' => $absolutePath,
-            'file_exists' => file_exists($absolutePath)
+            'base_path' => $basePath,
+            'correct_path' => $correctPath,
+            'alternative_path' => $alternativePath,
+            'correct_path_exists' => file_exists($correctPath),
+            'alternative_path_exists' => file_exists($alternativePath)
         ]);
 
-        // الحل 1: الحذف المباشر باستخدام PHP
-        if (file_exists($absolutePath)) {
-            if (unlink($absolutePath)) {
-                Log::info('✅ تم حذف الملف بنجاح', [
-                    'path' => $absolutePath,
-                    'method' => 'direct_unlink'
-                ]);
+        // المحاولة الأولى: المسار المصحح
+        if (file_exists($correctPath)) {
+            if (unlink($correctPath)) {
+                Log::info('✅ تم حذف الملف بنجاح من المسار المصحح', ['path' => $correctPath]);
                 return true;
-            } else {
-                Log::error('❌ فشل في حذف الملف مباشرة', ['path' => $absolutePath]);
             }
         }
 
-        // الحل 2: استخدام Storage مع disk مخصص
-        $storagePath = str_replace('storage/', '', $imagePath);
+        // المحاولة الثانية: المسار البديل
+        if (file_exists($alternativePath)) {
+            if (unlink($alternativePath)) {
+                Log::info('✅ تم حذف الملف بنجاح من المسار البديل', ['path' => $alternativePath]);
+                return true;
+            }
+        }
+
+        // المحاولة الثالثة: البحث في المجلد مباشرة
+        $filename = basename($imagePath);
+        $directSearchPath = $basePath . '/public/storage/bank_icons/' . $filename;
         
-        // إنشاء disk مخصص للمسار الصحيح
-        if (Storage::disk('custom_public')->exists($storagePath)) {
-            if (Storage::disk('custom_public')->delete($storagePath)) {
-                Log::info('✅ تم الحذف عبر disk مخصص', ['path' => $storagePath]);
+        if (file_exists($directSearchPath)) {
+            if (unlink($directSearchPath)) {
+                Log::info('✅ تم الحذف بعد البحث المباشر', ['path' => $directSearchPath]);
                 return true;
             }
         }
 
-        Log::error('❌ تعذر العثور على الملف أو حذفه', [
-            'searched_path' => $absolutePath,
-            'image_path' => $imagePath,
-            'storage_path' => $storagePath
+        Log::error('❌ تعذر العثور على الملف', [
+            'searched_paths' => [
+                $correctPath,
+                $alternativePath,
+                $directSearchPath
+            ],
+            'directory_contents' => file_exists($basePath . '/public/storage/bank_icons/') ? 
+                scandir($basePath . '/public/storage/bank_icons/') : 'Directory not found'
         ]);
 
         return false;
@@ -79,7 +93,8 @@ public function deleteImage(?string $imagePath): bool
     } catch (\Exception $e) {
         Log::error('💥 خطأ أثناء محاولة الحذف', [
             'image_path' => $imagePath,
-            'error' => $e->getMessage()
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
         ]);
         return false;
     }
