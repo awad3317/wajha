@@ -38,7 +38,7 @@ public function deleteImage(?string $imagePath): bool
         return false;
     }
 
-    $storagePath = str_replace('storage/', '', $imagePath);
+    $storagePath = $imagePath;
     
     if (!Storage::disk('public')->exists($storagePath)) {
         Log::error('الملف غير موجود للحذف', [
