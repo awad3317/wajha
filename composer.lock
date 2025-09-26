@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b2e23195a29c9eba69fabd37c8ba92f",
+    "content-hash": "94add55a96511a7b5322af1955d7f82d",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -379,6 +379,83 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "cuyz/valinor",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CuyZ/Valinor.git",
+                "reference": "03521de8bc7fbf52b0bd07094809ff8f616bbf2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CuyZ/Valinor/zipball/03521de8bc7fbf52b0bd07094809ff8f616bbf2d",
+                "reference": "03521de8bc7fbf52b0bd07094809ff8f616bbf2d",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": "^2.0",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "conflict": {
+                "phpstan/phpstan": "<1.0 || >= 3.0",
+                "vimeo/psalm": "<5.0 || >=7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "infection/infection": "^0.29",
+                "marcocesarato/php-conventional-changelog": "^1.12",
+                "mikey179/vfsstream": "^1.6.10",
+                "phpbench/phpbench": "^1.3",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^10.5",
+                "rector/rector": "^2.0",
+                "vimeo/psalm": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CuyZ\\Valinor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Romain Canon",
+                    "email": "romain.hydrocanon@gmail.com",
+                    "homepage": "https://github.com/romm"
+                }
+            ],
+            "description": "Library that helps to map any input into a strongly-typed value object structure.",
+            "homepage": "https://github.com/CuyZ/Valinor",
+            "keywords": [
+                "array",
+                "conversion",
+                "hydrator",
+                "json",
+                "mapper",
+                "mapping",
+                "object",
+                "tree",
+                "yaml"
+            ],
+            "support": {
+                "issues": "https://github.com/CuyZ/Valinor/issues",
+                "source": "https://github.com/CuyZ/Valinor/tree/2.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/romm",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-08-28T12:41:24+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1956,22 +2033,23 @@
         },
         {
             "name": "kreait/firebase-php",
-            "version": "7.20.0",
+            "version": "7.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kreait/firebase-php.git",
-                "reference": "7b579b80a3465979c7eb0706d464ba9ea768e0ab"
+                "reference": "97a39cb83de9acf1b0de8b0aa2fa0da0d8955c79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kreait/firebase-php/zipball/7b579b80a3465979c7eb0706d464ba9ea768e0ab",
-                "reference": "7b579b80a3465979c7eb0706d464ba9ea768e0ab",
+                "url": "https://api.github.com/repos/kreait/firebase-php/zipball/97a39cb83de9acf1b0de8b0aa2fa0da0d8955c79",
+                "reference": "97a39cb83de9acf1b0de8b0aa2fa0da0d8955c79",
                 "shasum": ""
             },
             "require": {
                 "beste/clock": "^3.0",
                 "beste/in-memory-cache": "^1.3.1",
                 "beste/json": "^1.5.1",
+                "cuyz/valinor": "^2.0",
                 "ext-ctype": "*",
                 "ext-filter": "*",
                 "ext-json": "*",
@@ -1986,7 +2064,7 @@
                 "kreait/firebase-tokens": "^5.2",
                 "lcobucci/jwt": "^4.3|^5.3",
                 "mtdowling/jmespath.php": "^2.8.0",
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
                 "psr/cache": "^1.0.1|^2.0|^3.0",
                 "psr/clock": "^1.0",
                 "psr/http-client": "^1.0.3",
@@ -1995,17 +2073,17 @@
                 "psr/log": "^1.1|^2.0|^3.0.2"
             },
             "require-dev": {
-                "google/cloud-firestore": "^1.50.0",
-                "php-cs-fixer/shim": "^3.81.0",
+                "google/cloud-firestore": "^1.53.0",
+                "php-cs-fixer/shim": "^3.85.1",
                 "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.1.17",
+                "phpstan/phpstan": "^2.1.22",
                 "phpstan/phpstan-deprecation-rules": "^2.0.3",
-                "phpstan/phpstan-phpunit": "^2.0.6",
-                "phpstan/phpstan-strict-rules": "^2.0.3",
-                "phpunit/phpunit": "^10.5.46",
-                "rector/rector": "^2.0.17",
+                "phpstan/phpstan-phpunit": "^2.0.7",
+                "phpstan/phpstan-strict-rules": "^2.0.6",
+                "phpunit/phpunit": "^10.5.48",
+                "rector/rector": "^2.1.2",
                 "shipmonk/composer-dependency-analyser": "^1.8.3",
-                "symfony/var-dumper": "^6.4.15 || ^7.3.0",
+                "symfony/var-dumper": "^6.4.15 || ^7.3.2",
                 "vlucas/phpdotenv": "^5.6.2"
             },
             "suggest": {
@@ -2052,7 +2130,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-17T23:01:08+00:00"
+            "time": "2025-09-20T22:11:10+00:00"
         },
         {
             "name": "kreait/firebase-tokens",
@@ -10010,12 +10088,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
