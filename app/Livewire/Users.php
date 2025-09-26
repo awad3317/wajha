@@ -26,13 +26,13 @@ class Users extends Component
                 $user->tokens()->delete();
                 AdminLoggerService::log(
                     'تم حضر المستخدم',
-                    $user,
+                    $user->name,
                     'تم حظر المستخدم',
                 );
             } else {
                 AdminLoggerService::log(
                     'تم فك حضر المستخدم',
-                    $user,
+                    $user->name,
                     'تم فك حظر المستخدم',
                 );
             }
