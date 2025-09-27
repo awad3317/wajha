@@ -105,7 +105,6 @@
                         <th>الخصم</th>
                         <th>كود الخصم</th>
                         <th>حالة الحجز</th>
-                        <th>الإيصال</th>
                         <th>العمليات</th>
 
                     </tr>
@@ -150,32 +149,7 @@
                                     {{ $statusLabels[$booking->status] }}
                                 </span>
                             </td>
-                            <td>
-                                @if ($booking->payment_receipt_image)
-                                    <img src="{{ config('app.url') }}/storage/establishment-image/{{ $booking->payment_receipt_image }}"
-                                        width="50" class="rounded cursor-pointer" data-bs-toggle="modal"
-                                        data-bs-target="#receiptModal{{ $booking->id }}">
-                                    {{-- مودال الإيصال --}}
-                                    <div class="modal fade" id="receiptModal{{ $booking->id }}" tabindex="-1"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">إيصال الدفع</h5>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body text-center">
-                                                    <img src="{{ config('app.url') }}/storage/establishment-image/ . $booking->payment_receipt_image) }}"
-                                                        class="img-fluid rounded">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    -
-                                @endif
-                            </td>
+                      
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="{{ url('show_booking/' . $booking->id) }}" class="btn btn-sm btn-success">

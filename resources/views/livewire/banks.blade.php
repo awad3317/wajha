@@ -118,6 +118,19 @@
                 </div>
             </div>
         @endif
+           <div class="alert alert-warning shadow-lg border-0 rounded-3 d-flex align-items-start p-3" role="alert">
+    <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
+    <div>
+        <h6 class="fw-bold text-dark mb-1">تنبيه بالغ الأهمية</h6>
+        <p class="mb-0 text-secondary">
+            الأيقونات المرتبطة <span class="fw-bold text-primary">بالبنوك</span> تُعد جزءاً أساسياً من هوية النظام 
+            وتُستخدم لتمييز الحسابات والمعاملات بشكل واضح وسريع. 
+            <br>
+            يرجى <span class="fw-bold text-danger">عدم حذف هذه الأيقونات</span> 
+            لتجنب حدوث ارتباك أو فقدان دقة في عرض البيانات.
+        </p>
+    </div>
+</div>
 
         {{-- جدول البنوك --}}
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">

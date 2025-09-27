@@ -78,12 +78,13 @@
                             <!-- Action Buttons -->
                             <div class="col-12 mt-3">
                                 <div class="row g-3">
-                                      <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
 
-                                         <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>   {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
-                                            
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
+
                                         </button>
                                     </div>
                                     <div class="col-md-6">
@@ -92,7 +93,7 @@
                                             <i class="fas fa-times mr-2"></i>إلغاء
                                         </button>
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -100,11 +101,30 @@
                 </div>
             </div>
         @endif
+
+
+        <div class="alert alert-warning shadow border-0 rounded-3 p-3 d-flex align-items-start" role="alert">
+            <div class="me-3">
+    <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold text-dark mb-1">تنبيه بخصوص أيقونات التطبيق</h6>
+                <p class="mb-0 text-secondary">
+                    الأيقونات الخاصة <span class="fw-bold text-primary">بالتطبيق</span>
+                    تمثل عناصر أساسية في الواجهة لتوضيح الوظائف
+                    وتقديم تجربة استخدام سلسة وبديهية.
+                    <br>
+                    نرجو <span class="fw-bold text-danger">عدم حذف هذه الأيقونات</span>
+                    حتى لا تتأثر سهولة الاستخدام أو يتشوش تصميم التطبيق.
+                </p>
+            </div>
+        </div>
+
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
             <!-- Card Header -->
             <div class="card-header bg-primary text-white py-3">
                 <h5 class="mb-0 ">
-                 <i class="fas fa-boxes mr-2"></i>   قائمة الباقات
+                    <i class="fas fa-boxes mr-2"></i> قائمة ايقونات المميزات
                 </h5>
             </div>
 

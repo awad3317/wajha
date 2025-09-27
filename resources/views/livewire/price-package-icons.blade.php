@@ -4,18 +4,20 @@
     @endif
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center my-2">
-    @if (!$showForm && !$isEdit)
-                <button wire:click="create" class="btn btn-primary add-btn text-left">  <i class="fas fa-plus mr-1"></i> إضافة الأيقونة    </button>
+            @if (!$showForm && !$isEdit)
+                <button wire:click="create" class="btn btn-primary add-btn text-left"> <i class="fas fa-plus mr-1"></i>
+                    إضافة الأيقونة </button>
             @endif
-            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">إدارة ايقونات الباقات</h3>
-             
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">إدارة ايقونات
+                الباقات </h3>
+
         </div>
         @if ($showForm || $isEdit)
             <div class="card mb-4 border-0 shadow-lg rounded-3">
                 <div class="card-header bg-primary text-white py-3 rounded-top-3">
                     <h5 class="mb-0 text-center">
                         <i class="fas fa-plus mr-1"></i>
-                         {{ $isEdit ? 'تعديل الأيقونة' : 'إضافة أيقونة جديدة' }}
+                        {{ $isEdit ? 'تعديل الأيقونة' : 'إضافة أيقونة جديدة' }}
                     </h5>
                 </div>
 
@@ -79,15 +81,16 @@
                                     <div class="col-md-6">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
-                                          <i class="fas fa-times mr-2"></i>  إلغاء
+                                            <i class="fas fa-times mr-2"></i> إلغاء
                                         </button>
                                     </div>
                                     <div class="col-md-6">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
 
-                                             <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>   {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
-                                        
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة أيقونة' }}
+
                                         </button>
                                     </div>
                                 </div>
@@ -97,11 +100,26 @@
                 </div>
             </div>
         @endif
+        <div class="alert alert-warning shadow-lg border-0 rounded-3 d-flex align-items-start p-3" role="alert">
+            <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
+            <div>
+                <h6 class="fw-bold text-dark mb-1">ملاحظة مهمة</h6>
+                <p class="mb-0 text-secondary">
+                    الأيقونات المرتبطة <span class="fw-bold text-primary">بالتطبيق</span> تُستخدم
+                    لتسهيل تجربة المستخدم وتوضيح وظائف النظام بشكل بصري وسريع.
+                    <br>
+                    يرجى <span class="fw-bold text-danger">عدم حذف هذه الأيقونات</span>
+                    حتى لا تتأثر واجهة التطبيق أو تفقد وضوحها.
+                </p>
+            </div>
+        </div>
+
+
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
             <!-- Card Header -->
             <div class="card-header bg-primary text-white py-3">
                 <h5 class="mb-0 ">
-                 <i class="fas fa-boxes mr-2"></i>   قائمة الباقات
+                    <i class="fas fa-boxes mr-2"></i> قائمة ايقونات الباقات
                 </h5>
             </div>
 
