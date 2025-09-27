@@ -13,6 +13,31 @@
     <link rel="stylesheet" href="{{asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/adminlte/dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+     <meta name="description"
+        content="وجهه - منصة متكاملة لحجز الفنادق، الشاليهات وصالات الأفراح في اليمن، مع تفاصيل شاملة وخيارات متنوعة تناسب جميع المناسبات.">
+    <meta name="keywords"
+        content="وجهه, حجز فنادق اليمن, شاليهات اليمن, صالات أفراح, قاعات مناسبات, حجز فندق, قاعة زفاف, حجز شاليه, Yemen Hotels Booking">
+    <meta name="author" content="منصة وجهه">
+
+    {{-- Open Graph Meta (للسوشيال ميديا) --}}
+    <meta property="og:title" content="وجهه - حجز فنادق، شاليهات وصالات أفراح في اليمن">
+    <meta property="og:description"
+        content="سهولة وراحة في حجز الفنادق، الشاليهات وقاعات المناسبات عبر منصة وجهه في اليمن.">
+    <meta property="og:image" content="{{ asset('favicons/favicon-96x96.png') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+
+    {{-- Favicon & App Icons --}}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicons/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicons/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicons/web-app-manifest-192x192.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicons/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('favicons/site.webmanifest') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('favicons/favicon-96x96.png') }}">
+    <meta name="msapplication-TileColor" content="#ffffff">
 </head>
 
 <body class="login-page" >
