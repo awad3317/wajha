@@ -39,9 +39,7 @@ public function deleteImage(?string $imagePath): bool
         if (file_exists($filePath)) {
             return unlink($filePath);
         }
-
         return false;
-
     } catch (\Exception $e) {
         return false;
     }
