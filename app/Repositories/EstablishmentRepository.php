@@ -28,8 +28,10 @@ class EstablishmentRepository implements RepositoriesInterface
                     $q->select('id', 'name');
                 }
             ])
-            ->withAvg('reviews', 'rating')->where('is_verified','=',true);
-
+            ->withAvg('reviews', 'rating')->where('is_verified','=',true)
+            ->whereHas('owner', function ($q) {
+            $q->where('is_banned', false);
+        });
         $region_id = $request->query('region_id');
         if ($region_id) {
             $region = Region::with('children')->where('id', $region_id)->first();
