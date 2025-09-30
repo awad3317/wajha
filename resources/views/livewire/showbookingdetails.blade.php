@@ -152,91 +152,69 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-12">
-            <div class="card h-100 shadow-sm border-0 rounded-3">
-                <div class="card-body">
-                    <h5 class="text-primary mb-4">
-                        <i class="fas fa-route me-2"></i> تتبع حالة الحجز
-                    </h5>
+       <div class="col-12 col-lg-12">
+    <div class="card h-100 shadow-sm border-0 rounded-3">
+        <div class="card-body">
+            <h5 class="text-primary mb-4">
+                <i class="fas fa-route me-2"></i> تتبع حالة الحجز
+            </h5>
 
-                    <div class="timeline-vertical">
-                        @php
-                            $statusMap = [
-                                'pending' => 'قيد الانتظار',
-                                'waiting_payment' => 'بانتظار الدفع',
-                                'paid' => 'مدفوع',
-                                'confirmed' => 'تم التأكيد',
-                                'completed' => 'مكتمل',
-                                'cancelled' => 'ملغى',
-                            ];
-                        @endphp
+            <div class="timeline-vertical">
+                @php
+                    $statusMap = [
+                        'pending' => ['label' => 'قيد الانتظار', 'class' => 'bg-warning text-dark'],
+                        'waiting_payment' => ['label' => 'بانتظار الدفع', 'class' => 'bg-secondary text-white'],
+                        'paid' => ['label' => 'مدفوع', 'class' => 'bg-info text-white'],
+                        'confirmed' => ['label' => 'تم التأكيد', 'class' => 'bg-primary text-white'],
+                        'completed' => ['label' => 'مكتمل', 'class' => 'bg-success text-white'],
+                        'cancelled' => ['label' => 'ملغى', 'class' => 'bg-danger text-white'],
+                    ];
+                @endphp
 
-                        @foreach ($bookingLogs as $log)
-                            <div class="timeline-item d-flex">
-                                {{-- الأيقونة --}}
-
-
-                                {{-- التفاصيل --}}
-                                <div class="timeline-content mr-3 pr-5">
-                                    <div class="fw-bold">
-                                        من <span
-                                            class="text-muted">{{ $statusMap[$log->from_status] ?? $log->from_status }}</span>
-                                        ←
-                                        <span>الى </span>
-                                        <span class="text-primary">
-
-                                            {{ $statusMap[$log->to_status] ?? $log->to_status }}
-
-                                        </span>
-
-                                    </div>
-                                    <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
-                                    <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
-                                </div>
+                @foreach ($bookingLogs as $log)
+                    <div class="timeline-item d-flex">
+                        <div class="timeline-content mr-3 pr-5">
+                            <div class="fw-bold">
+                                من <span class="badge bg-light text-dark">
+                                    {{ $statusMap[$log->from_status]['label'] ?? $log->from_status }}
+                                </span>
+                                ←
+                                الى <span class="badge {{ $statusMap[$log->to_status]['class'] ?? 'bg-light text-dark' }}">
+                                    {{ $statusMap[$log->to_status]['label'] ?? $log->to_status }}
+                                </span>
                             </div>
-                        @endforeach
+                            <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
+                            <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
+                        </div>
                     </div>
-
-                    @if ($bookingLogs->isEmpty())
-                        <p class="text-muted text-center mt-3">لا يوجد تتبع للحالة حتى الآن</p>
-                    @endif
-                </div>
+                @endforeach
             </div>
+
+            @if ($bookingLogs->isEmpty())
+                <p class="text-muted text-center mt-3">لا يوجد تتبع للحالة حتى الآن</p>
+            @endif
         </div>
+    </div>
+</div>
 
-        <style>
-            .timeline-vertical {
-                position: relative;
-                margin-left: 30px;
-                border-left: 3px solid #dee2e6;
-                /* الخط العمودي */
-                padding-left: 30px;
-            }
+<style>
+    .timeline-vertical {
+        position: relative;
+        margin-left: 30px;
+        border-left: 3px solid #dee2e6;
+        padding-left: 30px;
+    }
 
-            .timeline-item {
-                position: relative;
-                margin-bottom: 30px;
-            }
+    .timeline-item {
+        position: relative;
+        margin-bottom: 30px;
+    }
 
-            .timeline-icon {
-                width: 45px;
-                height: 45px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 18px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-                position: absolute;
-                left: -53px;
-                /* يخلي الأيقونة فوق الخط */
-                top: 0;
-            }
+    .timeline-content {
+        margin-left: 10px;
+    }
+</style>
 
-            .timeline-content {
-                margin-left: 10px;
-            }
-        </style>
 
 
 
