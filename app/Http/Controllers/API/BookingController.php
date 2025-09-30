@@ -315,20 +315,20 @@ class BookingController extends Controller
 
         $booking = $this->bookingStatusService->completeBooking($booking);
 
-        // $user->notify(new NewBookingNotification(
-        //     $booking, 
-        //     'completed', 
-        //     "تم إكمال حجزك في {$establishment->name}", 
-        //     'customer'
-        // ));
+        $user->notify(new NewBookingNotification(
+            $booking, 
+            'completed', 
+            "تم إكمال حجزك في {$establishment->name}", 
+            'customer'
+        ));
 
-        // $establishmentOwner = $establishment->owner;
-        // $establishmentOwner->notify(new NewBookingNotification(
-        //     $booking, 
-        //     'completed', 
-        //     "تم إكمال حجز في {$establishment->name} للعميل {$user->name}", 
-        //     'owner'
-        // ));
+        $establishmentOwner = $establishment->owner;
+        $establishmentOwner->notify(new NewBookingNotification(
+            $booking, 
+            'completed', 
+            "تم إكمال حجز في {$establishment->name} للعميل {$user->name}", 
+            'owner'
+        ));
 
         $title = "تم إكمال الحجز بنجاح";
         $body = "شكراً لزيارتك {$establishment->name}. ساعدنا بتقييم تجربك لتحسين خدماتنا!";
