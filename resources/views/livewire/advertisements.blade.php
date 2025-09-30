@@ -95,7 +95,7 @@
                                         </div>
                                     @elseif ($imagePreview)
                                         <div class="position-relative d-inline-block">
-                                            <img src="{{ asset('storage/establishment-image/' . $imagePreview) }}"
+                                            <img src="{{ asset('storage/advertisement-images/' . $imagePreview) }}"
                                                 class="rounded-3 shadow border-3 border-secondary"
                                                 style="max-height: 200px; max-width: 100%; object-fit: contain;">
                                             <span class="badge bg-secondary position-absolute top-0 start-0 m-2">الصورة
@@ -327,8 +327,6 @@
                     </div>
                 </div>
             @endforelse
-
-
         </div>
         <div class="mt-2">
             {{ $advertisements->links('pagination::bootstrap-5') }}

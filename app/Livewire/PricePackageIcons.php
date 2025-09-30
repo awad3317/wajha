@@ -131,7 +131,7 @@ class PricePackageIcons extends Component
 
     public function render()
     {
-        $packages = pricePackageIcon::query()->paginate(2);
+        $packages = pricePackageIcon::query()->paginate(perPage: 10);
         return view('livewire.price-package-icons', compact('packages'));
     }
 }
