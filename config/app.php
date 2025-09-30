@@ -124,4 +124,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'mobile_app_secret' => env('MOBILE_APP_SECRET', 'your-secret-here')
+
 ];

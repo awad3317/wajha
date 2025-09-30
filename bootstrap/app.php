@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\CheckBannedUser;
 use App\Http\Middleware\SanctumApiAuth;
+use App\Http\Middleware\VerifyAppAccess;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -25,7 +26,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'check.banned' => CheckBannedUser::class,
             'auth.sanctum.api' => SanctumApiAuth::class,
+            'verify.app.access' => VerifyAppAccess::class,
         ]);
+        // $middleware->appendToGroup('api', [
+        //     'verify.app.access', 
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
