@@ -87,8 +87,8 @@
                         </div>
                     </div>
                 </div>
-                     {{-- الملاحظات --}}
-            
+                {{-- الملاحظات --}}
+
                 <div class="col-6 col-lg-6">
                     <div class="card shadow-sm border-0 rounded-3 bg-warning-subtle">
                         <div class="card-body">
@@ -97,145 +97,183 @@
                         </div>
                     </div>
                 </div>
-        
-            </div>
+
+        </div>
 
 
 
-            {{-- التواريخ --}}
-            <div class="row g-4 mt-3">
-                <div class="col-12 col-md-6">
-                    <div class="card shadow-sm border-0 rounded-3">
-                        <div class="card-body">
-                            <h6 class="text-primary mb-3"><i class="fas fa-clock me-2"></i> التواريخ</h6>
-                            <p><strong>تاريخ الحجز:</strong> {{ $booking->booking_date?->format('Y-m-d') }}</p>
-                            <p><strong>أنشئ في:</strong> {{ $booking->created_at?->format('Y-m-d H:i') }}</p>
-                            <p><strong>آخر تحديث:</strong> {{ $booking->updated_at?->format('Y-m-d H:i') }}</p>
-                        </div>
+        {{-- التواريخ --}}
+        <div class="row g-4 mt-3">
+            <div class="col-12 col-md-6">
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-body">
+                        <h6 class="text-primary mb-3"><i class="fas fa-clock me-2"></i> التواريخ</h6>
+                        <p><strong>تاريخ الحجز:</strong> {{ $booking->booking_date?->format('Y-m-d') }}</p>
+                        <p><strong>أنشئ في:</strong> {{ $booking->created_at?->format('Y-m-d H:i') }}</p>
+                        <p><strong>آخر تحديث:</strong> {{ $booking->updated_at?->format('Y-m-d H:i') }}</p>
                     </div>
                 </div>
+            </div>
 
-                {{-- إيصال الدفع --}}
-                <div class="col-12 col-md-6">
-                    <div class="card shadow-sm border-0 rounded-3">
-                        <div class="card-body">
-                            <h6 class="text-primary mb-3"><i class="fas fa-credit-card me-2"></i> الدفع</h6>
-                            <p><strong>الحالة:</strong>
-                                <span
-                                    class="badge {{ $booking->status == 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">
-                                    {{ $booking->status == 'paid' ? 'مدفوع' : 'بانتظار الدفع' }}
-                                </span>
-                            </p>
-                            @if ($booking->payment_receipt_image)
-                                <p><strong>إيصال الدفع:</strong></p>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#receiptModal">
-                                    <img src="{{ asset($booking->payment_receipt_image) }}"
-                                        class="img-fluid rounded shadow" style="max-width:180px; cursor: zoom-in;">
-                                </a>
+            {{-- إيصال الدفع --}}
+            <div class="col-12 col-md-6">
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-body">
+                        <h6 class="text-primary mb-3"><i class="fas fa-credit-card me-2"></i> الدفع</h6>
+                        <p><strong>الحالة:</strong>
+                            <span
+                                class="badge {{ $booking->status == 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">
+                                {{ $booking->status == 'paid' ? 'مدفوع' : 'بانتظار الدفع' }}
+                            </span>
+                        </p>
+                        @if ($booking->payment_receipt_image)
+                            <p><strong>إيصال الدفع:</strong></p>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#receiptModal">
+                                <img src="{{ asset($booking->payment_receipt_image) }}"
+                                    class="img-fluid rounded shadow" style="max-width:180px; cursor: zoom-in;">
+                            </a>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="receiptModal" tabindex="-1"
-                                    aria-labelledby="receiptModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content bg-transparent border-0">
-                                            <div class="modal-body text-center">
-                                                <img src="{{ asset($booking->payment_receipt_image) }}"
-                                                    class="img-fluid rounded shadow"
-                                                    style="max-width:100%; cursor: zoom-in;">
-                                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content bg-transparent border-0">
+                                        <div class="modal-body text-center">
+                                            <img src="{{ asset($booking->payment_receipt_image) }}"
+                                                class="img-fluid rounded shadow"
+                                                style="max-width:100%; cursor: zoom-in;">
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
+                        @endif
 
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-12">
-                <div class="card h-100 shadow-sm border-0 rounded-3">
-                            <div class="card-body">
-                                <h5 class="text-primary mb-4">
-                                    <i class="fas fa-route me-2"></i> تتبع حالة الحجز
-                                </h5>
-
-                                <div class="timeline d-flex justify-content-between position-relative">
-                               @foreach ($bookingLogs as $log)
-    <div class="timeline-step text-center flex-fill position-relative">
-        <div class="timeline-icon 
-            @if ($log->to_status == 'pending') bg-warning text-dark
-            @elseif($log->to_status == 'waiting_payment') bg-secondary text-white
-            @elseif($log->to_status == 'paid') bg-info text-white
-            @elseif($log->to_status == 'confirmed') bg-primary text-white
-            @elseif($log->to_status == 'completed') bg-success text-white
-            @elseif($log->to_status == 'cancelled') bg-danger text-white
-            @endif
-        ">
-            <i class="fas fa-check"></i>
         </div>
+        <div class="col-12 col-lg-12">
+            <div class="card h-100 shadow-sm border-0 rounded-3">
+                <div class="card-body">
+                    <h5 class="text-primary mb-4">
+                        <i class="fas fa-route me-2"></i> تتبع حالة الحجز
+                    </h5>
 
-        <div class="mt-2 small fw-bold">
-            من <span class="text-muted">{{ $log->from_status }}</span>
-            إلى <span class="text-primary">{{ $log->to_status }}</span>
-        </div>
-
-        <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
-        <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
-    </div>
-@endforeach
-
+                    <div class="timeline d-flex flex-wrap justify-content-between position-relative">
+                        @foreach ($bookingLogs as $log)
+                            <div class="timeline-step text-center flex-fill position-relative mb-4">
+                                {{-- أيقونة الحالة --}}
+                                <div
+                                    class="timeline-icon 
+                                @if ($log->to_status == 'pending') bg-warning text-dark
+                                @elseif($log->to_status == 'waiting_payment') bg-secondary text-white
+                                @elseif($log->to_status == 'paid') bg-info text-white
+                                @elseif($log->to_status == 'confirmed') bg-primary text-white
+                                @elseif($log->to_status == 'completed') bg-success text-white
+                                @elseif($log->to_status == 'cancelled') bg-danger text-white @endif">
+                                    <i class="fas fa-check"></i>
                                 </div>
 
-                                @if ($bookingLogs->isEmpty())
-                                    <p class="text-muted text-center mt-3">لا يوجد تتبع للحالة حتى الآن</p>
+                                {{-- تفاصيل الحالة --}}
+                                <div class="mt-2 small fw-bold">
+                                    من <span class="text-muted">{{ $log->from_status }}</span>
+                                    إلى <span class="text-primary">{{ $log->to_status }}</span>
+                                </div>
+                                <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
+                                <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
+
+                                {{-- الخط بين المراحل --}}
+                                @if (!$loop->last)
+                                    <div class="timeline-line"></div>
                                 @endif
-
                             </div>
-                        </div>
-
-                        <style>
-                            .timeline {
-                                margin-top: 20px;
-                            }
-
-                            .timeline-step {
-                                position: relative;
-                                min-width: 120px;
-                            }
-
-                            .timeline-icon {
-                                width: 50px;
-                                height: 50px;
-                                border-radius: 50%;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                margin: 0 auto;
-                                font-size: 18px;
-                                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-                                z-index: 2;
-                            }
-
-                            .timeline-line {
-                                position: absolute;
-                                top: 25px;
-                                left: 50%;
-                                width: 100%;
-                                height: 4px;
-                                background: #dee2e6;
-                                z-index: 1;
-                            }
-
-                            .timeline-step:last-child .timeline-line {
-                                display: none;
-                            }
-                        </style>
-
+                        @endforeach
                     </div>
-                </div>
-       
 
+                    @if ($bookingLogs->isEmpty())
+                        <p class="text-muted text-center mt-3">لا يوجد تتبع للحالة حتى الآن</p>
+                    @endif
+                </div>
+            </div>
         </div>
+
+        <style>
+            .timeline {
+                margin-top: 20px;
+                position: relative;
+            }
+
+            .timeline-step {
+                position: relative;
+                min-width: 160px;
+                flex: 1;
+            }
+
+            .timeline-icon {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0px 20px;
+                font-size: 18px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+                z-index: 2;
+            }
+
+            .timeline-line {
+                position: absolute;
+                top: 25px;
+                left: 50%;
+                transform: translateX(50%);
+                width: 100%;
+                height: 4px;
+                background: #dee2e6;
+                z-index: 1;
+            }
+
+            /* آخر عنصر بدون خط */
+            .timeline-step:last-child .timeline-line {
+                display: none;
+            }
+
+            /* موبايل: العمود يصير عمودي */
+            @media (max-width: 768px) {
+                .timeline {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .timeline-step {
+                    flex: none;
+                    width: 100%;
+                    text-align: left;
+                    margin-bottom: 30px;
+                }
+
+                .timeline-line {
+                    top: 50px;
+                    left: 25px;
+                    width: 4px;
+                    height: calc(100% - 50px);
+                    transform: none;
+                }
+
+                .timeline-step:last-child .timeline-line {
+                    display: none;
+                }
+
+                .timeline-icon {
+                    margin: 0;
+                }
+            }
+        </style>
+
     </div>
+
+
+</div>
+</div>
 
 </div>
