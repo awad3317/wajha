@@ -535,7 +535,7 @@ private function getArabicStatus($status)
             $allowedStatuses = ['pending', 'waiting_payment', 'paid'];
             if (!in_array($booking->status, $allowedStatuses)) {
                 return ApiResponseClass::sendError(
-                'لا يمكن تعديل موعد الحجز في الحالة الحالية (' . $this->getStatusText($booking->status) . ')', 
+                'لا يمكن تعديل موعد الحجز في الحالة الحالية (' . $booking->status_text . ')', 
                 [], 
                 400
                 );

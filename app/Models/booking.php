@@ -26,6 +26,20 @@ class booking extends Model
         'discount_amount' => 'decimal:2'
     ];
 
+    public function getStatusTextAttribute()
+    {
+        $statusMap = [
+            'pending' => 'قيد الانتظار',
+            'waiting_payment' => 'بانتظار الدفع',
+            'paid' => 'مدفوع',
+            'confirmed' => 'تم التأكيد',
+            'cancelled' => 'ملغى', 
+            'completed' => 'مكتمل'
+        ];
+
+        return $statusMap[$this->status] ?? 'غير معروف';
+    }
+
     public function getPaymentReceiptImageAttribute($value)
     {
         return 'storage/' . $value;
