@@ -115,7 +115,7 @@ class Advertisements extends Component
         $this->start_date = $advertisement->start_date->format('Y-m-d\TH:i');
         $this->end_date = $advertisement->end_date ? $advertisement->end_date->format('Y-m-d\TH:i') : null;
         $this->isEdit = true;
-        $this->showForm = true;
+        // $this->showForm = true;
     }
 
     public function update()

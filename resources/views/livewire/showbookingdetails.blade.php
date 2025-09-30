@@ -71,7 +71,7 @@
 
             {{-- السعر والتحليل --}}
             <div class="row g-4 mt-3">
-                <div class="col-12 col-lg-12">
+                <div class="col-6 col-lg-6">
                     <div class="card h-100 shadow-sm border-0 rounded-3">
                         <div class="card-body">
                             <h6 class="text-primary mb-3"><i class="fas fa-money-bill me-2"></i> تفاصيل السعر</h6>
@@ -84,6 +84,92 @@
                                 {{ number_format(($booking->pricePackage->price ?? 0) - ($booking->discount_amount ?? 0), 2) }}
                                 ر.س
                             </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-6">
+                    <div class="card h-100 shadow-sm border-0 rounded-3">
+                        <div class="card-body">
+                            <div class="card shadow-sm border-0 rounded-4">
+                                <div class="card-body">
+                                <h5 class="text-primary mb-4">
+    <i class="fas fa-route me-2"></i> تتبع حالة الحجز
+</h5>
+
+<div class="timeline d-flex justify-content-between position-relative">
+    @foreach ($bookingLogs as $log)
+        <div class="timeline-step text-center flex-fill position-relative">
+            {{-- أيقونة الحالة --}}
+            <div class="timeline-icon 
+                @if ($log->status == 'pending') bg-warning text-dark
+                @elseif($log->status == 'paid') bg-info 
+                @elseif($log->status == 'confirmed') bg-primary 
+                @elseif($log->status == 'completed') bg-success 
+                @elseif($log->status == 'cancelled') bg-danger 
+                @else bg-secondary @endif">
+                <i class="fas fa-check"></i>
+            </div>
+
+            {{-- تفاصيل الحالة --}}
+            <div class="mt-2 small fw-bold">{{ $log->status_text ?? ucfirst($log->status) }}</div>
+            <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
+            <div class="text-secondary small">
+                {{ $log->created_at->format('Y-m-d H:i') }}
+            </div>
+
+            {{-- الخط بين المراحل --}}
+            @if (!$loop->last)
+                <div class="timeline-line"></div>
+            @endif
+        </div>
+    @endforeach
+</div>
+
+@if ($bookingLogs->isEmpty())
+    <p class="text-muted text-center mt-3">لا يوجد تتبع للحالة حتى الآن</p>
+@endif
+
+                                </div>
+                            </div>
+
+                            <style>
+                                .timeline {
+                                    margin-top: 20px;
+                                }
+
+                                .timeline-step {
+                                    position: relative;
+                                    min-width: 120px;
+                                }
+
+                                .timeline-icon {
+                                    width: 50px;
+                                    height: 50px;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto;
+                                    font-size: 18px;
+                                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+                                    z-index: 2;
+                                }
+
+                                .timeline-line {
+                                    position: absolute;
+                                    top: 25px;
+                                    left: 50%;
+                                    width: 100%;
+                                    height: 4px;
+                                    background: #dee2e6;
+                                    z-index: 1;
+                                }
+
+                                .timeline-step:last-child .timeline-line {
+                                    display: none;
+                                }
+                            </style>
+
                         </div>
                     </div>
                 </div>
@@ -128,7 +214,8 @@
                                         <div class="modal-content bg-transparent border-0">
                                             <div class="modal-body text-center">
                                                 <img src="{{ asset($booking->payment_receipt_image) }}"
-                                                    class="img-fluid rounded shadow" style="max-width:100%; cursor: zoom-in;">
+                                                    class="img-fluid rounded shadow"
+                                                    style="max-width:100%; cursor: zoom-in;">
                                             </div>
                                         </div>
                                     </div>
