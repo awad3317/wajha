@@ -159,26 +159,36 @@
                         <i class="fas fa-route me-2"></i> تتبع حالة الحجز
                     </h5>
 
-                    <div class="timeline-vertical position-relative">
-                        @foreach ($bookingLogs as $log)
-                            <div class="timeline-step-vertical d-flex align-items-start mb-4">
-                                {{-- الأيقونة --}}
-                                <div
-                                    class="timeline-icon 
-                                @if ($log->to_status == 'pending') bg-warning text-dark
-                                @elseif($log->to_status == 'waiting_payment') bg-secondary 
-                                @elseif($log->to_status == 'paid') bg-info 
-                                @elseif($log->to_status == 'confirmed') bg-primary 
-                                @elseif($log->to_status == 'completed') bg-success 
-                                @elseif($log->to_status == 'cancelled') bg-danger  @endif">
-                                    <i class="fas fa-check"></i>
-                                </div>
+                    <div class="timeline-vertical">
+                        @php
+                            $statusMap = [
+                                'pending' => 'قيد الانتظار',
+                                'waiting_payment' => 'بانتظار الدفع',
+                                'paid' => 'مدفوع',
+                                'confirmed' => 'تم التأكيد',
+                                'completed' => 'مكتمل',
+                                'cancelled' => 'ملغى',
+                            ];
+                        @endphp
 
-                                {{-- تفاصيل الحالة --}}
-                                <div class="ms-3">
-                                    <div class="fw-bold text-dark">
-                                        من <span class="text-muted">{{ $log->from_status }}</span>
-                                        → <span class="text-primary">{{ $log->to_status }}</span>
+                        @foreach ($bookingLogs as $log)
+                            <div class="timeline-item d-flex">
+                                {{-- الأيقونة --}}
+
+
+                                {{-- التفاصيل --}}
+                                <div class="timeline-content mr-3 pr-5">
+                                    <div class="fw-bold">
+                                        من <span
+                                            class="text-muted">{{ $statusMap[$log->from_status] ?? $log->from_status }}</span>
+                                        ←
+                                        <span>الى </span>
+                                        <span class="text-primary">
+
+                                            {{ $statusMap[$log->to_status] ?? $log->to_status }}
+
+                                        </span>
+
                                     </div>
                                     <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
                                     <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
@@ -195,28 +205,17 @@
         </div>
 
         <style>
-            .timeline-vertical {    
-                margin-top: 20px;
-                border-left: 3px solid #dee2e6;
-                padding-left: 20px;
-            }
-
-            .timeline-step-vertical {
+            .timeline-vertical {
                 position: relative;
+                margin-left: 30px;
+                border-left: 3px solid #dee2e6;
+                /* الخط العمودي */
+                padding-left: 30px;
             }
 
-            .timeline-step-vertical::before {
-                content: "";
-                position: absolute;
-                left: -22px;
-                top: 25px;
-                width: 3px;
-                height: calc(100% - 25px);
-                background: #dee2e6;
-            }
-
-            .timeline-step-vertical:last-child::before {
-                display: none;
+            .timeline-item {
+                position: relative;
+                margin-bottom: 30px;
             }
 
             .timeline-icon {
@@ -228,11 +227,22 @@
                 justify-content: center;
                 font-size: 18px;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-                z-index: 2;
+                position: absolute;
+                left: -53px;
+                /* يخلي الأيقونة فوق الخط */
+                top: 0;
+            }
+
+            .timeline-content {
+                margin-left: 10px;
             }
         </style>
 
+
+
     </div>
+</div>
+</div>
 
 
 </div>
