@@ -159,10 +159,10 @@
                         <i class="fas fa-route me-2"></i> تتبع حالة الحجز
                     </h5>
 
-                    <div class="timeline d-flex flex-wrap justify-content-between position-relative">
+                    <div class="timeline-vertical position-relative">
                         @foreach ($bookingLogs as $log)
-                            <div class="timeline-step text-center flex-fill position-relative mb-4">
-                                {{-- أيقونة الحالة --}}
+                            <div class="timeline-step-vertical d-flex align-items-start mb-4">
+                                {{-- الأيقونة --}}
                                 <div
                                     class="timeline-icon 
                                 @if ($log->to_status == 'pending') bg-warning text-dark
@@ -175,17 +175,14 @@
                                 </div>
 
                                 {{-- تفاصيل الحالة --}}
-                                <div class="mt-2 small fw-bold">
-                                    من <span class="text-muted">{{ $log->from_status }}</span>
-                                    إلى <span class="text-primary">{{ $log->to_status }}</span>
+                                <div class="ms-3">
+                                    <div class="fw-bold text-dark">
+                                        من <span class="text-muted">{{ $log->from_status }}</span>
+                                        → <span class="text-primary">{{ $log->to_status }}</span>
+                                    </div>
+                                    <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
+                                    <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
                                 </div>
-                                <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
-                                <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
-
-                                {{-- الخط بين المراحل --}}
-                                @if (!$loop->last)
-                                    <div class="timeline-line"></div>
-                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -198,75 +195,40 @@
         </div>
 
         <style>
-            .timeline {
+            .timeline-vertical {
                 margin-top: 20px;
+                border-left: 3px solid #dee2e6;
+                padding-left: 20px;
+            }
+
+            .timeline-step-vertical {
                 position: relative;
             }
 
-            .timeline-step {
-                position: relative;
-                min-width: 160px;
-                flex: 1;
+            .timeline-step-vertical::before {
+                content: "";
+                position: absolute;
+                left: -22px;
+                top: 25px;
+                width: 3px;
+                height: calc(100% - 25px);
+                background: #dee2e6;
+            }
+
+            .timeline-step-vertical:last-child::before {
+                display: none;
             }
 
             .timeline-icon {
-                width: 50px;
-                height: 50px;
+                width: 45px;
+                height: 45px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0px 20px;
                 font-size: 18px;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
                 z-index: 2;
-            }
-
-            .timeline-line {
-                position: absolute;
-                top: 25px;
-                left: 50%;
-                transform: translateX(50%);
-                width: 100%;
-                height: 4px;
-                background: #dee2e6;
-                z-index: 1;
-            }
-
-            /* آخر عنصر بدون خط */
-            .timeline-step:last-child .timeline-line {
-                display: none;
-            }
-
-            /* موبايل: العمود يصير عمودي */
-            @media (max-width: 768px) {
-                .timeline {
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-
-                .timeline-step {
-                    flex: none;
-                    width: 100%;
-                    text-align: left;
-                    margin-bottom: 30px;
-                }
-
-                .timeline-line {
-                    top: 50px;
-                    left: 25px;
-                    width: 4px;
-                    height: calc(100% - 50px);
-                    transform: none;
-                }
-
-                .timeline-step:last-child .timeline-line {
-                    display: none;
-                }
-
-                .timeline-icon {
-                    margin: 0;
-                }
             }
         </style>
 
