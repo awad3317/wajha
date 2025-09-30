@@ -237,7 +237,7 @@ class BookingController extends Controller
         Log::error('خطأ في markAsPaid: ' . $e->getMessage());
         return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الدفع: ' . $e->getMessage(), [], 500);
     }
-}
+    }
     public function confirmBooking(Request $request)
 {
     $fields = $request->validate([
@@ -295,7 +295,7 @@ class BookingController extends Controller
     } catch (Exception $e) {
         return ApiResponseClass::sendError('حدث خطأ أثناء تأكيد الحجز: ' . $e->getMessage(), [], 500);
     }
-}
+    }
 
     public function completeBooking(Request $request)
     {
@@ -349,9 +349,9 @@ class BookingController extends Controller
     } catch (Exception $e) {
         return ApiResponseClass::sendError('حدث خطأ أثناء إكمال الحجز: ' . $e->getMessage(), [], 500);
     }
-}
+    }
 
-public function cancelledBooking(Request $request)
+    public function cancelledBooking(Request $request)
 {
     $fields = $request->validate([
         'booking_id' => ['required', Rule::exists('bookings', 'id')],
@@ -438,7 +438,7 @@ public function cancelledBooking(Request $request)
             500
         );
     }
-}
+    }
 
     public function revertBookingStatus(Request $request)
 {
@@ -492,8 +492,8 @@ public function cancelledBooking(Request $request)
             500
         );
     }
-}
-private function getArabicStatus($status)
+    }
+    private function getArabicStatus($status)
 {
     $statusMap = [
         'pending' => 'قيد الانتظار',
@@ -505,7 +505,7 @@ private function getArabicStatus($status)
     ];
 
     return $statusMap[$status] ?? $status;
-}
+    }
 
     /**
      * Display the specified resource.
