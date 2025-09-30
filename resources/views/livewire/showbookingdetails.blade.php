@@ -154,42 +154,36 @@
             </div>
             <div class="col-12 col-lg-12">
                 <div class="card h-100 shadow-sm border-0 rounded-3">
-                    {{-- <div class="card-body"> --}}
-                        {{-- <div class="card shadow-sm border-0 rounded-4"> --}}
                             <div class="card-body">
                                 <h5 class="text-primary mb-4">
                                     <i class="fas fa-route me-2"></i> تتبع حالة الحجز
                                 </h5>
 
                                 <div class="timeline d-flex justify-content-between position-relative">
-                                    @foreach ($bookingLogs as $log)
-                                        <div class="timeline-step text-center flex-fill position-relative">
-                                            {{-- أيقونة الحالة --}}
-                                            <div
-                                                class="timeline-icon 
-                @if ($log->status == 'pending') bg-warning text-dark
-                @elseif($log->status == 'paid') bg-info 
-                @elseif($log->status == 'confirmed') bg-primary 
-                @elseif($log->status == 'completed') bg-success 
-                @elseif($log->status == 'cancelled') bg-danger 
-                @else bg-secondary @endif">
-                                                <i class="fas fa-check"></i>
-                                            </div>
+                               @foreach ($bookingLogs as $log)
+    <div class="timeline-step text-center flex-fill position-relative">
+        <div class="timeline-icon 
+            @if ($log->to_status == 'pending') bg-warning text-dark
+            @elseif($log->to_status == 'waiting_payment') bg-secondary text-white
+            @elseif($log->to_status == 'paid') bg-info text-white
+            @elseif($log->to_status == 'confirmed') bg-primary text-white
+            @elseif($log->to_status == 'completed') bg-success text-white
+            @elseif($log->to_status == 'cancelled') bg-danger text-white
+            @endif
+        ">
+            <i class="fas fa-check"></i>
+        </div>
 
-                                            {{-- تفاصيل الحالة --}}
-                                            <div class="mt-2 small fw-bold">
-                                                {{ $log->status_text ?? ucfirst($log->status) }}</div>
-                                            <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
-                                            <div class="text-secondary small">
-                                                {{ $log->created_at->format('Y-m-d H:i') }}
-                                            </div>
+        <div class="mt-2 small fw-bold">
+            من <span class="text-muted">{{ $log->from_status }}</span>
+            إلى <span class="text-primary">{{ $log->to_status }}</span>
+        </div>
 
-                                            {{-- الخط بين المراحل --}}
-                                            @if (!$loop->last)
-                                                <div class="timeline-line"></div>
-                                            @endif
-                                        </div>
-                                    @endforeach
+        <div class="text-muted small">{{ $log->user?->name ?? 'النظام' }}</div>
+        <div class="text-secondary small">{{ $log->created_at->format('Y-m-d H:i') }}</div>
+    </div>
+@endforeach
+
                                 </div>
 
                                 @if ($bookingLogs->isEmpty())
@@ -238,8 +232,7 @@
                         </style>
 
                     </div>
-                {{-- </div> --}}
-            {{-- </div> --}}
+                </div>
        
 
         </div>
