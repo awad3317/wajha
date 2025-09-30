@@ -209,7 +209,7 @@
 
             <!-- Card Footer with Pagination -->
             <div class="card-footer">
-                {{ $users->links('vendor.pagination.bootstrap-4') }}
+                {{ $users->links('vendor.pagination.bootstrap-5') }}
             </div>
         </div>
     </div>

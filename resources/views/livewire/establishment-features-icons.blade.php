@@ -105,7 +105,7 @@
 
         <div class="alert alert-warning shadow border-0 rounded-3 p-3 d-flex align-items-start" role="alert">
             <div class="me-3">
-    <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
+                <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
             </div>
             <div>
                 <h6 class="fw-bold text-dark mb-1">تنبيه بخصوص أيقونات التطبيق</h6>
@@ -191,6 +191,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-2 ">
+                        {{ $packages->links('pagination::bootstrap-5') }}
+
+                    </div>
                 </div>
             </div>
         </div>

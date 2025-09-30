@@ -7,12 +7,15 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
 use App\Services\AdminLoggerService;
+use Livewire\WithPagination;
 
 class Advertisements extends Component
 {
     use WithFileUploads;
-
-    public $advertisements;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap-5';
+    
+    // public $advertisements;
     public $title, $description, $image, $imagePreview, $is_active = true, $start_date, $end_date, $advertisement_id;
     public $isEdit = false;
     public $deleteId = null;
@@ -21,32 +24,12 @@ class Advertisements extends Component
     public $showForm = false;
     public $selectedStatu = null;
 
-    public function mount()
-    {
-        $this->loadAdvertisements();
-    }
-    public function updatedSearch()
-    {
-        $this->loadAdvertisements();
-    }
-    public function updatedSelectedStatu()
-    {
-        $this->loadAdvertisements();
-    }
 
     protected $queryString = ['search', 'selectedStatu'];
 
     public function loadAdvertisements()
     {
-        $this->advertisements = Advertisement::query()
-            ->when($this->search, function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%');
-            })
-            ->when(is_numeric($this->selectedStatu), function ($query) {
-                $query->where('is_active', $this->selectedStatu);
-            })
-            ->orderBy('id', 'desc')
-            ->get();
+       
     }
     public function cancel()
     {
@@ -114,7 +97,7 @@ class Advertisements extends Component
         ]);
         AdminLoggerService::log('اضافة اعلان', 'Advertisement', "إضافة إعلان جديد: {$this->title}");
         $this->resetForm();
-        $this->loadAdvertisements();
+       
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم إضافة الإعلان بنجاح',
@@ -160,7 +143,7 @@ class Advertisements extends Component
         ]);
         AdminLoggerService::log('تعديل اعلان', 'Advertisement', "تعديل الإعلان: {$this->title}");
         $this->resetForm();
-        $this->loadAdvertisements();
+       
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل الإعلان بنجاح',
@@ -183,7 +166,7 @@ class Advertisements extends Component
         }
         $ad->delete();
         AdminLoggerService::log('حذف اعلان', 'Advertisement', "حذف الإعلان: {$this->deleteTitle}");
-        $this->loadAdvertisements();
+       
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم حذف الإعلان بنجاح',
@@ -201,7 +184,7 @@ class Advertisements extends Component
         ]);
         AdminLoggerService::log('تعديل حالة اعلان', 'Advertisement', "تعديل حالة الإعلان: {$this->deleteTitle}");
 
-        $this->loadAdvertisements();
+       
 
         $this->dispatch('show-toast', [
             'type' => 'success',
@@ -225,7 +208,16 @@ class Advertisements extends Component
     }
     public function render()
     {
+         $advertisements = Advertisement::query()
+            ->when($this->search, function ($query) {
+                $query->where('title', 'like', '%' . $this->search . '%');
+            })
+            ->when(is_numeric($this->selectedStatu), function ($query) {
+                $query->where('is_active', $this->selectedStatu);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(perPage: 10);
 
-        return view('livewire.advertisements');
+        return view('livewire.advertisements',compact('advertisements'));
     }
 }

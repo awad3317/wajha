@@ -278,7 +278,7 @@
         @endif
         {{-- Pagination --}}
         @if ($packages->hasPages())
-            <div class="card-footer d-flex justify-content-center bg-transparent border-0">
+            <div class="m-2">
                 {{ $packages->links('vendor.pagination.bootstrap-5') }}
             </div>
         @endif

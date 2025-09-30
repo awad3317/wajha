@@ -381,7 +381,10 @@
                 </div>
             @endforelse
         </div>
+        <div class="mt-2 ">
+            {{ $coupons->links('pagination::bootstrap-5') }}
 
+        </div>
         <!-- تأكيد الحذف -->
         @if ($deleteId)
             <div class="modal fade show d-block" style="background-color: rgba(0,0,0,0.5);">

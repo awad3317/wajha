@@ -2,7 +2,7 @@
     <div class="row mb-4">
         <div class="col-md-12 mb-2">
             <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
-                  <div class="input-group-append">
+                <div class="input-group-append">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-search text-secondary"></i>
                     </span>
@@ -14,7 +14,7 @@
 
         <div class="col-md-6 mb-2">
             <div class="input-group shadow-sm rounded-pill overflow-hidden">
-                  <div class="input-group-append">
+                <div class="input-group-append">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-building text-primary"></i>
                     </span>
@@ -25,13 +25,13 @@
                         <option value="{{ $type->id }}">{{ $type->name }}</option>
                     @endforeach
                 </select>
-              
+
             </div>
         </div>
 
         <div class="col-md-6 mb-2">
             <div class="input-group shadow-sm rounded-pill overflow-hidden">
-                  <div class="input-group-append">
+                <div class="input-group-append">
                     <span class="input-group-text bg-white border-0">
                         <i class="fas fa-check-circle text-success"></i>
                     </span>
@@ -41,7 +41,7 @@
                     <option value="1">موثقة</option>
                     <option value="0">غير موثقة</option>
                 </select>
-              
+
             </div>
         </div>
     </div>
@@ -115,7 +115,8 @@
     @if ($establishments->hasPages())
         <div class="row mt-4">
             <div class="col-12 d-flex justify-content-center">
-                {{ $establishments->links('vendor.pagination.bootstrap-4') }}
+                {{ $establishments->links('pagination::bootstrap-5') }}
+
             </div>
         </div>
     @endif

@@ -94,7 +94,7 @@
                                         </button>
                                     </div>
 
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,11 @@
                             @endforelse
                         </tbody>
                     </table>
+                   <div class="mt-3" style="">
+                    {{ $regions->links('pagination::bootstrap-5') }}
+                    </div>
                 </div>
+                 
             </div>
         </div>
     </div>

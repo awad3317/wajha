@@ -186,6 +186,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="m-2">
+                        {{ $packages->links('pagination::bootstrap-5') }}
+
+                    </div>
                 </div>
             </div>
         </div>

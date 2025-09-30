@@ -5,11 +5,11 @@ namespace App\Livewire;
 use App\Models\Region;
 use Livewire\Component;
 use App\Services\AdminLoggerService;
-
+use Livewire\WithPagination;
 class Regions extends Component
 {
-
-    public $regions;
+    use WithPagination;
+    // public $regions;
     public $name, $parent_id, $region_id;
     public $isEdit = false;
     public $deleteId = null;
@@ -17,23 +17,8 @@ class Regions extends Component
     public $search = '';
     public $showForm = false;
 
-    public function mount()
-    {
-        $this->loadRegions();
-    }
-    public function updatedSearch()
-    {
-        $this->loadRegions();
-    }
-    public function loadRegions()
-    {
-        $this->regions = Region::with('parent')
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('id', 'asc')
-            ->get();
-    }
+
+
 
     public function store()
     {
@@ -47,7 +32,7 @@ class Regions extends Component
         ]);
         AdminLoggerService::log('اضافة منطقة', 'Region', "إضافة منطقه جديد: {$this->name}");
         $this->resetForm();
-        $this->loadRegions();
+        // $this->loadRegions();
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم اضافة المنطقه بنجاح'
@@ -78,7 +63,7 @@ class Regions extends Component
         ]);
         AdminLoggerService::log('تعديل منطقة', 'Region', "تعديل منطقه: {$this->name}");
         $this->resetForm();
-        $this->loadRegions();
+        // $this->loadRegions();
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل المنطقه بنجاح'
@@ -94,7 +79,7 @@ class Regions extends Component
     {
         Region::findOrFail($this->deleteId)->delete();
         AdminLoggerService::log('حذف منطقة', 'Region', "حذف منطقه: {$this->deleteName}");
-        $this->loadRegions();
+        // $this->loadRegions();
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم حذف المنطقه بنجاح'
@@ -126,9 +111,14 @@ class Regions extends Component
 
     public function render()
     {
-                $parents = Region::whereNull('parent_id')->get();
-
+        $parents = Region::whereNull('parent_id')->get();
+        $regions = Region::with('parent')
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy('id', 'asc')
+            ->paginate(perPage: 10);
         // $parents = Region::with('parent')->get();
-        return view('livewire.regions', compact('parents'));
+        return view('livewire.regions', compact('parents', 'regions'));
     }
 }

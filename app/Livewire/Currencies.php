@@ -12,7 +12,7 @@ class Currencies extends Component
 {
     use WithFileUploads;
 
-    public $currencies;
+    // public $currencies;
     public $name, $code, $symbol, $icon, $currency_id;
     public $isEdit = false;
     public $deleteId = null;
@@ -21,22 +21,7 @@ class Currencies extends Component
     public $iconFile;
     public $showForm = false;
 
-    public function mount()
-    {
-        $this->loadCurrencies();
-    }
-
-    public function updatedSearch()
-    {
-        $this->loadCurrencies();
-    }
-
-    public function loadCurrencies()
-    {
-        $this->currencies = Currency::query()
-            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
-            ->orderBy('id')->get();
-    }
+ 
 
     public function store()
     {
@@ -58,7 +43,7 @@ class Currencies extends Component
         ]);
         AdminLoggerService::log('اضافة عملة', 'Currency', "إضافة عملة جديد: {$this->name}");
         $this->resetForm();
-        $this->loadCurrencies();
+        
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تمت إضافة العملة بنجاح'
@@ -113,7 +98,7 @@ class Currencies extends Component
         $currency->save();
         AdminLoggerService::log('تعديل عملة', 'Currency', "تعديل العملة: {$this->name}");
         $this->resetForm();
-        $this->loadCurrencies();
+        
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل العملة بنجاح'
@@ -130,7 +115,7 @@ class Currencies extends Component
         }
         $currency->delete();
         AdminLoggerService::log('حذف عملة', 'Currency', "حذف العملة: {$currency->name}");
-        $this->loadCurrencies();
+        
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم حذف العملة بنجاح'
@@ -166,6 +151,9 @@ class Currencies extends Component
 
     public function render()
     {
-        return view('livewire.currencies');
+         $currencies = Currency::query()
+            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->orderBy('id')->paginate(perPage: 10);
+        return view('livewire.currencies', compact('currencies'));
     }
 }

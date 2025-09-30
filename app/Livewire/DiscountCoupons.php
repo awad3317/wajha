@@ -9,10 +9,12 @@ use App\Models\EstablishmentType;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Services\AdminLoggerService;
+use Livewire\WithPagination;
+
 
 class DiscountCoupons extends Component
 {
-    public $coupons = [];
+    use WithPagination;
 
     public $code, $description, $discount_type = 'percentage', $discount_value;
     public $start_date, $end_date, $max_uses, $is_active = true;
@@ -37,17 +39,9 @@ class DiscountCoupons extends Component
         $this->establishments = Establishment::orderBy('name')->get();
         $this->establishmentTypes = EstablishmentType::orderBy('name')->get();
 
-        $this->loadCoupons();
     }
 
-    public function loadCoupons()
-    {
-        $this->coupons = DiscountCoupon::query()
-            ->when($this->search, fn($q) => $q->where('code', 'like', "%{$this->search}%"))
-            ->when(is_numeric($this->selectedStatu), fn($q) => $q->where('is_active', $this->selectedStatu))
-            ->orderBy('id', 'desc')
-            ->get();
-    }
+  
     protected function rules()
     {
         return [
@@ -268,6 +262,11 @@ class DiscountCoupons extends Component
 
     public function render()
     {
-        return view('livewire.discount-coupons');
+          $coupons = DiscountCoupon::query()
+            ->when($this->search, fn($q) => $q->where('code', 'like', "%{$this->search}%"))
+            ->when(is_numeric($this->selectedStatu), fn($q) => $q->where('is_active', $this->selectedStatu))
+            ->orderBy('id', 'desc')
+            ->paginate(perPage: 2);
+        return view('livewire.discount-coupons', compact('coupons'));
     }
 }

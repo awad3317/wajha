@@ -5,16 +5,16 @@
 
     <div class="container py-4">
         {{-- العنوان وزر الإضافة --}}
-        <div
-            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2" dir="rtl">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-2 gap-2"
+            dir="rtl">
             @if (!$showForm && !$isEdit)
                 <button wire:click="create" class="btn btn-primary add-btn">
-                      <i class="fas fa-plus ms-1"></i>
+                    <i class="fas fa-plus ms-1"></i>
                     <span class="d-none d-md-inline">إضافة بنك</span>
-                  
+
                 </button>
             @endif
-             <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
+            <h3 class="fw-bold text-primary mb-2 mb-sm-0 text-center text-sm-start d-none d-sm-block">
                 إدارة البنوك
             </h3>
         </div>
@@ -36,7 +36,7 @@
                             {{-- الأيقونة --}}
                             <div class="col-12 col-md-6">
                                 <label class="form-label text-primary fw-bold d-block mb-2">
-                                  <span class="text-danger">*</span>  <i class="fas fa-image mr-2"></i> أيقونة البنك 
+                                    <span class="text-danger">*</span> <i class="fas fa-image mr-2"></i> أيقونة البنك
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
                                     <label class="input-group-text btn btn-primary text-white border-0"
@@ -74,16 +74,16 @@
                             {{-- اسم البنك --}}
                             <div class="col-12 col-md-6">
                                 <label class="form-label text-primary fw-bold d-block  mb-2">
-                                  <span class="text-danger">*</span> <i class="fas fa-signature mr-2"></i> اسم البنك 
+                                    <span class="text-danger">*</span> <i class="fas fa-signature mr-2"></i> اسم البنك
                                 </label>
                                 <div class="input-group input-group-lg shadow-sm rounded-2 overflow-hidden">
-                                     <span class="input-group-text bg-white border-0">
+                                    <span class="input-group-text bg-white border-0">
                                         <i class="fas fa-university text-primary"></i>
                                     </span>
                                     <input type="text" wire:model.defer="name"
                                         class="form-control border-0  py-3 @error('name') is-invalid @enderror"
                                         placeholder="أدخل اسم البنك هنا...">
-                                   
+
                                 </div>
                                 @error('name')
                                     <div class="invalid-feedback  d-block mt-2">
@@ -92,7 +92,7 @@
                                 @enderror
                             </div>
 
-                          
+
 
                             {{-- الأزرار --}}
                             <div class="col-12 mt-4">
@@ -100,14 +100,15 @@
                                     <div class="col-12 col-md-6">
                                         <button type="button" wire:click="cancel"
                                             class="btn btn-outline-secondary btn-lg w-100 rounded-pill shadow-sm py-3 mb-2">
-                                       <i class="fas fa-times mr-2"></i>     إلغاء
+                                            <i class="fas fa-times mr-2"></i> إلغاء
                                         </button>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <button type="submit"
                                             class="btn btn-{{ $isEdit ? 'warning' : 'primary' }} btn-lg w-100 rounded-pill shadow-sm py-3">
-                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>      {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
-                                      
+                                            <i class="fas {{ $isEdit ? 'fa-save' : 'fa-plus-circle' }} mr-2"></i>
+                                            {{ $isEdit ? 'حفظ التعديلات' : 'إضافة بنك' }}
+
 
                                         </button>
                                     </div>
@@ -118,43 +119,44 @@
                 </div>
             </div>
         @endif
-           <div class="alert alert-warning shadow-lg border-0 rounded-3 d-flex align-items-start p-3" role="alert">
-    <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
-    <div>
-        <h6 class="fw-bold text-dark mb-1">تنبيه بالغ الأهمية</h6>
-        <p class="mb-0 text-secondary">
-            الأيقونات المرتبطة <span class="fw-bold text-primary">بالبنوك</span> تُعد جزءاً أساسياً من هوية النظام 
-            وتُستخدم لتمييز الحسابات والمعاملات بشكل واضح وسريع. 
-            <br>
-            يرجى <span class="fw-bold text-danger">عدم حذف هذه الأيقونات</span> 
-            لتجنب حدوث ارتباك أو فقدان دقة في عرض البيانات.
-        </p>
-    </div>
-</div>
+        <div class="alert alert-warning shadow-lg border-0 rounded-3 d-flex align-items-start p-3" role="alert">
+            <i class="fas fa-exclamation-triangle fa-2x text-danger mr-3 mt-3"></i>
+            <div>
+                <h6 class="fw-bold text-dark mb-1">تنبيه بالغ الأهمية</h6>
+                <p class="mb-0 text-secondary">
+                    الأيقونات المرتبطة <span class="fw-bold text-primary">بالبنوك</span> تُعد جزءاً أساسياً من هوية
+                    النظام
+                    وتُستخدم لتمييز الحسابات والمعاملات بشكل واضح وسريع.
+                    <br>
+                    يرجى <span class="fw-bold text-danger">عدم حذف هذه الأيقونات</span>
+                    لتجنب حدوث ارتباك أو فقدان دقة في عرض البيانات.
+                </p>
+            </div>
+        </div>
 
         {{-- جدول البنوك --}}
         <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-                 <div class="card-header-custom bg-light py-2 py-md-3">
+            <div class="card-header-custom bg-light py-2 py-md-3">
                 <div class="row align-items-center">
-                       <div class="col-12 col-md-6 d-none d-md-block">
-                       <h5 class="mb-0 text-white ">
-                         <i class="fas fa-map-marked-alt mr-2"></i>   قائمة البنوك 
+                    <div class="col-12 col-md-6 d-none d-md-block">
+                        <h5 class="mb-0 text-white ">
+                            <i class="fas fa-map-marked-alt mr-2"></i> قائمة البنوك
                         </h5>
                     </div>
                     <div class="col-12 col-md-6 mb-2  mb-md-0">
-                            <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
-                                  <span class="input-group-text bg-white border-0 rounded-0">
+                        <div class="input-group shadow-sm rounded-pill overflow-hidden border-0 ">
+                            <span class="input-group-text bg-white border-0 rounded-0">
                                 <i class="fas fa-search text-primary"></i>
                             </span>
-                            <input type="text" class="form-control border-0  py-2 "
-                                placeholder="...ابحث باسم البنك" wire:model.debounce.300ms.live="search">
-                       
+                            <input type="text" class="form-control border-0  py-2 " placeholder="...ابحث باسم البنك"
+                                wire:model.debounce.300ms.live="search">
+
                         </div>
                     </div>
-                 
+
                 </div>
             </div>
-            
+
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -210,6 +212,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-3" style="">
+                        {{ $banks->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>

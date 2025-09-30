@@ -7,12 +7,12 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
 use App\Services\AdminLoggerService;
+use Livewire\WithPagination;
 
 class PricePackageIcons extends Component
 {
     use WithFileUploads;
-
-    public $packages;
+    use WithPagination;
     public  $icon, $package_id;
     public $isEdit = false;
     public $deleteId = null;
@@ -20,15 +20,7 @@ class PricePackageIcons extends Component
     public $iconFile;
     public $showForm = false;
 
-    public function mount()
-    {
-        $this->loadPackages();
-    }
 
-    public function loadPackages()
-    {
-        $this->packages = pricePackageIcon::query()->get();
-    }
 
     public function create()
     {
@@ -55,7 +47,7 @@ class PricePackageIcons extends Component
         ]);
         AdminLoggerService::log('اضافة ايقونه', 'PricePackageIcon', "إضافة الأيقونة: {$this->icon}");
         $this->resetForm();
-        $this->loadPackages();
+        
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تمت إضافة الأيقونة بنجاح'
@@ -94,7 +86,7 @@ class PricePackageIcons extends Component
         $package->save();
         AdminLoggerService::log('تعديل ايقونه', 'PricePackageIcon', "تعديل الأيقونة: {$this->icon}");
         $this->resetForm();
-        $this->loadPackages();
+        
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل الأيقونة بنجاح'
@@ -114,8 +106,8 @@ class PricePackageIcons extends Component
             $imageService->deleteImage($package->icon);
         }
         $package->delete();
-        AdminLoggerService::log('حذف ايقونه', 'PricePackageIcon', "حذف الأيقونة: {$this->icon}");   
-        $this->loadPackages();
+        AdminLoggerService::log('حذف ايقونه', 'PricePackageIcon', "حذف الأيقونة: {$this->icon}");
+        
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم حذف الأيقونة بنجاح'
@@ -139,6 +131,7 @@ class PricePackageIcons extends Component
 
     public function render()
     {
-        return view('livewire.price-package-icons');
+        $packages = pricePackageIcon::query()->paginate(2);
+        return view('livewire.price-package-icons', compact('packages'));
     }
 }

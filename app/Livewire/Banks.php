@@ -7,12 +7,14 @@ use App\Models\Bank;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
 use App\Services\AdminLoggerService;
+use Livewire\WithPagination;
 
 class Banks extends Component
 {
     use WithFileUploads;
-
-    public $banks;
+    use WithPagination;
+    protected $paginationTheme = 'pagination::bootstrap-5';
+    // public $banks;
     public $name, $icon, $bank_id;
     public $isEdit = false;
     public $deleteId = null;
@@ -22,23 +24,6 @@ class Banks extends Component
     public $showForm = false;
 
 
-
-    public function mount()
-    {
-        $this->loadBanks();
-    }
-
-    public function updatedSearch()
-    {
-        $this->loadBanks();
-    }
-
-    public function loadBanks()
-    {
-        $this->banks = Bank::query()
-            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
-            ->orderBy('id')->get();
-    }
 
     public function store()
     {
@@ -62,7 +47,7 @@ class Banks extends Component
         AdminLoggerService::log('اضافة بنك', 'Bank', "إضافة بنك جديد: {$this->name}");
 
         $this->resetForm();
-        $this->loadBanks();
+       
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تمت إضافة البنك بنجاح'
@@ -109,7 +94,7 @@ class Banks extends Component
         $bank->save();
         AdminLoggerService::log('تعديل بنك', 'Bank', "تعديل البنك: {$this->name}");
         $this->resetForm();
-        $this->loadBanks();
+       
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تمت تعديل البنك بنجاح'
@@ -126,7 +111,7 @@ class Banks extends Component
         }
         $bank->delete();
         AdminLoggerService::log('حذف بنك', 'Bank', "حذف البنك: {$bank->name}");
-        $this->loadBanks();
+       
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تمت حذف البنك بنجاح'
@@ -158,6 +143,9 @@ class Banks extends Component
     }
     public function render()
     {
-        return view('livewire.banks');
+         $banks = Bank::query()
+            ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
+            ->orderBy('id')->paginate(perPage: 2);
+        return view('livewire.banks', compact('banks'));
     }
 }

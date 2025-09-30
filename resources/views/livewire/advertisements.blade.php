@@ -317,7 +317,9 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             @empty
                 <div class="col-12">
                     <div class="alert alert-warning text-center shadow-sm rounded">
@@ -325,8 +327,13 @@
                     </div>
                 </div>
             @endforelse
-        </div>
 
+
+        </div>
+        <div class="mt-2">
+            {{ $advertisements->links('pagination::bootstrap-5') }}
+
+        </div>
         {{-- Delete Confirmation Modal --}}
         @if ($deleteId)
             <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">

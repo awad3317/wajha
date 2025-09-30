@@ -7,12 +7,14 @@ use Livewire\WithFileUploads;
 use App\Services\ImageService;
 use App\Models\establishmentFeaturesIcon;
 use App\Services\AdminLoggerService;
+use Livewire\WithPagination;
 
 class EstablishmentFeaturesIcons extends Component
 {
      use WithFileUploads;
-
-    public $packages;
+     use WithPagination;
+    protected $paginationTheme = 'bootstrap-5';
+    // public $packages;
     public  $icon, $package_id;
     public $isEdit = false;
     public $deleteId = null;
@@ -27,7 +29,6 @@ class EstablishmentFeaturesIcons extends Component
 
     public function loadPackages()
     {
-        $this->packages = establishmentFeaturesIcon::query()->get();
     }
 
     public function create()
@@ -142,6 +143,8 @@ public function cancel()
     }
     public function render()
     {
-        return view('livewire.establishment-features-icons');
+                $packages = establishmentFeaturesIcon::query()->paginate(10);
+
+        return view('livewire.establishment-features-icons', compact('packages'));
     }
 }
