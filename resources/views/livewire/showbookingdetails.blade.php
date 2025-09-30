@@ -166,11 +166,11 @@
                                 <div
                                     class="timeline-icon 
                                 @if ($log->to_status == 'pending') bg-warning text-dark
-                                @elseif($log->to_status == 'waiting_payment') bg-secondary text-white
-                                @elseif($log->to_status == 'paid') bg-info text-white
-                                @elseif($log->to_status == 'confirmed') bg-primary text-white
-                                @elseif($log->to_status == 'completed') bg-success text-white
-                                @elseif($log->to_status == 'cancelled') bg-danger text-white @endif">
+                                @elseif($log->to_status == 'waiting_payment') bg-secondary 
+                                @elseif($log->to_status == 'paid') bg-info 
+                                @elseif($log->to_status == 'confirmed') bg-primary 
+                                @elseif($log->to_status == 'completed') bg-success 
+                                @elseif($log->to_status == 'cancelled') bg-danger  @endif">
                                     <i class="fas fa-check"></i>
                                 </div>
 
@@ -195,7 +195,7 @@
         </div>
 
         <style>
-            .timeline-vertical {
+            .timeline-vertical {    
                 margin-top: 20px;
                 border-left: 3px solid #dee2e6;
                 padding-left: 20px;
