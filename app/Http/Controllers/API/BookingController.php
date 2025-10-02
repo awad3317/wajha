@@ -116,6 +116,7 @@ class BookingController extends Controller
             }
             
             $booking = $this->bookingRepository->store($fields);
+            return ApiResponseClass::sendResponse($booking, 'تم حفظ الحجز بنجاح');
              if (!empty($fields['coupon_code'])) {
             $this->couponService->recordCouponUse([
                 'coupon_id' => $coupon->id,
