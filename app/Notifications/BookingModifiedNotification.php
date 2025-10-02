@@ -23,7 +23,7 @@ class BookingModifiedNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(booking $booking, Carbon $oldDate, Carbon $newDate, string $modifierType, string $modifierName = '')
+    public function __construct(booking $booking, $oldDate, $newDate, string $modifierType, string $modifierName = '')
     {
         $this->booking = $booking;
         $this->oldDate = $oldDate;
