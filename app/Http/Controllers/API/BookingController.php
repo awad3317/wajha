@@ -568,7 +568,7 @@ class BookingController extends Controller
             $modifierName
         ));
         $title = "تم تعديل موعد الحجز";
-        $body = $this->getFirebaseMessage($modifierType, $establishment->name, $customer->name, $oldDate, $newDate);
+        $body = "تم تعديل موعد حجزك ";
         
         $data = [
             'type' => 'booking_modified',
