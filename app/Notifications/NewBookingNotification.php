@@ -31,7 +31,7 @@ class NewBookingNotification extends Notification
         
     }
 
-    protected function determineColor(string $type): string
+    protected function determineColor($type): string
     {
         return match($type) {
             'pending' => '#3B82F6',
