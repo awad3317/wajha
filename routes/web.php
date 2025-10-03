@@ -68,6 +68,11 @@ Route::get('/go/establishment/{id}', function ($id) {
     ], 200)->header('Content-Type', 'text/html');
 });
 
+Route::get('/Privacy_Policy_Wajha', function () {
+    return view('Privacy_Policy_Wajha');
+})->name('Privacy_Policy_Wajha');
+
+
 Route::get('/go/booking/{id}', function ($id) {
     $scheme = "wejha://booking/$id"; // رابط التطبيق (Custom URL Scheme)
     $fallback = url('/download-wajha-app') . '?from=deeplink&d=' . urlencode($scheme);
