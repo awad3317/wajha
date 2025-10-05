@@ -348,11 +348,11 @@ return [
             'url' => '/discount_coupons',
             'icon' => 'fas fa-shopping-bag',
         ],
-        [
-            'text' => 'اسعار الباقات ',
-            'url' => '/price_packages',
-            'icon' => 'fas fa-tags',
-        ],
+        // [
+        //     'text' => 'اسعار الباقات ',
+        //     'url' => '/price_packages',
+        //     'icon' => 'fas fa-tags',
+        // ],
         [
             'text' => 'العملات',
             'url' => '/currency',
