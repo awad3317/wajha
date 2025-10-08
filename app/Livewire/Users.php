@@ -6,15 +6,94 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Services\AdminLoggerService;
+use Illuminate\Support\Facades\Hash;
 
 class Users extends Component
 {
     use WithPagination;
-
     public $search = '';
     public $userType = '';
     public $bannedStatus = '';
     protected $queryString = ['search', 'userType', 'bannedStatus'];
+
+    public $showAddForm = false;
+    public $newName, $newPhone, $newPassword;
+    public $newCountry = 'YE';
+    public $countryCodes = [
+        'YE' => '967',
+        'SA' => '966',
+        'EG' => '20',
+        'AE' => '971',
+    ];
+
+
+    public function storeOwner()
+    {
+        $rules = [
+            'newName'     => 'required|string|min:3',
+            'newPhone'    => 'required|string|unique:users,phone',
+            'newPassword' => 'required|string|min:6',
+        ];
+
+        $messages = [
+            'newName.required' => 'يرجى إدخال اسم صاحب المنشاة',
+            'newPhone.required' => 'يرجى إدخال رقم الجوال',
+            'newPassword.required' => 'يرجى إدخال كلمة المرور',
+            'newPhone.regex' => 'رقم الجوال غير صالح',
+            'newPhone.unique' => 'رقم الجوال مستخدم بالفعل',
+        ];
+
+        switch ($this->newCountry) {
+            case 'YE': 
+                $rules['newPhone'] .= '|regex:/^[0-9]{9}$/';
+                $messages['newPhone.regex'] = 'رقم اليمن يجب أن يتكون من 9 أرقام';
+                break;
+
+            case 'SA':
+                $rules['newPhone'] .= '|regex:/^[0-9]{9}$/';
+                $messages['newPhone.regex'] = 'رقم السعودية يجب أن يتكون من 9 أرقام';
+                break;
+
+            case 'EG':
+                $rules['newPhone'] .= '|regex:/^[0-9]{10}$/';
+                $messages['newPhone.regex'] = 'رقم مصر يجب أن يتكون من 10 أرقام';
+                break;
+
+            case 'AE': 
+                $rules['newPhone'] .= '|regex:/^[0-9]{9}$/';
+                $messages['newPhone.regex'] = 'رقم الإمارات يجب أن يتكون من 9 أرقام';
+                break;
+        }
+
+        $this->validate($rules, $messages);
+
+
+        $user = User::create([
+            'name' => $this->newName,
+            'phone' => $this->countryCodes[$this->newCountry] . $this->newPhone,
+            'password' => Hash::make($this->newPassword),
+            'user_type' => 'owner',
+            'phone_verified_at' => now(),
+            'is_banned' => 0,
+        ]);
+
+        AdminLoggerService::log(
+            'إضافة مستخدم',
+            $user->name,
+            'تمت إضافة صاحب منشأة جديد'
+        );
+
+        // إعادة تعيين الحقول
+        $this->reset(['newName', 'newPhone', 'newPassword', 'showAddForm']);
+
+        // رسالة نجاح
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'تمت إضافة صاحب منشأة بنجاح'
+        ]);
+    }
+
+
     public function toggleBan($userId)
 
     {

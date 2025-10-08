@@ -23,6 +23,8 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"/>
 
     {{-- Favicon & App Icons --}}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicons/favicon.ico') }}">
@@ -167,6 +169,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 </body>
 
