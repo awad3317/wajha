@@ -253,7 +253,7 @@
                                         @else
                                             <select class="form-control form-control-sm shadow-sm"
                                                 wire:model.defer="editType">
-                                                <option value="admin">مدير</option>
+                                                {{-- <option value="admin">مدير</option> --}}
                                                 <option value="owner">صاحب منشأة</option>
                                                 <option value="user">مستخدم</option>
                                             </select>
@@ -277,14 +277,20 @@
 
                                 <td class="text-center">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <span class="me-2 small">{{ $user->is_banned ? 'محظور' : 'نشط' }}</span>
-                                        <div
-                                            class="form-switch {{ $user->is_banned ? 'switch-banned' : 'switch-active' }}">
-                                            <input type="checkbox" id="banSwitch{{ $user->id }}"
-                                                wire:click="toggleBan({{ $user->id }})"
-                                                @if (!$user->is_banned) checked @endif>
-                                            <label for="banSwitch{{ $user->id }}"></label>
-                                        </div>
+                                        @if ($user->user_type === 'admin')
+                                            {{-- <span class="badge badge-danger">لايمكن حضره</span> --}}
+                                        @else
+                                            <span class="me-2 small">{{ $user->is_banned ? 'محظور' : 'نشط' }}</span>
+                                            <div
+                                                class="form-switch {{ $user->is_banned ? 'switch-banned' : 'switch-active' }}">
+                                                <input type="checkbox" id="banSwitch{{ $user->id }}"
+                                                    wire:click="toggleBan({{ $user->id }})"
+                                                    @if (!$user->is_banned) checked @endif>
+                                                <label for="banSwitch{{ $user->id }}"></label>
+                                            </div>
+                                        @endif
+
+
                                     </div>
                                 </td>
 
@@ -302,13 +308,13 @@
                                             </button>
                                         </div>
                                     @else
-                                     @if ($user->user_type === 'owner')
-                                            <span class="badge badge-primary">لايمكن التعديل</span>
+                                        @if (in_array($user->user_type, ['owner', 'admin']))
+                                            {{-- <span class="badge badge-primary">لايمكن التعديل</span> --}}
                                         @else
-                                        <button class="btn btn-sm btn-outline-primary shadow-sm rounded-pill px-3"
-                                            wire:click="editUser({{ $user->id }})">
-                                            <i class="fas fa-edit me-1"></i> تعديل
-                                        </button>
+                                            <button class="btn btn-sm btn-outline-primary shadow-sm rounded-pill px-3"
+                                                wire:click="editUser({{ $user->id }})">
+                                                <i class="fas fa-edit me-1"></i> تعديل
+                                            </button>
                                         @endif
                                     @endif
                                 </td>
