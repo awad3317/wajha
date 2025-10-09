@@ -69,15 +69,15 @@ class DiscountCoupons extends Component
         ];
     }
 
-    public function updatedSearch()
-    {
-        $this->loadCoupons();
-    }
+    // public function updatedSearch()
+    // {
+    //     $this->loadCoupons();
+    // }
 
-    public function updatedSelectedStatu()
-    {
-        $this->loadCoupons();
-    }
+    // public function updatedSelectedStatu()
+    // {
+    //     $this->loadCoupons();
+    // }
 
     public function create()
     {
@@ -125,7 +125,6 @@ class DiscountCoupons extends Component
         AdminLoggerService::log('اضافة كوبون', 'DiscountCoupon', "إضافة كوبون جديد: {$this->code}");
 
         $this->resetForm();
-        $this->loadCoupons();
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم إنشاء الكوبون بنجاح',
@@ -194,7 +193,7 @@ class DiscountCoupons extends Component
         AdminLoggerService::log('تعديل كوبون', 'DiscountCoupon', "تعديل كوبون: {$this->code}");
 
         $this->resetForm();
-        $this->loadCoupons();
+        // $this->loadCoupons();
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم تعديل الكوبون بنجاح',
@@ -214,7 +213,7 @@ class DiscountCoupons extends Component
         DiscountCoupon::destroy($this->deleteId);
         $this->deleteId = null;
         AdminLoggerService::log('حذف كوبون', 'DiscountCoupon', "حذف كوبون: {$this->deleteTitle}");
-        $this->loadCoupons();
+        // $this->loadCoupons();
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => 'تم حذف الكوبون',
@@ -233,7 +232,7 @@ class DiscountCoupons extends Component
             'DiscountCoupon',
             "{$statusText} الكوبون: {$coupon->code}"
         );
-        $this->loadCoupons();
+        // $this->loadCoupons();
 
         $this->dispatch('show-toast', [
             'type' => 'success',
