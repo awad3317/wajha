@@ -265,7 +265,7 @@ class DiscountCoupons extends Component
             ->when($this->search, fn($q) => $q->where('code', 'like', "%{$this->search}%"))
             ->when(is_numeric($this->selectedStatu), fn($q) => $q->where('is_active', $this->selectedStatu))
             ->orderBy('id', 'desc')
-            ->paginate(perPage: 2);
+            ->paginate(perPage: 10);
         return view('livewire.discount-coupons', compact('coupons'));
     }
 }
