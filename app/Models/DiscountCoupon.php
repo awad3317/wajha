@@ -68,6 +68,6 @@ class DiscountCoupon extends Model
 
     public function bookings()
     {
-        return $this->hasMany(booking::class);
+        return $this->hasMany(Booking::class);
     }
 }

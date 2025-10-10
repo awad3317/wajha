@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
-use App\Models\establishmentFeaturesIcon;
+use App\Models\EstablishmentFeaturesIcon;
 use App\Services\AdminLoggerService;
 use Livewire\WithPagination;
 
@@ -51,7 +51,7 @@ class EstablishmentFeaturesIcons extends Component
         $imageService = new ImageService();
         $iconPath = $this->iconFile ? $imageService->saveImage($this->iconFile, 'package_icons') : null;
 
-        establishmentFeaturesIcon::create([
+        EstablishmentFeaturesIcon::create([
             'icon' => $iconPath,
         ]);
     AdminLoggerService::log('اضافة ايقونة', 'EstablishmentFeaturesIcon', "إضافة الأيقونة: {$this->icon}");
@@ -70,7 +70,7 @@ public function cancel()
 
     public function edit($id)
     {
-        $package = establishmentFeaturesIcon::findOrFail($id);
+        $package = EstablishmentFeaturesIcon::findOrFail($id);
         
         $this->package_id = $package->id;
         $this->icon = $package->icon;
@@ -85,7 +85,7 @@ public function cancel()
         ]);
 
         $imageService = new ImageService();
-        $package = establishmentFeaturesIcon::findOrFail($this->package_id);
+        $package = EstablishmentFeaturesIcon::findOrFail($this->package_id);
 
         if ($this->iconFile) {
             if ($package->icon) {
@@ -112,7 +112,7 @@ public function cancel()
 
     public function deletepackage()
     {
-        $package = establishmentFeaturesIcon::findOrFail($this->deleteId);
+        $package = EstablishmentFeaturesIcon::findOrFail($this->deleteId);
         if ($package->icon) {
             $imageService = new ImageService();
             $imageService->deleteImage($package->icon);
@@ -143,7 +143,7 @@ public function cancel()
     }
     public function render()
     {
-                $packages = establishmentFeaturesIcon::query()->paginate(10);
+                $packages = EstablishmentFeaturesIcon::query()->paginate(10);
 
         return view('livewire.establishment-features-icons', compact('packages'));
     }

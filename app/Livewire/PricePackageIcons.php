@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\pricePackageIcon;
+use App\Models\PricePackageIcon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\ImageService;
@@ -42,7 +42,7 @@ class PricePackageIcons extends Component
         $imageService = new ImageService();
         $iconPath = $this->iconFile ? $imageService->saveImage($this->iconFile, 'package_icons') : null;
 
-        pricePackageIcon::create([
+        PricePackageIcon::create([
             'icon' => $iconPath,
         ]);
         AdminLoggerService::log('اضافة ايقونه', 'PricePackageIcon', "إضافة الأيقونة: {$this->icon}");
@@ -60,7 +60,7 @@ class PricePackageIcons extends Component
 
     public function edit($id)
     {
-        $package = pricePackageIcon::findOrFail($id);
+        $package = PricePackageIcon::findOrFail($id);
         $this->package_id = $package->id;
         $this->icon = $package->icon;
         $this->isEdit = true;
@@ -74,7 +74,7 @@ class PricePackageIcons extends Component
         ]);
 
         $imageService = new ImageService();
-        $package = pricePackageIcon::findOrFail($this->package_id);
+        $package = PricePackageIcon::findOrFail($this->package_id);
 
         if ($this->iconFile) {
             if ($package->icon) {
@@ -100,7 +100,7 @@ class PricePackageIcons extends Component
 
     public function deletepackage()
     {
-        $package = pricePackageIcon::findOrFail($this->deleteId);
+        $package = PricePackageIcon::findOrFail($this->deleteId);
         if ($package->icon) {
             $imageService = new ImageService();
             $imageService->deleteImage($package->icon);
@@ -131,7 +131,7 @@ class PricePackageIcons extends Component
 
     public function render()
     {
-        $packages = pricePackageIcon::query()->paginate(perPage: 10);
+        $packages = PricePackageIcon::query()->paginate(perPage: 10);
         return view('livewire.price-package-icons', compact('packages'));
     }
 }

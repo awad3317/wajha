@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Establishment;
-use App\Models\booking;
+use App\Models\Booking;
 use App\Models\DiscountCoupon;
 use App\Models\Advertisement;
 use App\Models\EstablishmentType;
@@ -26,7 +26,7 @@ class Homepage extends Component
         $this->adminsCount = User::where('user_type', 'admin')->count();
 
         $this->establishmentsCount = Establishment::count();
-        $this->bookingsCount = booking::count();
+        $this->bookingsCount = Booking::count();
 
         $this->activeCoupons = DiscountCoupon::where('is_active', 1)->count();
         $this->expiredCoupons = DiscountCoupon::where('end_date', '<', now())->count();
@@ -36,7 +36,7 @@ class Homepage extends Component
 
     public function render()
     {
-        $latestBookings = booking::select(
+        $latestBookings = Booking::select(
             'establishment_id',
             DB::raw('COUNT(*) as total'),
             DB::raw('MAX(booking_date) as last_booking_date')
@@ -55,7 +55,7 @@ class Homepage extends Component
         $latestReviews = Review::with('user', 'establishment')->latest()->take(5)->get();
 
         // Chart Data
-        $bookingsChart = booking::selectRaw('DATE(created_at) as date, COUNT(*) as total')
+        $bookingsChart = Booking::selectRaw('DATE(created_at) as date, COUNT(*) as total')
             ->where('created_at', '>=', now()->subDays(10))
             ->groupBy('date')
             ->orderBy('date')

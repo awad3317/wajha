@@ -75,7 +75,7 @@ class User extends Authenticatable
     */
     public function bookings()
     {
-        return $this->hasMany(booking::class);
+        return $this->hasMany(Booking::class);
     }
 
     public function createdCoupons()

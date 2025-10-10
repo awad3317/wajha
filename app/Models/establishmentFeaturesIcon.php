@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class establishmentFeaturesIcon extends Model
+class EstablishmentFeaturesIcon extends Model
 {
     use HasFactory;
     protected $fillable = ['icon'];

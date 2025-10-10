@@ -27,6 +27,6 @@ class OwnerAccount extends Model
 
     public function bank()
     {
-        return $this->belongsTo(bank::class, 'bank_id');
+        return $this->belongsTo(Bank::class, 'bank_id');
     }
 }

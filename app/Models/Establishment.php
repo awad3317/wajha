@@ -110,7 +110,7 @@ class Establishment extends Model
      */
     public function bookings()
     {
-        return $this->hasMany(booking::class);
+        return $this->hasMany(Booking::class);
     }
 
     /**
@@ -118,7 +118,7 @@ class Establishment extends Model
      */
     public function activeBookings()
     {
-        return $this->hasMany(booking::class)
+        return $this->hasMany(Booking::class)
             ->whereNotIn('status', ['cancelled', 'completed']);
     }
 
