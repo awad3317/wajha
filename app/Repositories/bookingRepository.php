@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\booking;
+use App\Models\Booking;
 use App\Models\Establishment;
 use App\Interfaces\RepositoriesInterface;
 
@@ -31,15 +31,15 @@ class bookingRepository implements RepositoriesInterface
     /**
      * Retrieve a booking by ID.
      */
-    public function getById($id): booking
+    public function getById($id): Booking
     {
         return Booking::with(['user','establishment.owner.ownerAccounts.bank','pricePackage.currency','pricePackage.icon','coupon'])->findOrFail($id);
     }
 
     /**
-     * Store a new booking.
+     * Store a new Booking.
      */
-    public function store(array $data): booking
+    public function store(array $data): Booking
     {
         return Booking::create($data);
     }
