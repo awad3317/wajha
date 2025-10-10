@@ -78,7 +78,7 @@
                             <p><strong>الباقة:</strong> {{ $booking->pricePackage->name ?? '-' }}</p>
                             <p><strong>السعر:</strong> {{ number_format($booking->pricePackage->price ?? 0, 2) }} ر.س
                             </p>
-                            <p><strong>الخصم:</strong> {{ number_format($booking->discount_amount ?? 0, 2) }} ر.س</p>
+                            <p class="text-primary"><strong>الخصم:</strong> {{ number_format($booking->discount_amount ?? 0, 2) }} ر.س</p>
                             <hr>
                             <h5 class="text-success">الإجمالي:
                                 {{ number_format(($booking->pricePackage->price ?? 0) - ($booking->discount_amount ?? 0), 2) }}
