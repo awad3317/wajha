@@ -53,7 +53,7 @@
                             <p><strong>الاسم:</strong> {{ $booking->pricePackage->name }}</p>
                             <p><strong>الوصف:</strong> {{ $booking->pricePackage->description }}</p>
                             <p><strong>السعر:</strong> {{ $booking->pricePackage->price }}
-                                {{ $booking->pricePackage->currency->name ?? '' }}</p>
+                                {{ $booking->pricePackage->currency->symbol ?? '' }}</p>
                             <p><strong>الفترة:</strong> {{ $booking->pricePackage->time_period }}</p>
                             @if ($booking->pricePackage->features)
                                 <p><strong>المميزات:</strong></p>
@@ -74,17 +74,40 @@
                 <div class="col-6 col-lg-6">
                     <div class="card h-100 shadow-sm border-0 rounded-3">
                         <div class="card-body">
-                            <h6 class="text-primary mb-3"><i class="fas fa-money-bill me-2"></i> تفاصيل السعر</h6>
+                            <h6 class="text-primary mb-3">
+                                <i class="fas fa-money-bill me-2"></i> تفاصيل السعر
+                            </h6>
+
                             <p><strong>الباقة:</strong> {{ $booking->pricePackage->name ?? '-' }}</p>
-                            <p><strong>السعر:</strong> {{ number_format($booking->pricePackage->price ?? 0, 2) }} ر.س
+
+                            <p><strong>السعر:</strong>
+                                {{ number_format($booking->pricePackage->price ?? 0, 2) }}
+                                {{ $booking->pricePackage->currency->symbol ?? '' }}
                             </p>
-                            <p class="text-primary"><strong>الخصم:</strong> {{ number_format($booking->discount_amount ?? 0, 2) }} ر.س</p>
+
+                            <p><strong>الكوبون:</strong> {{ $booking->couponUse->coupon->code ?? '-' }}</p>
+
+                            <p class="text-primary"><strong>الخصم:</strong>
+                                {{ $discountLabel }}
+                            </p>
+                            
+                            <small class="text-muted">
+                                نوع الخصم:
+                                {{ $discountType === 'percentage' ? 'نسبة مئوية' : ($discountType === 'fixed_amount' ? 'مبلغ ثابت' : 'بدون خصم') }}
+                                ({{ $discountLabel }})
+                            </small>
                             <hr>
-                            <h5 class="text-success">الإجمالي:
-                                {{ number_format(($booking->pricePackage->price ?? 0) - ($booking->discount_amount ?? 0), 2) }}
-                                ر.س
+
+                            <h5 class="text-success">
+                                الإجمالي:
+                                {{ number_format($finalPrice, 2) }}
+                                {{ $booking->pricePackage->currency->symbol ?? '' }}
+
+
                             </h5>
+
                         </div>
+
                     </div>
                 </div>
                 {{-- الملاحظات --}}
