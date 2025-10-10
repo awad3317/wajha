@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 use App\Interfaces\RepositoriesInterface;
-use App\Models\pricePackageIcon;
+use App\Models\PricePackageIcon;
 
 class pricePackageIconRepository implements RepositoriesInterface
 {
@@ -16,31 +16,31 @@ class pricePackageIconRepository implements RepositoriesInterface
 
     public function index()
     {
-        return pricePackageIcon::get();
+        return PricePackageIcon::get();
     }
 
     /**
-     * Retrieve a pricePackageIcon by ID.
+     * Retrieve a PricePackageIcon by ID.
      */
-    public function getById($id): pricePackageIcon
+    public function getById($id): PricePackageIcon
     {
-        return pricePackageIcon::findOrFail($id);
+        return PricePackageIcon::findOrFail($id);
     }
 
     /**
-     * Store a new pricePackageIcon.
+     * Store a new PricePackageIcon.
      */
-    public function store(array $data): pricePackageIcon
+    public function store(array $data): PricePackageIcon
     {
-        return pricePackageIcon::create($data);
+        return PricePackageIcon::create($data);
     }
 
     /**
-     * Update an existing pricePackageIcon.
+     * Update an existing PricePackageIcon.
      */
-    public function update(array $data, $id): pricePackageIcon
+    public function update(array $data, $id): PricePackageIcon
     {
-        $pricePackageIcon = pricePackageIcon::findOrFail($id);
+        $pricePackageIcon = PricePackageIcon::findOrFail($id);
         $pricePackageIcon->update($data);
         return $pricePackageIcon;
     }
@@ -50,7 +50,7 @@ class pricePackageIconRepository implements RepositoriesInterface
      */
     public function delete($id): bool
     {
-        return pricePackageIcon::where('id', $id)->delete() > 0;
+        return PricePackageIcon::where('id', $id)->delete() > 0;
     }
     
 }

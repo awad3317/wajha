@@ -25,7 +25,7 @@ class bookingRepository implements RepositoriesInterface
 
     public function index($user_id)
     {
-        return booking::with(['establishment'])->where('user_id', $user_id)->get();
+        return Booking::with(['establishment'])->where('user_id', $user_id)->get();
     }
 
     /**
@@ -33,7 +33,7 @@ class bookingRepository implements RepositoriesInterface
      */
     public function getById($id): booking
     {
-        return booking::with(['user','establishment.owner.ownerAccounts.bank','pricePackage.currency','pricePackage.icon','coupon'])->findOrFail($id);
+        return Booking::with(['user','establishment.owner.ownerAccounts.bank','pricePackage.currency','pricePackage.icon','coupon'])->findOrFail($id);
     }
 
     /**
@@ -41,15 +41,15 @@ class bookingRepository implements RepositoriesInterface
      */
     public function store(array $data): booking
     {
-        return booking::create($data);
+        return Booking::create($data);
     }
 
     /**
      * Update an existing booking.
      */
-    public function update(array $data, $id): booking
+    public function update(array $data, $id): Booking
     {
-        $booking = booking::findOrFail($id);
+        $booking = Booking::findOrFail($id);
         $booking->update($data);
         return $booking;
     }
@@ -59,7 +59,7 @@ class bookingRepository implements RepositoriesInterface
      */
     public function delete($id): bool
     {
-        return booking::where('id', $id)->delete() > 0;
+        return Booking::where('id', $id)->delete() > 0;
     }
 
     public function findExistingBooking($user_id,$establishment_id){

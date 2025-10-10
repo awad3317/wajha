@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 use App\Interfaces\RepositoriesInterface;
-use App\Models\bank;
+use App\Models\Bank;
 
 class bankRepository implements RepositoriesInterface
 {
@@ -16,31 +16,31 @@ class bankRepository implements RepositoriesInterface
 
     public function index()
     {
-        return bank::get();
+        return Bank::get();
     }
 
     /**
-     * Retrieve a bank by ID.
+     * Retrieve a Bank by ID.
      */
-    public function getById($id): bank
+    public function getById($id): Bank
     {
-        return bank::findOrFail($id);
+        return Bank::findOrFail($id);
     }
 
     /**
-     * Store a new bank.
+     * Store a new Bank.
      */
-    public function store(array $data): bank
+    public function store(array $data): Bank
     {
-        return bank::create($data);
+        return Bank::create($data);
     }
 
     /**
-     * Update an existing bank.
+     * Update an existing Bank.
      */
-    public function update(array $data, $id): bank
+    public function update(array $data, $id): Bank
     {
-        $bank = bank::findOrFail($id);
+        $bank = Bank::findOrFail($id);
         $bank->update($data);
         return $bank;
     }
@@ -50,7 +50,7 @@ class bankRepository implements RepositoriesInterface
      */
     public function delete($id): bool
     {
-        return bank::where('id', $id)->delete() > 0;
+        return Bank::where('id', $id)->delete() > 0;
     }
     
 }

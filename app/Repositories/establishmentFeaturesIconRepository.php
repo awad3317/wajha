@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 use App\Interfaces\RepositoriesInterface;
-use App\Models\establishmentFeaturesIcon;
+use App\Models\EstablishmentFeaturesIcon;
 
 class establishmentFeaturesIconRepository implements RepositoriesInterface
 {
@@ -16,31 +16,31 @@ class establishmentFeaturesIconRepository implements RepositoriesInterface
 
     public function index()
     {
-        return establishmentFeaturesIcon::get();
+        return EstablishmentFeaturesIcon::get();
     }
 
     /**
-     * Retrieve a establishmentFeaturesIcon by ID.
+     * Retrieve a EstablishmentFeaturesIcon by ID.
      */
-    public function getById($id): establishmentFeaturesIcon
+    public function getById($id): EstablishmentFeaturesIcon
     {
-        return establishmentFeaturesIcon::findOrFail($id);
+        return EstablishmentFeaturesIcon::findOrFail($id);
     }
 
     /**
-     * Store a new establishmentFeaturesIcon.
+     * Store a new EstablishmentFeaturesIcon.
      */
-    public function store(array $data): establishmentFeaturesIcon
+    public function store(array $data): EstablishmentFeaturesIcon
     {
-        return establishmentFeaturesIcon::create($data);
+        return EstablishmentFeaturesIcon::create($data);
     }
 
     /**
-     * Update an existing establishmentFeaturesIcon.
+     * Update an existing EstablishmentFeaturesIcon.
      */
-    public function update(array $data, $id): establishmentFeaturesIcon
+    public function update(array $data, $id): EstablishmentFeaturesIcon
     {
-        $establishmentFeaturesIcon = establishmentFeaturesIcon::findOrFail($id);
+        $establishmentFeaturesIcon = EstablishmentFeaturesIcon::findOrFail($id);
         $establishmentFeaturesIcon->update($data);
         return $establishmentFeaturesIcon;
     }
@@ -50,7 +50,7 @@ class establishmentFeaturesIconRepository implements RepositoriesInterface
      */
     public function delete($id): bool
     {
-        return establishmentFeaturesIcon::where('id', $id)->delete() > 0;
+        return EstablishmentFeaturesIcon::where('id', $id)->delete() > 0;
     }
     
 }
