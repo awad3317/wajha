@@ -7,15 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
 use App\Http\Controllers\Controller;
+use App\Services\BookingAvailabilityService;
 use App\Repositories\EstablishmentRepository;
 use App\Repositories\EstablishmentUnavailabilityRepository;
+use Database\Seeders\reviewSeeder;
 
 class EstablishmentUnavailabilityController extends Controller
 {
       /**
      * Create a new class instance.
      */
-    public function __construct(private EstablishmentUnavailabilityRepository $EstablishmentUnavailabilityRepository,private EstablishmentRepository $EstablishmentRepository)
+    public function __construct(private EstablishmentUnavailabilityRepository $EstablishmentUnavailabilityRepository,private EstablishmentRepository $EstablishmentRepository,private BookingAvailabilityService $BookingAvailabilityService)
     {
         //
     }
@@ -23,9 +25,19 @@ class EstablishmentUnavailabilityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'price_package_id' => ['required'],
+        ], [
+            'price_package_id.required' => 'يجب اختيار الباقه.',
+        ]);
+        try {
+            $unavailable_dates= $this->BookingAvailabilityService->getUnavailableDates( $fields['pricePackage_id']);
+            return ApiResponseClass::sendResponse($unavailable_dates, 'تم جلب التواريخ غير المتاحة للباقة بنجاح');
+        } catch (Exception $e) {
+            return ApiResponseClass::sendError('حدث خطأ في جلب التواريخ غير المتاحة للباقة: ' . $e->getMessage());
+        }
     }
 
     /**

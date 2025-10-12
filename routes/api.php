@@ -97,4 +97,6 @@ Route::get('/regions/parents', [RegionController::class,'getParents']);
 Route::get('/regions/{id}/children', [RegionController::class,'getChildren']);
 Route::get('/region',[RegionController::class,'index']);
 
+Route::post('/getUnavailableDates', [EstablishmentUnavailabilityController::class,'index']);
+
 Route::get('/advertisement', [AdvertisementController::class,'index']);

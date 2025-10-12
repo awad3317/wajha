@@ -9,10 +9,19 @@ class EstablishmentUnavailability extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['establishment_id', 'unavailable_date'];
+    protected $fillable = ['establishment_id','price_package_id', 'unavailable_date'];
+
+    protected $casts = [
+        'unavailable_date' => 'date'
+    ];
 
     public function establishment()
     {
         return $this->belongsTo(Establishment::class);
+    }
+
+    public function pricePackage()
+    {
+        return $this->belongsTo(PricePackage::class);
     }
 }

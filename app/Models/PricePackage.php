@@ -59,4 +59,9 @@ class PricePackage extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
+     public function unavailabilities()
+    {
+        return $this->hasMany(EstablishmentUnavailability::class);
+    }
 }

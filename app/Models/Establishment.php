@@ -100,11 +100,6 @@ class Establishment extends Model
         return $this->hasMany(EstablishmentSpecification::class);
     }
 
-    public function unavailabilityDays()
-    {
-        return $this->hasMany(EstablishmentUnavailability::class);
-    }
-
     /**
      * Get the bookings for the establishment.
      */

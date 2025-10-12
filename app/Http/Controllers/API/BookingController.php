@@ -8,6 +8,7 @@ use App\Livewire\Booking;
 use Illuminate\Http\Request;
 use App\Models\Establishment;
 use App\Services\ImageService;
+use Illuminate\Support\Carbon;
 use App\Services\CouponService;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
@@ -16,18 +17,18 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Services\BookingStatusService;
 use App\Repositories\bookingRepository;
-use Illuminate\Support\Carbon;
-use App\Notifications\BookingModifiedNotification;
 use Illuminate\Support\Facades\Storage;
+use App\Services\BookingAvailabilityService;
 use App\Notifications\NewBookingNotification;
 use App\Repositories\EstablishmentRepository;
+use App\Notifications\BookingModifiedNotification;
 
 class BookingController extends Controller
 {
      /**
      * Create a new class instance.
      */
-    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService,private CouponService $couponService,private EstablishmentRepository $EstablishmentRepository,private BookingStatusService $bookingStatusService,private ImageService $ImageService)
+    public function __construct(private bookingRepository $bookingRepository,private FirebaseService $firebaseService,private CouponService $couponService,private EstablishmentRepository $EstablishmentRepository,private BookingStatusService $bookingStatusService,private ImageService $ImageService,private BookingAvailabilityService $BookingAvailabilityService)
     {
         //
     }
@@ -75,6 +76,9 @@ class BookingController extends Controller
         ]);
 
         try {
+            if($this->BookingAvailabilityService->checkAvailability($fields['establishment_id'], $fields['price_package_id'], $fields['booking_date']) == false){
+                return ApiResponseClass::sendError('عذراً، التاريخ الذي اخترته غير متاح لهذه الباقة. يرجى اختيار تاريخ آخر.', 400);
+            }
             $user_id = auth('sanctum')->id();
             $fields['user_id'] = $user_id;
 
@@ -255,6 +259,7 @@ class BookingController extends Controller
             return ApiResponseClass::sendError('غير مصرح لك بتأكيد هذا الحجز', [], 403);
         }
         $booking = $this->bookingStatusService->confirmBooking($booking);
+        $this->BookingAvailabilityService->markAsUnavailable($booking->establishment_id, $booking->price_package_id, $booking->booking_date);
         $user->notify(new NewBookingNotification(
             $booking, 
             'تم تأكيد الحجز', 
@@ -368,7 +373,7 @@ class BookingController extends Controller
         }
 
         $booking = $this->bookingStatusService->cancelledBooking($booking, $fields['cancellation_reason'] ?? null);
-
+        $this->BookingAvailabilityService->markAsAvailable($booking->establishment_id, $booking->price_package_id, $booking->booking_date);
         if($user->id == $booking->user_id){
             $establishmentOwner = $establishment->owner;
             $establishmentOwner->notify(new NewBookingNotification(
