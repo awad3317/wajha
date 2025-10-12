@@ -26,7 +26,7 @@ class Booking extends Model
         'discount_amount' => 'decimal:2'
     ];
 
-    protected $appends = ['pricing_details'];
+    // protected $appends = ['pricing_details'];
 
 
     public function getStatusTextAttribute()
