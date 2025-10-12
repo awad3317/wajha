@@ -514,7 +514,10 @@ class BookingController extends Controller
     {
         try {
             $booking=$this->bookingRepository->getById($id);
-            return ApiResponseClass::sendResponse($booking,'تم جلب البيانات بنجاح');
+            $pricingDetails = $this->calculatePricing($booking);
+            $bookingData = $booking->toArray();
+            $bookingData['pricing_details'] = $pricingDetails;
+            return ApiResponseClass::sendResponse($bookingData,'تم جلب البيانات بنجاح');
         } catch (Exception $e) {
             return ApiResponseClass::sendError('حدث خطأ في جلب بيانات الحجز: ' . $e->getMessage());
         }
@@ -594,4 +597,35 @@ class BookingController extends Controller
     {
         //
     }
+
+    private function calculatePricing($booking)
+{
+    $originalPrice = $booking->pricePackage->price ?? 0;
+
+    $discountType = $booking->coupon->discount_type ?? null;
+    $discountValue = $booking->coupon->discount_value ?? 0;
+
+    $finalPrice = $originalPrice;
+    $discountAmount = 0;
+    $discountLabel = 'بدون خصم';
+
+    if ($discountType === 'percentage' && $discountValue > 0) {
+        $discountAmount = $originalPrice * ($discountValue / 100);
+        $finalPrice = $originalPrice - $discountAmount;
+        $discountLabel = $discountValue . ' %';
+    } elseif ($discountType === 'fixed_amount' && $discountValue > 0) {
+        $discountAmount = $discountValue;
+        $finalPrice = $originalPrice - $discountAmount;
+        $discountLabel = number_format($discountValue, 2) . ' ' . ($booking->pricePackage->currency->symbol ?? '');
+    }
+
+    return [
+        'final_price' => max(0, $finalPrice),
+        'discount_label' => $discountLabel,
+        'original_price' => (float) $originalPrice,
+        'discount_type' => $discountType,
+        'discount_amount' => (float) $discountAmount,
+        'currency' => $booking->pricePackage->currency ?? null
+    ];
+}
 }
