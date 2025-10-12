@@ -185,11 +185,11 @@
                             @endforelse
                         </tbody>
                     </table>
-                   <div class="mt-3" style="">
+                
+                </div>
+                    <div class="m-3" >
                     {{ $regions->links('pagination::bootstrap-5') }}
                     </div>
-                </div>
-                 
             </div>
         </div>
     </div>
