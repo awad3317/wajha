@@ -36,19 +36,16 @@ class Homepage extends Component
 
     public function render()
     {
-        $latestBookings = Booking::select(
-            'establishment_id',
-            DB::raw('COUNT(*) as total'),
-            DB::raw('MAX(booking_date) as last_booking_date')
-        )
-            ->with('establishment')
+        $latestBookings = Booking::with('establishment')
+            ->select(
+                'establishment_id',
+                DB::raw('COUNT(*) as total'),
+                DB::raw('MAX(booking_date) as last_booking_date')
+            )
             ->groupBy('establishment_id')
-            ->orderBy('total', 'desc')
-            ->get()
-            ->map(function ($item) {
-                $item->last_booking_date = \Carbon\Carbon::parse($item->last_booking_date);
-                return $item;
-            });
+            ->orderByDesc('total')
+            ->get();
+
 
         $latestEstablishments = Establishment::latest()->take(5)->get();
         $latestAds = Advertisement::latest()->take(5)->get();

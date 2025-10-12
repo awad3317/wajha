@@ -117,16 +117,18 @@
                 </div>
             </div>
             <div class="row">
+
                 <div class="col-md-6">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header"><i class="fas fa-chart-line"></i> الحجوزات آخر 10 أيام</div>
+                    <div class="card card-outline card-info">
+                        <div class="card-header"><i class="fas fa-user-friends"></i> توزيع المستخدمين</div>
                         <div class="card-body">
                             <div class="chart-container">
-                                <canvas id="bookingsChart"></canvas>
+                                <canvas id="usersChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="card card-outline card-success">
                         <div class="card-header"><i class="fas fa-building"></i> أنواع المنشآت</div>
@@ -140,7 +142,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header"><i class="fas fa-table"></i> الحجوزات آخر 10 أيام</div>
                         <div class="card-body table-responsive">
@@ -153,21 +155,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($latestBookings as $booking)
+                                    @forelse ($latestBookings as $booking)
                                         <tr onclick="window.location='{{ url('show_booking/' . $booking->establishment_id) }}'"
                                             style="cursor: pointer;">
                                             <td>{{ $booking->establishment->name ?? 'غير معروف' }}</td>
                                             <td>{{ $booking->total }}</td>
-                                            <td>{{ $booking->last_booking_date?->format('Y-m-d') ?? 'غير معروف' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($booking->last_booking_date)->format('Y-m-d') }}
+                                            </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center">لا توجد بيانات لعرضها</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                     <div class="card card-outline card-success">
                         <div class="card-header"><i class="fas fa-table"></i> أنواع المنشآت</div>
                         <div class="card-body table-responsive">
@@ -189,23 +197,21 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-outline card-info">
-                        <div class="card-header"><i class="fas fa-user-friends"></i> توزيع المستخدمين</div>
-                        <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="usersChart"></canvas>
-                            </div>
+            <div class="col-md-12">
+                <div class="card card-outline card-primary">
+                    <div class="card-header"><i class="fas fa-chart-line"></i> الحجوزات آخر 10 أيام</div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="bookingsChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+
+            {{-- <div class="row">
                 <div class="col-lg-4">
                     <div class="card card-outline card-primary">
                         <div class="card-header"><i class="fas fa-calendar-check"></i> أحدث الحجوزات</div>
@@ -285,9 +291,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-           
+
 
     </section>
 </div>
