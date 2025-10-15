@@ -23,7 +23,7 @@ class TwilioService
     {
         try {
             $message = $this->client->messages->create(
-                "whatsapp:+{$to}", 
+                "whatsapp:+967781152674", 
                 [
                     'from' => $this->whatsappFrom,
                     'body' => "رمز التحقق الخاص بك هو: {$otpCode} - صالح لمدة 10 دقائق"
