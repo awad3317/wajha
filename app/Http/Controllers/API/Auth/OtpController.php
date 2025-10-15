@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Auth;
 use Exception;
 use App\Services\OtpService;
 use Illuminate\Http\Request;
+use App\Services\TwilioService;
 use Illuminate\Validation\Rule;
 use App\Classes\ApiResponseClass;
 use App\Http\Controllers\Controller;
@@ -13,9 +14,9 @@ use App\Services\HypersenderService;
 
 class OtpController extends Controller
 {
-    public function __construct(private OtpService $otpService,private UserRepository $UserRepository,private HypersenderService $HypersenderService)
+    public function __construct(private OtpService $otpService,private UserRepository $UserRepository,private HypersenderService $HypersenderService,private TwilioService $TwilioService)
     {
-        //
+        
     }
 
     public function resendOTP(Request $request) {
@@ -24,6 +25,8 @@ class OtpController extends Controller
         ]);
         try {
             $otp=$this->otpService->generateOTP($fields['phone'],'account_creation');
+            // Send the OTP via Twilio WhatsApp
+            $this->TwilioService->sendOTP($fields['phone'], $otp);
             $this->HypersenderService->sendTextMessage($fields['phone'],strval($otp));
             return ApiResponseClass::sendResponse(null,'Verification code has been sent to: ' . $fields['phone']);
         } catch (Exception $e) {
