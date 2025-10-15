@@ -15,22 +15,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: [
-            '/github/deploy'
-        ]);
-        $middleware->validateSignatures(except: [
-            '/github/deploy',
-            'github/deploy',
-            'github/deploy/*',
-        ]);
+        // $middleware->validateCsrfTokens(except: [
+        //     '/github/deploy'
+        // ]);
+        // $middleware->validateSignatures(except: [
+        //     '/github/deploy',
+        //     'github/deploy',
+        //     'github/deploy/*',
+        // ]);
         $middleware->alias([
             'check.banned' => CheckBannedUser::class,
             'auth.sanctum.api' => SanctumApiAuth::class,
             'verify.app.access' => VerifyAppAccess::class,
         ]);
-        // $middleware->appendToGroup('api', [
-        //     'verify.app.access', 
-        // ]);
+        $middleware->appendToGroup('api', [
+            'verify.app.access', 
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

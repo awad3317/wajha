@@ -20,7 +20,7 @@ class VerifyAppAccess
         if (!$appSecret || $appSecret !== config('app.mobile_app_secret')) {
             return response()->json([
                 'success' => false,
-                'message' => 'غير مصرح بالوصول'
+                'message' => 'Access denied'
             ], 401);
         }
 
