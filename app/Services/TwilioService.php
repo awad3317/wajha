@@ -24,11 +24,13 @@ class TwilioService
         try {
             $message = $this->client->messages->create(
                 "whatsapp:+967781152674", 
-                array(
-          "from" => "whatsapp:+14155238886",
-          "contentSid" => "HXb5b62575e6e4ff6129ad7c8efe1f983e",
-          "body" => "Your Message"
-        )
+                [
+                "from" => "whatsapp:+14155238886",
+                "contentSid" => "HXeac83efff71ec95a7a6934556141a511",
+                "contentVariables" => json_encode([
+                    "1" => $otpCode,
+                ])
+            ]
             );
 
             return [
