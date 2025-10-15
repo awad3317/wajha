@@ -26,10 +26,7 @@ class TwilioService
                 "whatsapp:+967781152674", 
                 [
                 "from" => "whatsapp:+14155238886",
-                "contentSid" => "HXeac83efff71ec95a7a6934556141a511",
-                "contentVariables" => json_encode([
-                    "1" => $otpCode,
-                ])
+                "body" => "رمز التحقق الخاص بك هو: {$otpCode} - صالح لمدة 10 دقائق"
             ]
             );
 
