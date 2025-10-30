@@ -28,9 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.sanctum.api' => SanctumApiAuth::class,
             'verify.app.access' => VerifyAppAccess::class,
         ]);
-        $middleware->appendToGroup('api', [
-            'verify.app.access', 
-        ]);
+        // $middleware->appendToGroup('api', [
+        //     'verify.app.access', 
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
