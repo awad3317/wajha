@@ -16,8 +16,8 @@ class HypersenderService
 
     public function __construct()
     {
-        $this->baseUrl = config('hypersender.base_url');
-        $this->apiPath = '/api/whatsapp/v1';
+        $this->baseUrl = rtrim(config('hypersender.base_url'), '/') . '/';
+        $this->apiPath = 'api/whatsapp/v1';
         $this->instanceId = config('hypersender.instance_id');
         $this->token = config('hypersender.token');
         
@@ -31,23 +31,16 @@ class HypersenderService
         ]);
     }
 
-    /**
-     * إرسال رسالة نصية عبر واتساب
-     *
-     * @param string $chatId
-     * @param string $text
-     * @param string|null $replyTo
-     * @param bool $linkPreview
-     * @return array
-     */
     public function sendTextMessage($chatId, $text, $replyTo = null, $linkPreview = false)
     {
         $endpoint = "{$this->apiPath}/{$this->instanceId}/send-text";
+
         try {
-            
-            $response = $this->client->post($endpoint,[
+            Log::info('Hypersender URL:', ['url' => $this->baseUrl . $endpoint]);
+
+            $response = $this->client->post($endpoint, [
                 'json' => [
-                    'chatId' => $chatId.'@c.us',
+                    'chatId' => $chatId . '@c.us',
                     'text' => $text,
                     'reply_to' => $replyTo,
                     'link_preview' => $linkPreview,
