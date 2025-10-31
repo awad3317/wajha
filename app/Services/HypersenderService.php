@@ -16,11 +16,11 @@ class HypersenderService
 
     public function __construct()
     {
-        $this->baseUrl = rtrim(config('hypersender.base_url'), '/') . '/';
-        $this->apiPath = 'api/whatsapp/v1';
+        $this->baseUrl = config('hypersender.base_url');
+        $this->apiPath = '/api/whatsapp/v1';
         $this->instanceId = config('hypersender.instance_id');
         $this->token = config('hypersender.token');
-
+        
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
             'headers' => [
@@ -31,16 +31,23 @@ class HypersenderService
         ]);
     }
 
+    /**
+     * إرسال رسالة نصية عبر واتساب
+     *
+     * @param string $chatId
+     * @param string $text
+     * @param string|null $replyTo
+     * @param bool $linkPreview
+     * @return array
+     */
     public function sendTextMessage($chatId, $text, $replyTo = null, $linkPreview = false)
     {
-        $endpoint = ltrim("{$this->apiPath}/{$this->instanceId}/send-text", '/');
-
+        $endpoint = "{$this->apiPath}/{$this->instanceId}/send-text";
         try {
-            Log::info('Hypersender URL:', ['url' => $this->baseUrl . $endpoint]);
-
-            $response = $this->client->post($endpoint, [
+            
+            $response = $this->client->post($endpoint,[
                 'json' => [
-                    'chatId' => $chatId . '@c.us',
+                    'chatId' => $chatId.'@c.us',
                     'text' => $text,
                     'reply_to' => $replyTo,
                     'link_preview' => $linkPreview,
@@ -53,7 +60,7 @@ class HypersenderService
             ];
         } catch (GuzzleException $e) {
             Log::error('Hypersender API Error: ' . $e->getMessage());
-
+            
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
