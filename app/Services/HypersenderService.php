@@ -20,7 +20,7 @@ class HypersenderService
         $this->apiPath = 'api/whatsapp/v1';
         $this->instanceId = config('hypersender.instance_id');
         $this->token = config('hypersender.token');
-        
+
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
             'headers' => [
@@ -33,7 +33,7 @@ class HypersenderService
 
     public function sendTextMessage($chatId, $text, $replyTo = null, $linkPreview = false)
     {
-        $endpoint = "{$this->apiPath}/{$this->instanceId}/send-text";
+        $endpoint = ltrim("{$this->apiPath}/{$this->instanceId}/send-text", '/');
 
         try {
             Log::info('Hypersender URL:', ['url' => $this->baseUrl . $endpoint]);
@@ -53,7 +53,7 @@ class HypersenderService
             ];
         } catch (GuzzleException $e) {
             Log::error('Hypersender API Error: ' . $e->getMessage());
-            
+
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
