@@ -16,8 +16,8 @@ class HypersenderService
 
     public function __construct()
     {
-        $this->baseUrl = rtrim(config('hypersender.base_url'), '/');
-        $this->apiPath = '/api/whatsapp/v1';
+        $this->baseUrl = config('hypersender.base_url');
+        $this->apiPath = 'api/whatsapp/v1';
         $this->instanceId = config('hypersender.instance_id');
         $this->token = config('hypersender.token');
         
