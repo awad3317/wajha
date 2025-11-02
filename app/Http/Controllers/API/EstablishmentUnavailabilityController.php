@@ -28,12 +28,12 @@ class EstablishmentUnavailabilityController extends Controller
     public function index(Request $request)
     {
         $fields = $request->validate([
-            'price_package_id' => ['required'],
+            'price_package_id' => ['required',Rule::exists('price_packages','id')],
         ], [
             'price_package_id.required' => 'يجب اختيار الباقه.',
         ]);
         try {
-            $unavailable_dates= $this->BookingAvailabilityService->getUnavailableDates( $fields['pricePackage_id']);
+            $unavailable_dates= $this->BookingAvailabilityService->getUnavailableDates( $fields['price_package_id']);
             return ApiResponseClass::sendResponse($unavailable_dates, 'تم جلب التواريخ غير المتاحة للباقة بنجاح');
         } catch (Exception $e) {
             return ApiResponseClass::sendError('حدث خطأ في جلب التواريخ غير المتاحة للباقة: ' . $e->getMessage());

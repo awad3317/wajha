@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\PricePackage;
 use App\Models\EstablishmentUnavailability;
 
 class BookingAvailabilityService
@@ -43,8 +44,19 @@ class BookingAvailabilityService
 
     public function getUnavailableDates($pricePackageId)
     {
-        return EstablishmentUnavailability::where([
-            'price_package_id' => $pricePackageId
-        ])->pluck('unavailable_date');
-    }
+        $pricePackage = PricePackage::with('establishment')->findOrFail($pricePackageId);
+    
+        $anyPackageIds = PricePackage::where('establishment_id', $pricePackage->establishment_id)
+            ->where('time_period', 'any')
+            ->pluck('id');
+    
+        if ($pricePackage->time_period !== 'any') {
+            $anyPackageIds->push($pricePackageId);
+        }
+    
+        return EstablishmentUnavailability::whereIn('price_package_id', $anyPackageIds)
+            ->pluck('unavailable_date')
+            ->unique()
+            ->values();
+        }
 }
