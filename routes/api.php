@@ -17,6 +17,7 @@ use App\Http\Controllers\API\PricePackageController;
 use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\Auth\UserAuthController;
 use App\Http\Controllers\API\EstablishmentController;
+use App\Http\Controllers\Api\DiscountCouponController;
 use App\Http\Controllers\API\pricePackageIconController;
 use App\Http\Controllers\API\EstablishmentRuleController;
 use App\Http\Controllers\API\EstablishmentTypeController;
@@ -44,6 +45,7 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::apiResource('/pricePackage', PricePackageController::class)->except(['index','show']);
     // Route::apiResource('/review', ReviewController::class)->except(['index','show']);
     Route::apiResource('/unavailabilityDays', EstablishmentUnavailabilityController::class)->except(['index','show','update']);
+    Route::apiResource('/Coupon', DiscountCouponController::class)->only(['index']);
     Route::apiResource('/booking', BookingController::class)->except(['destroy']);
     Route::post('/booking/markAsWaitingPayment', [BookingController::class, 'markAsWaitingPayment']);
     Route::post('/booking/markAsPaid', [BookingController::class, 'markAsPaid']);
@@ -51,18 +53,18 @@ Route::middleware(['auth.sanctum.api','check.banned'])->group(function () {
     Route::post('/booking/cancelledBooking', [BookingController::class, 'cancelledBooking']);
     Route::post('/booking/revertBookingStatus', [BookingController::class, 'revertBookingStatus']);
     Route::post('/booking/completeBooking', [BookingController::class, 'completeBooking']);
-    
+
     Route::apiResource('/pricePackageIcon', pricePackageIconController::class)->only(['index']);
     Route::get('/stats/owner',[Dashboardcontroller::class,'index']);
     Route::get('/showMyStablishment/{id}',[Dashboardcontroller::class,'showMyStablishment']);
-    
+
     Route::get('/notifications',[NotificationController::class,'index']);
     Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
     Route::post('/notifications/markAsRead/{id}', [NotificationController::class, 'markAsRead']);
-    
+
     Route::post('/DeviceToken',[UserController::class,'updateDeviceToken']);
     Route::apiResource('/EstablishmentImage', EstablishmentImageController::class)->except(['index','show']);
-    
+
     Route::apiResource('/featuresIcon', EstablishmentFeaturesIconController::class)->only(['index']);
     Route::apiResource('/Currency', CurrencyController::class)->only(['index']);
     //           Review Route        //
