@@ -17,7 +17,7 @@ use App\Http\Controllers\API\PricePackageController;
 use App\Http\Controllers\API\AdvertisementController;
 use App\Http\Controllers\API\Auth\UserAuthController;
 use App\Http\Controllers\API\EstablishmentController;
-use App\Http\Controllers\Api\DiscountCouponController;
+use App\Http\Controllers\API\DiscountCouponController;
 use App\Http\Controllers\API\pricePackageIconController;
 use App\Http\Controllers\API\EstablishmentRuleController;
 use App\Http\Controllers\API\EstablishmentTypeController;
