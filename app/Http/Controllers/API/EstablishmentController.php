@@ -336,7 +336,7 @@ class EstablishmentController extends Controller
 
         try {
             $user = auth('sanctum')->user();
-            $establishment = $this->EstablishmentRepository->getById($id);
+            $establishment = $this->EstablishmentRepository->find($id);
             if ($establishment->owner_id !== $user->id) {
                 return ApiResponseClass::sendError('غير مصرح لك بتحديث هذه المنشأة', null, 403);
             }
